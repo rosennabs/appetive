@@ -1,20 +1,18 @@
 import { React } from 'react';
 import useAppData from './hooks/useAppData';
 import HomePage from "./routes/HomePage";
+import { AppDataProvider } from './contexts/AppDataContext';
 
 
 function App() {
 
-  //Destructure the useApplicationData function
-  const { state } = useAppData();
-
 
   return (
-    <div className="items-center mt-10 text-xl text-amber-700 uppercase font-bold font-sans-serif">
-      <HomePage
-        mealCategories={state.mealCategories}
-      />
-    </div>
+    <AppDataProvider>
+      <div className="items-center mt-10 text-xl text-amber-700 uppercase font-bold font-sans-serif">
+        <HomePage />
+        </div>
+    </AppDataProvider>
   );
 }
 

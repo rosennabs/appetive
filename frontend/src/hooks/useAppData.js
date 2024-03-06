@@ -1,16 +1,32 @@
-import { useState, useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import axios from "axios";
 
 
 // Define action types as constants
 const SET_MEAL_CATEGORIES = "SET_MEAL_CATEGORIES";
 
+
 //Initial state
-const useAppData = () => {
-  const initialState = {
-    mealCategories: [],
+export const initialState = {
+  mealCategories: [],
+};
+
+//Define the reducer function to update state
+export const reducer = (state, action) => {
+ 
+    switch (action.type) {
+      case SET_MEAL_CATEGORIES:
+      
+        return {
+          ...state,
+          mealCategories: action.mealCategories,
+        };
+    }
   };
 
+const useAppData = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  
   //Dispatch meal categories data
   const setMealCategories = (data) => {
     dispatch({
@@ -26,32 +42,18 @@ const useAppData = () => {
         const response = await axios.get(
           "https://www.themealdb.com/api/json/v1/1/categories.php"
         );
-        console.log("Meal Categories: ", response.data.categories);
 
+        //console.log("Meal Categories: ", response.data.categories);
         setMealCategories(response.data.categories);
       } catch (error) {
         console.error("Error fatching meal categories: ", error);
       }
     };
     fetchCategories();
-  }, []);
-
-  //Update state using the reduce function
-  const reduce = (state, action) => {
-    switch (action.type) {
-      case SET_MEAL_CATEGORIES:
-        return {
-          ...state,
-          mealCategories: action.mealCategories,
-        };
-    }
-  };
-
-  //State management
-  const [state, dispatch] = useReducer(reduce, initialState);
+  }, [dispatch]); //Ensure the latest dispatch function is used to update the state.
 
   return {
-    state,
+    state
   };
 };
 
