@@ -30,6 +30,26 @@ function RecipeForm() {
           name="prep_time"
           type="text"
         />
+
+        <label htmlFor="ingredient">Ingredients</label>
+        {/* For ingredients: each input has a quantity + type of measurement dropdown + ingredient */}
+        {/* quantity (number input) */}
+        <input name="quantity" type="number" />
+        {/* measurement (select) */}
+        <select name="measurement">
+          <option value="whole"></option>
+          <option value="teaspoon">tsp</option>
+          <option value="tablespoon">tbsp</option>
+          <option value="cup">cup</option>
+          <option value="ounces">oz</option>
+          <option value="pounds">lbs</option>
+          <option value="grams">grams</option>
+          <option value="kilograms">kilograms</option>
+        </select>
+        {/* ingredient (text) */}
+        <input name="ingredient" placeholder="Ingredient name" type="text"/>
+        <button onClick={() => {}}>+</button> {/* for adding new ingredient input */}
+
         <label htmlFor="instructions">Instructions</label>
         <textarea
           id="instructions"
