@@ -2,6 +2,10 @@ import React from "react";
 import { Formik } from "formik";
 
 function RecipeForm() {
+  const emptyIngredient = {
+    quantity: 0,
+    name: ""
+  }
 
   /*
   
@@ -10,9 +14,16 @@ function RecipeForm() {
 
   */
   return (
-    <Formik>
+    <Formik
+      initialValues={{
+        ingredients: [emptyIngredient]
+      }}
+      onSubmit={(values) => {
+        console.log(values);
+      }}
+    >
     <div>
-      <form className="w-full max-w-lg" onSubmit={(event) => {event.preventDefault()}}>
+      <form className="w-full max-w-lg">
         <div className="flex flex-wrap">
           <div className="w-full">
             <label className="block" htmlFor="name">Recipe Name</label>
