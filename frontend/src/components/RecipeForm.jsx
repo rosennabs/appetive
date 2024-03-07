@@ -1,9 +1,16 @@
 import React from "react";
-import { useFormik } from "formik";
+import { Formik } from "formik";
 
 function RecipeForm() {
 
+  /*
+  
+  NOTE: All Tailwind classNames are TEMPORARY for visual aid only.
+  Once page styling is set they can be changed to match the page styling.
+
+  */
   return (
+    <Formik>
     <div>
       <form className="w-full max-w-lg" onSubmit={(event) => {event.preventDefault()}}>
         <div className="flex flex-wrap">
@@ -68,6 +75,7 @@ function RecipeForm() {
         </div>
       </form>
     </div>
+    </Formik>
   );
 };
 
