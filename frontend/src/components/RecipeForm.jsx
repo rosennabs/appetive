@@ -17,20 +17,20 @@ function RecipeForm() {
           </div>
           <div className="w-full">
             <label className="block" htmlFor="cuisine">Cuisine</label>
-            <input
-              id="cuisine"
-              name="cuisine"
-              type="text"
-              />
+            { /* to update with mock data */}
+            <select id="diet" name="diet">
+              <option value="French">French</option>
+              <option value="Jamaican">Jamaican</option>
+            </select>
           </div>
           <div className="w-full">
             <label className="block" htmlFor="diet">Diet</label>
-            <input
-              id="diet"
-              name="diet"
-              type="text"
-              />
-            </div>
+            { /* to update with mock data */}
+            <select id="diet" name="diet">
+              <option value="Keto">Keto</option>
+              <option value="Vegetarian">Vegetarian</option>
+            </select>
+          </div>
           <div className="w-full">
           <label className="block" htmlFor="prep_time">Prep Time</label>
           <input
@@ -42,17 +42,7 @@ function RecipeForm() {
 
           <div className="w-full">
             <label className="block" htmlFor="ingredient">Ingredients</label>
-            <input name="quantity" type="number" />
-            <select name="measurement">
-              <option value="whole"></option>
-              <option value="teaspoon">tsp</option>
-              <option value="tablespoon">tbsp</option>
-              <option value="cup">cup</option>
-              <option value="ounces">oz</option>
-              <option value="pounds">lbs</option>
-              <option value="grams">grams</option>
-              <option value="kilograms">kilograms</option>
-            </select>
+            <input name="measurement" placeholder="Measurement e.g. 50g" type="text" />
             <input name="ingredient" placeholder="Ingredient name" type="text"/>
             <button onClick={() => {}}>+</button> {/* for adding new ingredient input */}
           </div>
@@ -62,6 +52,7 @@ function RecipeForm() {
             <textarea
               id="instructions"
               name="instructions"
+              className="w-full"
               />
           </div>
           <div className="w-full">
