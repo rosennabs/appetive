@@ -64,9 +64,9 @@ function RecipeForm() {
         <div className="w-full">
           <label className="block" htmlFor="ingredients">Ingredients</label>
           <FieldArray name="ingredients">
-            {({ push }) => (
+            {({ push, remove }) => (
               <>
-              {values.ingredients.map((_ingredient, index) => {
+                {values.ingredients.map((_ingredient, index) => {
                   const startName = `ingredient[${index.toString()}]`;
 
                   return (
@@ -81,13 +81,17 @@ function RecipeForm() {
                         type="text"
                         placeholder="carrots"
                       />
+                      <button
+                        type="button"
+                        onClick={() => push(emptyIngredient)}
+                      >Add</button>
+                      <button
+                        type="button"
+                        onClick={() => remove(index)}
+                      >Remove</button>
                     </div>
                   )
-              })}
-              <button
-                type="button"
-                onClick={() => push(emptyIngredient)}
-              >+</button>
+                })}
               </>
             )}
           </FieldArray>
