@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Form, FieldArray } from "formik";
+import { Formik, Form, FieldArray, Field } from "formik";
 
 function RecipeForm() {
   const emptyIngredient = {
@@ -64,19 +64,32 @@ function RecipeForm() {
         <div className="w-full">
           <label className="block" htmlFor="ingredients">Ingredients</label>
           <FieldArray name="ingredients">
-            {({ push, remove }) => {
+            {({ push }) => (
               <>
               {values.ingredients.map((_ingredient, index) => {
-                return (
-                  { /* Ingredient*/ }
-                )
+                  const startName = `ingredient[${index.toString()}]`;
+
+                  return (
+                    <div key={`ingredient-${index.toString()}`}>
+                      <Field
+                        name={`${startName}.quantity`}
+                        type="text"
+                        placeholder="50g"
+                      />
+                      <Field
+                        name={`${startName}.name`}
+                        type="text"
+                        placeholder="carrots"
+                      />
+                    </div>
+                  )
               })}
               <button
                 type="button"
                 onClick={() => push(emptyIngredient)}
               >+</button>
               </>
-            }}
+            )}
           </FieldArray>
         </div>
 
