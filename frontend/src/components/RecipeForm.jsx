@@ -7,6 +7,7 @@ function RecipeForm() {
     name: ""
   }
 
+  // All Tailwind classNames are TEMPORARY to make the form easier to look at. All can be altered at styling stage
   return (
     <Formik
       initialValues={{
@@ -43,9 +44,9 @@ function RecipeForm() {
       <Field
         id="prep_time"
         name="prep_time"
-        type="text"
+        type="number"
         className="border"
-        />
+        /> minutes
 
       <label className="block" htmlFor="ingredients">Ingredients</label>
       <FieldArray name="ingredients">
@@ -60,19 +61,23 @@ function RecipeForm() {
                     name={`${startName}.quantity`}
                     type="text"
                     placeholder="50g"
+                    className="border"
                   />
                   <Field
                     name={`${startName}.name`}
                     type="text"
                     placeholder="carrots"
+                    className="border"
                   />
                   <button
                     type="button"
                     onClick={() => push(emptyIngredient)}
+                    className="mx-1 px-2 bg-gray-200"
                   >Add</button>
                   {index > 0 && <button
                     type="button"
                     onClick={() => remove(index)}
+                    className="mx-1 px-2 bg-gray-200"
                   >Remove</button>}
                 </div>
               )
@@ -95,7 +100,7 @@ function RecipeForm() {
           className="border"
           />
         <div>
-          <button type="submit">Submit Recipe</button>
+          <button type="submit" className="px-2 bg-gray-200">Submit Recipe</button>
         </div>
        </Form>
       )}
