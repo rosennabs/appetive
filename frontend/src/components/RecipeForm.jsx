@@ -3,7 +3,7 @@ import { Formik, Form, FieldArray } from "formik";
 
 function RecipeForm() {
   const emptyIngredient = {
-    quantity: 0,
+    quantity: "",
     name: ""
   }
 
@@ -62,7 +62,7 @@ function RecipeForm() {
         </div>
 
         <div className="w-full">
-          <label className="block" htmlFor="ingredient">Ingredients</label>
+          <label className="block" htmlFor="ingredients">Ingredients</label>
           <FieldArray name="ingredients">
             {({ push, remove }) => {
               <>
@@ -71,7 +71,10 @@ function RecipeForm() {
                   { /* Ingredient*/ }
                 )
               })}
-              <button>+</button>
+              <button
+                type="button"
+                onClick={() => push(emptyIngredient)}
+              >+</button>
               </>
             }}
           </FieldArray>
