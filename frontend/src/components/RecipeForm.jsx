@@ -85,10 +85,10 @@ function RecipeForm() {
                         type="button"
                         onClick={() => push(emptyIngredient)}
                       >Add</button>
-                      <button
+                      {index > 0 && <button
                         type="button"
                         onClick={() => remove(index)}
-                      >Remove</button>
+                      >Remove</button>}
                     </div>
                   )
                 })}
