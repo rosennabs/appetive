@@ -18,7 +18,13 @@ DB_USER=labber
 DB_PASS=labber
 DB_NAME=appetive
 DB_PORT=5432
+```
 
+## Generating UUIDs in PostgreSQL
+To use `uuid_generate_v4()` in your PostgreSQL database, make sure the `uuid-ossp` extension is installed and enabled. You can install it by running the following SQL command:
+
+```sql
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
 
 ## Seeding
