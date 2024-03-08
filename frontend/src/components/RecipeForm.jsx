@@ -19,7 +19,7 @@ function RecipeForm() {
     {({ values }) => (
      <Form>
       <label className="block" htmlFor="name">Recipe Name</label>
-      <input
+      <Field
         id="name"
         name="name"
         type="text"
@@ -27,20 +27,20 @@ function RecipeForm() {
         />
       <label className="block" htmlFor="cuisine">Cuisine</label>
       { /* to update with mock data */}
-      <select id="diet" name="diet"
+      <Field as="select" id="diet" name="diet"
       className="border">
         <option value="French">French</option>
         <option value="Jamaican">Jamaican</option>
-      </select>
+      </Field>
       <label className="block" htmlFor="diet">Diet</label>
       { /* to update with mock data */}
-      <select id="diet" name="diet"
+      <Field as="select" id="diet" name="diet"
       className="border">
         <option value="Keto">Keto</option>
         <option value="Vegetarian">Vegetarian</option>
-      </select>
+      </Field>
       <label className="block" htmlFor="prep_time">Prep Time</label>
-      <input
+      <Field
         id="prep_time"
         name="prep_time"
         type="text"
@@ -82,13 +82,13 @@ function RecipeForm() {
       </FieldArray>
 
         <label className="block" htmlFor="instructions">Instructions</label>
-        <textarea
+        <Field as="textarea"
           id="instructions"
           name="instructions"
           className="border"
           />
         <label className="block" htmlFor="tags">Tags</label>
-        <input
+        <Field
           id="tags"
           name="tags"
           type="text"
