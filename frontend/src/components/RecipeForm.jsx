@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik } from "formik";
+import { FieldArray, Formik } from "formik";
 
 function RecipeForm() {
   const emptyIngredient = {
@@ -22,6 +22,7 @@ function RecipeForm() {
         console.log(values);
       }}
     >
+      {({ values }) => (
     <div>
       <form className="w-full max-w-lg">
         <div className="flex flex-wrap">
@@ -31,12 +32,14 @@ function RecipeForm() {
               id="name"
               name="name"
               type="text"
+              className="border"
               />
           </div>
           <div className="w-full">
             <label className="block" htmlFor="cuisine">Cuisine</label>
             { /* to update with mock data */}
-            <select id="diet" name="diet">
+            <select id="diet" name="diet"
+            className="border">
               <option value="French">French</option>
               <option value="Jamaican">Jamaican</option>
             </select>
@@ -44,7 +47,8 @@ function RecipeForm() {
           <div className="w-full">
             <label className="block" htmlFor="diet">Diet</label>
             { /* to update with mock data */}
-            <select id="diet" name="diet">
+            <select id="diet" name="diet"
+            className="border">
               <option value="Keto">Keto</option>
               <option value="Vegetarian">Vegetarian</option>
             </select>
@@ -55,14 +59,24 @@ function RecipeForm() {
             id="prep_time"
             name="prep_time"
             type="text"
+            className="border"
             />
           </div>
 
           <div className="w-full">
             <label className="block" htmlFor="ingredient">Ingredients</label>
-            <input name="measurement" placeholder="Measurement e.g. 50g" type="text" />
-            <input name="ingredient" placeholder="Ingredient name" type="text"/>
-            <button onClick={() => {}}>+</button> {/* for adding new ingredient input */}
+            <FieldArray name="ingredients">
+              {({ push, remove }) => {
+                <>
+                {values.ingredients.map((_ingredient, index) => {
+                  return (
+                    { /* Ingredient*/ }
+                  )
+                })}
+                <button>+</button>
+                </>
+              }}
+            </FieldArray>
           </div>
 
           <div className="w-full">
@@ -70,7 +84,7 @@ function RecipeForm() {
             <textarea
               id="instructions"
               name="instructions"
-              className="w-full"
+              className="w-full border"
               />
           </div>
           <div className="w-full">
@@ -79,6 +93,7 @@ function RecipeForm() {
             id="tags"
             name="tags"
             type="text"
+            className="border"
             />
           </div>
 
@@ -86,6 +101,7 @@ function RecipeForm() {
         </div>
       </form>
     </div>
+      )}
     </Formik>
   );
 };
