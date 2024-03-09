@@ -1,23 +1,58 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
+import axios from "axios";
 
 function Register() {
+  const [inputs, setInputs] = useState({
+    name: "",
+    email: "",
+    password: ""
+  });
+
+  const {name, email, password} = inputs;
+
+  //Function to handle onChange for inputs
+  const handleOnChange = e => {
+    setInputs({...inputs, [e.target.name] : e.target.value})
+  };
+
+  // Function to handle onSubmit 
+  const onSubmitForm = async (e) => {
+    console.log("Form submitted")
+    e.preventDefault();
+
+    const body = {name, email, password};
+
+    try {
+      const response = await axios.post("http://localhost:3000/auth/register", body)
+      console.log(response.data);
+
+      //Save token in localStorge
+      localStorage.setItem("token", response.data.token);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
   return (
     <Fragment>
       <h1 className="text-5xl py-4">Register</h1>
 
-      <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={e => onSubmitForm(e)}>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="username"
+            htmlFor="name"
           >
-            Username
-          </label>
+            Name
+          </label> 
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="username"
+            id="name"
+            name="name"
             type="text"
-            placeholder="Username"
+            placeholder="Name"
+            value={name}
+            onChange={e => handleOnChange(e)}
           />
         </div>
 
@@ -32,7 +67,10 @@ function Register() {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="email"
             type="email"
+            name="email"
             placeholder="Email"
+            value={email}
+            onChange={e => handleOnChange(e)}
           />
         </div>
 
@@ -47,13 +85,16 @@ function Register() {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="password"
             type="password"
+            name="password"
             placeholder="Password"
+            value={password}
+            onChange={e => handleOnChange(e)}
           />
         </div>
 
         <button
           className="border-black border-2 rounded-2xl py-2 px-4"
-          type="button"
+          type="submit"
         >
           Sign Up
         </button>
