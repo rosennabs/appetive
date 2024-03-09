@@ -2,6 +2,7 @@ const router = require("express").Router();
 const db = require("../db/connection");
 const bcrypt = require("bcrypt");
 const jwtGenerator = require("../utils/jwtGenerator")
+const authorization = require("../middleware/authorization")
 
 //Registering route
 
@@ -65,9 +66,17 @@ router.post("/login", async(req,res) => {
 
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Server Error");    
+    res.status(500).send("Server Error");
   }
+})
 
+router.get("/is-verify", authorization, async(req,res) => {
+  try {
+    res.json(true);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
 })
 
 module.exports = router;
