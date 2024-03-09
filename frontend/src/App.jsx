@@ -1,14 +1,12 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   Link,
-  useNavigate,
-  Navigate,
 } from "react-router-dom";
-import Login from "./components/login";
-import Register from "./components/register";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
