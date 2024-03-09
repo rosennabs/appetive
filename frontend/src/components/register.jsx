@@ -1,12 +1,15 @@
 import React, { Fragment, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
-function Register() {
+function Register( {setAuth} ) {
   const [inputs, setInputs] = useState({
     name: "",
     email: "",
     password: ""
   });
+
+  const navigate = useNavigate();
 
   const {name, email, password} = inputs;
 
@@ -15,8 +18,8 @@ function Register() {
     setInputs({...inputs, [e.target.name] : e.target.value})
   };
 
-  // Function to handle onSubmit 
-  const onSubmitForm = async (e) => {
+  // Function to handle onSubmit for signup
+  const handleOnSubmitForm = async (e) => {
     console.log("Form submitted")
     e.preventDefault();
 
@@ -28,6 +31,10 @@ function Register() {
 
       //Save token in localStorge
       localStorage.setItem("token", response.data.token);
+
+      setAuth(true);
+
+      navigate("/");
     } catch (error) {
       console.error(error.message);
     }
@@ -37,7 +44,7 @@ function Register() {
     <Fragment>
       <h1 className="text-5xl py-4">Register</h1>
 
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={e => onSubmitForm(e)}>
+      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleOnSubmitForm}>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
