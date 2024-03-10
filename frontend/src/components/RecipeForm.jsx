@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Form, FieldArray, Field, handleChange } from "formik";
+import { Formik, Form, FieldArray, Field } from "formik";
 
 function RecipeForm() {
   const emptyIngredient = {
@@ -11,40 +11,65 @@ function RecipeForm() {
   return (
     <Formik
       initialValues={{
-        ingredients: [emptyIngredient]
+        name: '',
+        cuisine: '',
+        diet: '',
+        prep_time: 0,
+        ingredients: [emptyIngredient],
+        instructions: ''
       }}
       onSubmit={(values) => {
         console.log(values);
       }}
     >
-    {({ values }) => (
+    {({ values, handleChange }) => (
      <Form>
+
       <label className="block" htmlFor="name">Recipe Name</label>
       <Field
         id="name"
         name="name"
         type="text"
+        value={values.name}
+        onChange={handleChange}
         className="border"
         />
+
       <label className="block" htmlFor="cuisine">Cuisine</label>
       { /* to update with mock data */}
-      <Field as="select" id="diet" name="diet"
-      className="border">
+      <Field
+        as="select"
+        id="diet"
+        name="diet"
+        value={values.cuisine}
+        onChange={handleChange}
+        className="border"
+      >
         <option value="French">French</option>
         <option value="Jamaican">Jamaican</option>
       </Field>
+
       <label className="block" htmlFor="diet">Diet</label>
       { /* to update with mock data */}
-      <Field as="select" id="diet" name="diet"
-      className="border">
+      <Field
+        as="select"
+        id="diet"
+        name="diet"
+        value={values.diet}
+        onChange={handleChange}
+        className="border"
+      >
         <option value="Keto">Keto</option>
         <option value="Vegetarian">Vegetarian</option>
       </Field>
+
       <label className="block" htmlFor="prep_time">Prep Time</label>
       <Field
         id="prep_time"
         name="prep_time"
         type="number"
+        value={values.prep_time}
+        onChange={handleChange}
         className="border"
         /> minutes
 
@@ -52,7 +77,7 @@ function RecipeForm() {
       <FieldArray name="ingredients">
         {({ push, remove }) => (
           <>
-            {values.ingredients.map((_ingredient, index) => {
+            {values.ingredients.map((ingredient, index) => {
               const startName = `ingredients[${index.toString()}]`;
 
               return (
@@ -61,12 +86,16 @@ function RecipeForm() {
                     name={`${startName}.quantity`}
                     type="text"
                     placeholder="50g"
+                    value={values.ingredients[index].quantity}
+                    onChange={handleChange}
                     className="border"
                   />
                   <Field
                     name={`${startName}.name`}
                     type="text"
                     placeholder="carrots"
+                    value={values.ingredients[index].name}
+                    onChange={handleChange}
                     className="border"
                   />
                   <button
@@ -90,15 +119,11 @@ function RecipeForm() {
         <Field as="textarea"
           id="instructions"
           name="instructions"
+          value={values.instructions}
+          onChange={handleChange}
           className="border"
           />
-        <label className="block" htmlFor="tags">Tags</label>
-        <Field
-          id="tags"
-          name="tags"
-          type="text"
-          className="border"
-          />
+
         <div>
           <button type="submit" className="px-2 bg-gray-200">Submit Recipe</button>
         </div>
