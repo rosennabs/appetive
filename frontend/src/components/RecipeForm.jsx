@@ -29,7 +29,7 @@ function RecipeForm() {
       }}
     >
     {({ values, handleChange, setFieldValue }) => (
-     <Form>
+      <Form>
 
       <label className="block" htmlFor="title">Recipe Name</label>
       <Field
@@ -145,14 +145,14 @@ function RecipeForm() {
         )}
       </FieldArray>
 
-        <label className="block" htmlFor="instructions">Instructions</label>
-        <Field as="textarea"
-          id="instructions"
-          name="instructions"
-          value={values.instructions}
-          onChange={handleChange}
-          className="border"
-          />
+      <label className="block" htmlFor="instructions">Instructions</label>
+      <Field as="textarea"
+        id="instructions"
+        name="instructions"
+        value={values.instructions}
+        onChange={handleChange}
+        className="border"
+      />
 
       <fieldset>
         <legend>Nutritional Information</legend>
@@ -212,8 +212,8 @@ function RecipeForm() {
         <div>
           <button type="submit" className="px-2 bg-gray-200">Submit Recipe</button>
         </div>
-       </Form>
-      )}
+      </Form>
+    )}
     </Formik>
   );
 };
