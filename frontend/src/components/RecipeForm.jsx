@@ -31,7 +31,7 @@ function RecipeForm() {
     {({ values, handleChange, setFieldValue }) => (
       <Form>
 
-      <label className="block" htmlFor="title">Recipe Name</label>
+      <label className="block" htmlFor="title">Recipe Title</label>
       <Field
         id="title"
         name="title"
