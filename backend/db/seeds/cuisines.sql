@@ -1,9 +1,9 @@
 INSERT INTO
   cuisines (name)
 VALUES
-  ('french');
+  ('French');
 
 INSERT INTO
   cuisines (name)
 VALUES
-  ('german');
+  ('German');
