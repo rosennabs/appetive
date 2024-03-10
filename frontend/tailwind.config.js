@@ -16,11 +16,14 @@ module.exports = {
       black: colors.black,
       white: colors.white,
       gray: colors.gray,
-      amber: colors.amber
+      amber: colors.amber,
     },
     fontFamily: {
       sans: ["Graphik", "sans-serif"],
       serif: ["Merriweather", "serif"],
+    },
+    container: {
+      center: true,
     },
     extend: {
       spacing: {

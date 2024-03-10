@@ -1,13 +1,12 @@
 
-import MealCategoriesList from '../components/MealCategoriesList.jsx'
+import RecipesList from '../components/RecipesList.jsx'
 
 export default function HomePage() {
 
   return (
     <div>
-      <h1>Nav will go here! </h1>
 
-      <MealCategoriesList />
+      <RecipesList />
 
     </div>
   )
