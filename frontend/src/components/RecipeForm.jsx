@@ -3,7 +3,7 @@ import { Formik, Form, FieldArray, Field } from "formik";
 
 function RecipeForm() {
   const emptyIngredient = {
-    quantity: "",
+    measurement: "",
     name: ""
   }
 
@@ -113,10 +113,10 @@ function RecipeForm() {
               return (
                 <div key={`ingredient-${index.toString()}`}>
                   <Field
-                    name={`${startName}.quantity`}
+                    name={`${startName}.measurement`}
                     type="text"
                     placeholder="50g"
-                    value={values.ingredients[index].quantity}
+                    value={values.ingredients[index].measurement}
                     onChange={handleChange}
                     className="border"
                   />
