@@ -14,7 +14,7 @@ CREATE TABLE
     image TEXT NOT NULL,
     prep_time INTEGER NOT NULL,
     instructions TEXT NOT NULL,
-    protiens VARCHAR(255),
+    proteins VARCHAR(255),
     fats VARCHAR(255),
     carbs VARCHAR(255),
     number_of_servings INTEGER,
