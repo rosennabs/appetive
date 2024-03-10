@@ -11,26 +11,32 @@ function RecipeForm() {
   return (
     <Formik
       initialValues={{
-        name: '',
+        title: '',
         cuisine: '',
         diet: '',
+        meal_type: '',
         prep_time: 0,
         ingredients: [emptyIngredient],
-        instructions: ''
+        instructions: '',
+        proteins: '',
+        fats: '',
+        carbs: '',
+        number_of_servings: 0,
+        calories: 0
       }}
       onSubmit={(values) => {
         console.log(values);
       }}
     >
-    {({ values, handleChange }) => (
+    {({ values, handleChange, setFieldValue }) => (
      <Form>
 
-      <label className="block" htmlFor="name">Recipe Name</label>
+      <label className="block" htmlFor="title">Recipe Name</label>
       <Field
-        id="name"
-        name="name"
+        id="title"
+        name="title"
         type="text"
-        value={values.name}
+        value={values.title}
         onChange={handleChange}
         className="border"
         />
@@ -63,6 +69,20 @@ function RecipeForm() {
         <option value="Vegetarian">Vegetarian</option>
       </Field>
 
+      <label className="block" htmlFor="meal_type">Meal Type</label>
+      { /* to update with mock data */}
+      <Field
+        as="select"
+        id="meal_type"
+        name="meal_type"
+        value={values.meal_type}
+        onChange={handleChange}
+        className="border"
+      >
+        <option value="Breakfast">Breakfast</option>
+        <option value="Lunch">Lunch</option>
+      </Field>
+
       <label className="block" htmlFor="prep_time">Prep Time</label>
       <Field
         id="prep_time"
@@ -72,6 +92,16 @@ function RecipeForm() {
         onChange={handleChange}
         className="border"
         /> minutes
+
+      <label className="block" htmlFor="number_of_servings">Number of Servings</label>
+      <Field
+        id="number_of_servings"
+        name="number_of_servings"
+        type="number"
+        value={values.number_of_servings}
+        onChange={handleChange}
+        className="border"
+      />
 
       <label className="block" htmlFor="ingredients">Ingredients</label>
       <FieldArray name="ingredients">
@@ -124,6 +154,61 @@ function RecipeForm() {
           className="border"
           />
 
+      <fieldset>
+        <legend>Nutritional Information</legend>
+
+        <label className="inline" htmlFor="proteins">Protein</label>
+        <Field
+          id="proteins"
+          name="proteins"
+          type="text"
+          value={values.proteins}
+          onChange={handleChange}
+          className="border"
+          />
+        <label className="inline" htmlFor="fats">Fats</label>
+        <Field
+          id="fats"
+          name="fats"
+          type="text"
+          value={values.fats}
+          onChange={handleChange}
+          className="border"
+          />
+        <label className="inline" htmlFor="carbs">Carbs</label>
+        <Field
+          id="carbs"
+          name="carbs"
+          type="text"
+          value={values.carbs}
+          onChange={handleChange}
+          className="border"
+          />
+        
+        <br />
+
+        <label className="inline" htmlFor="calories">Calories</label>
+        <Field
+          id="calories"
+          name="calories"
+          type="number"
+          value={values.calories}
+          onChange={handleChange}
+          className="border"
+          />
+      </fieldset>
+
+      <label className="block" htmlFor="image">Upload Image</label>
+      <input
+        id="image"
+        name="image"
+        type="file"
+        value={values.image}
+        onChange={(event) => {
+          setFieldValue("file", event.currentTarget.files[0]);
+        }}
+        className="border"
+        />
         <div>
           <button type="submit" className="px-2 bg-gray-200">Submit Recipe</button>
         </div>
