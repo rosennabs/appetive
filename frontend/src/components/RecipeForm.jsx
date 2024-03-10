@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Form, FieldArray, Field } from "formik";
+import { Formik, Form, FieldArray, Field, handleChange } from "formik";
 
 function RecipeForm() {
   const emptyIngredient = {
@@ -53,7 +53,7 @@ function RecipeForm() {
         {({ push, remove }) => (
           <>
             {values.ingredients.map((_ingredient, index) => {
-              const startName = `ingredient[${index.toString()}]`;
+              const startName = `ingredients[${index.toString()}]`;
 
               return (
                 <div key={`ingredient-${index.toString()}`}>
