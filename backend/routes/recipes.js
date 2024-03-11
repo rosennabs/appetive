@@ -1,13 +1,20 @@
 const router = require("express").Router();
 const db = require("../db/connection");
+const { getRecipes } = require("../db/queries/recipes");
 
-router.get("/", async (req, res) => {
+router.get("/", async (_req, res) => {
   try {
-    const allRecipes = await db.query(`SELECT * FROM recipes;`);
-    res.status(200).json(allRecipes.rows);
+    const allRecipes = await getRecipes();
+    if ("message" in allRecipes) {
+      // No recipes found
+      res.status(404).json(allRecipes);
+    } else {
+      // Recipes found, return the array
+      res.status(200).json(allRecipes);
+    }
   } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Server error");
+    console.error("Error in api/recipes route:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
