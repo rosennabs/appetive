@@ -22,6 +22,9 @@ export const NavLink = styled(Link)`
     padding: 0 1rem;
     height: 100%;
     cursor: pointer;
+    &:hover {
+      color: #000000;
+    }
     &.active {
         color: #000000;
     }
@@ -29,7 +32,7 @@ export const NavLink = styled(Link)`
 
 export const Bars = styled(FaBars)`
     display: none;
-    color: #808080;
+    color: #decece;
     @media screen and (max-width: 768px) {
         display: block;
         position: absolute;
@@ -70,7 +73,7 @@ export const NavBtn = styled.nav`
 
 export const NavBtnLink = styled(Link)`
     border-radius: 4px;
-    background: #808080;
+    background: #decece;
     padding: 10px 22px;
     color: #000000;
     outline: none;
