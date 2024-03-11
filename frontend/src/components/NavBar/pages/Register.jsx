@@ -42,7 +42,7 @@ function Register( {setAuth} ) {
 
   return (
     <Fragment>
-      <h1 className="text-5xl py-4 mx-auto text-center">Register</h1>
+      <h1 className="text-5xl py-10 mx-auto text-center">Register</h1>
 
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto max-w-lg justify-self-center" onSubmit={handleOnSubmitForm}>
         <div className="mb-4">
