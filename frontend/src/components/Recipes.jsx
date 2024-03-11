@@ -10,9 +10,6 @@ export default function Recipe() {
 
   return (
     <div>
-      <h2 className="border-b-2 border-black text-center uppercase text-xl font-bold mb-4 pb-2">
-        Recipes
-      </h2>
 
       <section className="md:container max-w-screen-xl mx-auto flex flex-wrap justify-between">
         {recipes && recipes.map(recipe => (

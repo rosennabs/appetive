@@ -34,25 +34,31 @@ export default function SearchQuestions() {
 
   const renderOptions = (fieldName, optionsArray, showBackButton, handleChange, values) => {
     return (
-      <div>
+      <>
+      <div className="grid grid-cols-4 gap-4 md:grid-cols-4">
         {optionsArray.map(option => (
-          <div key={option}>
-            <label>
+          <div key={option} className="flex items-center">
+            <label className="flex items-center space-x-2">
               <Field
                 type="checkbox"
                 name={fieldName}
                 value={option}
                 checked={values[fieldName].includes(option)}
                 onChange={handleChange}
+                className="form-checkbox h-5 w-5 text-gray-600"
 
               />
-              {option}
+              <span className="ml-2">{option}</span>
             </label>
           </div>
         ))}
-        {showBackButton && <button type="button" onClick={handlePrevQuestion}>Back</button>}
-        {question < 5 && <button type="button" onClick={handleNextQuestion}>Next</button>}
-      </div>
+        </div>
+        <div className="flex justify-center mt-16 mb-16">
+          {showBackButton && <button type="button" onClick={handlePrevQuestion} className="hover:bg-amber-200 border-2 border-amber-700 text-black font-bold py-1 px-10 rounded-full mr-4">Back</button>}
+          {question < 5 && <button type="button" onClick={handleNextQuestion} className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-1 px-10 rounded-full mr-4">Next</button>}
+          {question === 5 && <button type="submit" className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-1 px-10 rounded-full mr-4">Search</button>}
+        </div>
+        </>
     ); 
   };
 
@@ -107,7 +113,6 @@ export default function SearchQuestions() {
             <>
             <h1 className="font-bold text-3xl mb-4  text-amber-700 text-center">What calorie range would you prefer?</h1>
             {renderOptions("calories", calories, true, handleChange, values)}
-            <button type="submit">Search</button>
             </>
           }
            
