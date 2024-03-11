@@ -1,41 +1,31 @@
-import React, { useState, useContext } from 'react';
-import { AppDataContext } from '../contexts/AppDataContext'; 
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 
 
-
-export default function SearchQuestions() {
-   //Access recipes from state
-  const { state } = useContext(AppDataContext);
-  const { recipes } = state;
-  console.log(recipes);
-
-  const [question, setQuestion] = useState(1);
-
-  const options = {
+const options = {
 
   cuisines: [
-    { label: 'Cajun', value: 'Cajun', image: ''},
-    { label: 'Asian', value: 'Asian', image: ''},
-    { label: 'Mexican', value: 'Mexican', image: ''}
+    { label: 'African', value: 'African'},
+    { label: 'Asian', value: 'Asian' },
+    { label: 'American', value: 'American' }
   ],
 
-  dishTypes: [
-    { label: 'main course', value: 'main course', image: '' },
-    { label: 'side dish', value: 'side dish', image: '' },
-    { label: 'dessert', value: 'dessert', image: '' }
+  mealTypes: [
+    { label: 'main course', value: 'main course' },
+    { label: 'side dish', value: 'side dish' },
+    { label: 'dessert', value: 'dessert' }
   ],
 
   diets: [
-    { label: 'Ketogenic', value: 'Ketogenic', image: '' },
-    { label: 'Vegetarian', value: 'Vegetarian', image: '' },
-    { label: 'Lacto-Vegetarian', value: 'Lacto-Vegetarian', image: '' }
+    { label: 'Ketogenic', value: 'Ketogenic' },
+    { label: 'Vegetarian', value: 'Vegetarian' },
+    { label: 'Lacto-Vegetarian', value: 'Lacto-Vegetarian' }
   ],
 
   allergies: [
-    { label: 'Dairy', value: 'Dairy', image: '' },
-    { label: 'Peanut', value: 'Peanut', image: '' },
-    { label: 'Seafood', value: 'Seafood', image: '' }
+    { label: 'Dairy', value: 'Dairy' },
+    { label: 'Peanut', value: 'Peanut' },
+    { label: 'Seafood', value: 'Seafood' }
   ],
 
   calories: [
@@ -53,9 +43,13 @@ export default function SearchQuestions() {
   // ];
 }
 
+
+export default function SearchQuestions() {
+  const [question, setQuestion] = useState(1);
+
   const initialValues={
     cuisines: [],
-    dishTypes: [],
+    mealTypes: [],
     diets: [],
     allergies: [],
     calories: [],
@@ -73,13 +67,7 @@ export default function SearchQuestions() {
   const renderOptions = (fieldName, optionsArray, showBackButton, handleChange, values) => {
     return (
       <div>
-        {optionsArray.map(option => {
-           if (fieldName === "cuisines") {
-          //Find image for the current cuisine
-          const image = recipes.find(recipe => 
-            recipe.information?.cuisines.includes(option.value))?.image;
-            
-          return (
+        {optionsArray.map(option => (
           <div key={option.value}>
             <label>
               <Field
@@ -90,30 +78,10 @@ export default function SearchQuestions() {
                 onChange={handleChange}
 
               />
-                {option.label}
-                {image && <img src={image} alt={option.label} />}
+              {option.label}
             </label>
           </div>
-        );
-            } else {
-          // For fields other than "cuisines", render the option without checking for image
-          return (
-            <div key={option.value}>
-              <label>
-                <Field
-                  type="checkbox"
-                  name={fieldName}
-                  value={option.value}
-                  checked={values[fieldName].includes(option.value)}
-                  onChange={handleChange}
-                />
-                {option.label}
-              </label>
-            </div>
-          );
-        }
-             
-        })}
+        ))}
         {showBackButton && <button type="button" onClick={handlePrevQuestion}>Back</button>}
         {question < 5 && <button type="button" onClick={handleNextQuestion}>Next</button>}
       </div>
@@ -149,7 +117,7 @@ export default function SearchQuestions() {
           {question === 2 &&
             <>
             <h1 className="font-bold text-3xl mb-4  text-amber-700 text-center">Which meal type would you love to make?</h1>
-            {renderOptions("dishTypes", options.dishTypes, true, handleChange, values)}
+            {renderOptions("mealTypes", options.mealTypes, true, handleChange, values)}
             </>
           }
 
