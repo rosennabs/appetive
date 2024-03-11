@@ -23,7 +23,7 @@ export const NavLink = styled(Link)`
     height: 100%;
     cursor: pointer;
     &:hover {
-      color: #000000;
+        color: #000000;
     }
     &.active {
         color: #000000;
@@ -52,12 +52,11 @@ export const NavMenu = styled.div`
     /* margin-right: 24px; */
     /* Third Nav */
     /* width: 100vw;
-  white-space: nowrap; */
+    white-space: nowrap; */
     @media screen and (max-width: 768px) {
         display: none;
     }
 `;
-
 
 export const NavBtn = styled.nav`
     display: flex;
@@ -65,7 +64,7 @@ export const NavBtn = styled.nav`
     margin-right: 24px;
     /* Third Nav */
     /* justify-content: flex-end;
-  width: 100vw; */
+    width: 100vw; */
     @media screen and (max-width: 768px) {
         display: none;
     }
