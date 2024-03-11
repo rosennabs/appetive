@@ -42,7 +42,7 @@ const useAppData = () => {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get(
-          `https://api.spoonacular.com/recipes/complexSearch?apiKey=18acf857f3d54a4dabd1d5c48a11f433&number=3&cuisine=${cuisines}`
+          `https://api.spoonacular.com/recipes/complexSearch?apiKey=18acf857f3d54a4dabd1d5c48a11f433&number=4&cuisine=${cuisines}`
         );
 
         

@@ -82,7 +82,7 @@ export default function SearchQuestions() {
 
           {question === 1 &&
             <>
-            <h1 className="font-bold text-3xl mb-4  text-amber-700 text-center">Which cuisines most interests you?</h1>
+            <h1 className="font-bold text-3xl mb-8  text-amber-700 text-center">Which types of cuisine are you most interested in?</h1>
             {renderOptions("cuisines", cuisines, false, handleChange, values)}
             
             </>
@@ -90,28 +90,28 @@ export default function SearchQuestions() {
 
           {question === 2 &&
             <>
-            <h1 className="font-bold text-3xl mb-4  text-amber-700 text-center">Which meal type would you love to make?</h1>
+            <h1 className="font-bold text-3xl mb-8  text-amber-700 text-center">What kind of meal would you like to prepare?</h1>
             {renderOptions("dishTypes", dishTypes, true, handleChange, values)}
             </>
           }
 
           {question === 3 &&
             <>
-            <h1 className="font-bold text-3xl mb-4  text-amber-700 text-center">Do you have any dietiary preference?</h1>
+            <h1 className="font-bold text-3xl mb-8  text-amber-700 text-center">Do you have any specific dietary preferences?</h1>
             {renderOptions("diets", diets, true, handleChange, values)}
             </>
           }
 
           {question === 4 &&
             <>
-            <h1 className="font-bold text-3xl mb-4  text-amber-700 text-center">Do you have any food allergies?</h1>
+            <h1 className="font-bold text-3xl mb-8  text-amber-700 text-center">Are there any food allergies you need to consider?</h1>
             {renderOptions("allergies", allergies, true, handleChange, values)}
             </>
           }
 
           {question === 5 &&
             <>
-            <h1 className="font-bold text-3xl mb-4  text-amber-700 text-center">What calorie range would you prefer?</h1>
+            <h1 className="font-bold text-3xl mb-8  text-amber-700 text-center">What calorie range would you like your meals to fall within?</h1>
             {renderOptions("calories", calories, true, handleChange, values)}
             </>
           }

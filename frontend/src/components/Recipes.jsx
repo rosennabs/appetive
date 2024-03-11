@@ -14,12 +14,12 @@ export default function Recipe() {
       <section className="md:container max-w-screen-xl mx-auto flex flex-wrap justify-between">
         {recipes && recipes.map(recipe => (
           
-          <div key={recipe.id} className="w-1/3 p-4 mb-4">
+          <div key={recipe.id} className="w-1/4 p-4 mb-4">
 
-            <img src={recipe.image} alt="Regular food" className="mx-auto m-2 w-full h-64 object-cover" />
-            <p className="mx-auto max-w-xs uppercase font-bold text-amber-700">{recipe.title}</p>
-            
-            {recipe.information && <a className="uppercase font-serif text-xs hover:text-amber-700" href={recipe.information.sourceUrl}> {recipe.information.creditsText} </a>}
+            <img src={recipe.image} alt="Regular food" className="mx-auto m-2 w-full h-38 object-cover" />
+            <p className="mx-auto max-w-xs text-xs text-center font-bold text-amber-700">{recipe.title}</p>
+{/*             
+            {recipe.information && <a className="uppercase font-serif text-center text-xs text-gray-500 hover:text-amber-700" href={recipe.information.sourceUrl}> {recipe.information.creditsText} </a>} */}
             
             
 
