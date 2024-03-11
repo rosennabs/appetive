@@ -1,6 +1,10 @@
 const router = require("express").Router();
 const db = require("../db/connection");
-const { getRecipes, getRecipeById } = require("../db/queries/recipes");
+const {
+  getRecipes,
+  getRecipeById,
+  getReviewsByRecipeId,
+} = require("../db/queries/recipes");
 
 router.get("/", async (_req, res) => {
   try {
@@ -46,17 +50,15 @@ router.get("/:id/reviews", async (req, res) => {
     if (!recipeId) {
       return res.status(400).json("Invalid recipe ID");
     }
-    const reviews = await db.query(
-      `SELECT * FROM reviews WHERE recipe_id = $1`,
-      [recipeId]
-    );
+    const reviews = await getReviewsByRecipeId(recipeId);
 
-    // Check if reviews exist
-    if (reviews.rows.length === 0) {
-      return res.status(404).json("No reviews found");
+    if ("message" in reviews) {
+      // No reviews found for the recipe
+      res.status(404).json(reviews);
+    } else {
+      // Reviews found, return the array
+      res.status(200).json(reviews);
     }
-
-    res.status(200).json(reviews.rows);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error");
