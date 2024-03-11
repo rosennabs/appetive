@@ -11,8 +11,16 @@ const RecipeDetails = function ({ id }) {
         const recipeResponse = await axios.get(
           `http://localhost:3000/api/recipes/5`
         );
+        console.log(recipeResponse);
         const recipeData = recipeResponse.data;
         console.log(recipeData);
+
+        // Check if response is ok
+        if (recipeResponse.status === 200) {
+          setRecipeDetails(recipeData);
+        } else {
+          console.error("Error fetching recipe:", recipeData);
+        }
       } catch (error) {
         console.error("Error", error.message);
       }
