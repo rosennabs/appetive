@@ -33,7 +33,25 @@ const getRecipeById = async function (recipe_id) {
   }
 };
 
+const getReviewsByRecipeId = async function (recipe_id) {
+  try {
+    const queryString = `SELECT * FROM reviews WHERE recipe_id = $1;`;
+    const queryParams = [recipe_id];
+    const reviews = await db.query(queryString, queryParams);
+
+    if (reviews.rows.length === 0) {
+      return { message: "No reviews found" };
+    }
+
+    return reviews.rows;
+  } catch (error) {
+    console.error("Error in getReviewsByRecipeId:", error.message);
+    throw error;
+  }
+};
+
 module.exports = {
   getRecipes,
   getRecipeById,
+  getReviewsByRecipeId,
 };
