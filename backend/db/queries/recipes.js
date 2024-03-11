@@ -50,6 +50,16 @@ const getReviewsByRecipeId = async function (recipe_id) {
   }
 };
 
+const addRecipe = async function(recipe) {
+  // should insert to table
+  try {
+
+  } catch (error) {
+    console.error("Error in addRecipe:", error.message);
+    throw error;
+  }
+};
+
 module.exports = {
   getRecipes,
   getRecipeById,
