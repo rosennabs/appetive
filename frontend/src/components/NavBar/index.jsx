@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Login from "../Login";
 import Register from "../Regsiter";
+import axios from "axios";
 
 import {
   Nav,
@@ -19,10 +20,30 @@ function NavBar() {
     setIsAuthenticated(boolean);
   };
 
-  const handleLogout = () => {
+  const handleLogout = (e) => {
+    e.preventDefault();
     localStorage.clear();
     setAuth(false);
   };
+
+  // Keep user login status and set 'setAuth' to 'true' upon page refresh
+  const isAuth = async() => {
+    try {
+      const headers = {
+        token: localStorage.token
+      }
+      const response = await axios.get("http://localhost:3000/auth/is-verify", {headers})
+      // console.log(response.data); //true
+
+      response.data === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }  
+
+  useEffect(() => {
+    isAuth();
+  });
 
   return (
     <>
@@ -46,7 +67,7 @@ function NavBar() {
           ) : (
             <>
               <p>Logged In</p>
-              <NavBtn onClick={handleLogout}>LOGOUT</NavBtn>
+              <NavBtn onClick={e => handleLogout(e)}>LOGOUT</NavBtn>
             </>
           )}
         </NavBtn>
