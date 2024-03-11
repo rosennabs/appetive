@@ -7,7 +7,6 @@ const pool = require("./db/connection");
 app.use(cors()); // enable CORS for all routes
 app.use(express.json()); //access req.body
 
-
 // TEST ROUTE with Postman
 // app.get("/users", async(req, res) => {
 //   try {
@@ -18,7 +17,10 @@ app.use(express.json()); //access req.body
 // });
 
 // Register and login routes
-app.use("/auth", require("./routes/jwtAuth"))
+app.use("/auth", require("./routes/jwtAuth"));
+
+//Recipes routes
+app.use("/api/recipes", require("./routes/recipes"));
 
 app.listen(3000, () => {
   console.log("Server has started on port 3000");
