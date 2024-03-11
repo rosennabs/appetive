@@ -6,7 +6,7 @@ import axios from "axios";
 const SET_RECIPES = "SET_RECIPES";
 
 //List of supported cuisines
-const cuisines = "African, Asian, American, British, Cajun, Caribbean, Chinese, Eastern European, European, French, German, Greek, Indian, Irish, Italian, Japanese, Jewish, Korean"
+const cuisines = "African, Asian, American, British, Cajun, Caribbean, Chinese, Eastern European, European, French, German, Greek, Indian, Irish, Italian, Japanese, Jewish, Korean, Latin American, Mediterranean, Mexican, Middle Eastern, Nordic, Southern, Spanish, Thai,Vietnamese"
 
 //Initial state
 export const initialState = {
@@ -42,7 +42,7 @@ const useAppData = () => {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get(
-          "https://api.spoonacular.com/recipes/complexSearch?apiKey=e2618c54ce47421791292129bc572c06&number=3"
+          `https://api.spoonacular.com/recipes/complexSearch?apiKey=18acf857f3d54a4dabd1d5c48a11f433&number=3&cuisine=${cuisines}`
         );
 
         
@@ -74,7 +74,7 @@ const useAppData = () => {
 
             // Fetch recipe information for the current recipe using id
             const response = await axios.get(
-              `https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=e2618c54ce47421791292129bc572c06&instructionsRequired=true&includeNutrition=true&includeInstructions=true`
+              `https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=18acf857f3d54a4dabd1d5c48a11f433&instructionsRequired=true&includeNutrition=true&includeInstructions=true`
             );
           
             // Add recipe information to the current recipe

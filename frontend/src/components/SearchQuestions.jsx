@@ -10,22 +10,17 @@ export default function SearchQuestions() {
   const { recipes } = state;
   console.log(recipes);
 
-  // recipes.map((recipe) => {
-  //   if (recipe.information)
-  // })
-  
-
   const [question, setQuestion] = useState(1);
 
   const options = {
 
   cuisines: [
-    { label: 'African', value: 'African', image: ''},
+    { label: 'Cajun', value: 'Cajun', image: ''},
     { label: 'Asian', value: 'Asian', image: ''},
-    { label: 'American', value: 'American', image: ''}
+    { label: 'Mexican', value: 'Mexican', image: ''}
   ],
 
-  mealTypes: [
+  dishTypes: [
     { label: 'main course', value: 'main course', image: '' },
     { label: 'side dish', value: 'side dish', image: '' },
     { label: 'dessert', value: 'dessert', image: '' }
@@ -60,7 +55,7 @@ export default function SearchQuestions() {
 
   const initialValues={
     cuisines: [],
-    mealTypes: [],
+    dishTypes: [],
     diets: [],
     allergies: [],
     calories: [],
@@ -78,7 +73,13 @@ export default function SearchQuestions() {
   const renderOptions = (fieldName, optionsArray, showBackButton, handleChange, values) => {
     return (
       <div>
-        {optionsArray.map(option => (
+        {optionsArray.map(option => {
+           if (fieldName === "cuisines") {
+          //Find image for the current cuisine
+          const image = recipes.find(recipe => 
+            recipe.information?.cuisines.includes(option.value))?.image;
+            
+          return (
           <div key={option.value}>
             <label>
               <Field
@@ -89,10 +90,30 @@ export default function SearchQuestions() {
                 onChange={handleChange}
 
               />
-              {option.label}
+                {option.label}
+                {image && <img src={image} alt={option.label} />}
             </label>
           </div>
-        ))}
+        );
+            } else {
+          // For fields other than "cuisines", render the option without checking for image
+          return (
+            <div key={option.value}>
+              <label>
+                <Field
+                  type="checkbox"
+                  name={fieldName}
+                  value={option.value}
+                  checked={values[fieldName].includes(option.value)}
+                  onChange={handleChange}
+                />
+                {option.label}
+              </label>
+            </div>
+          );
+        }
+             
+        })}
         {showBackButton && <button type="button" onClick={handlePrevQuestion}>Back</button>}
         {question < 5 && <button type="button" onClick={handleNextQuestion}>Next</button>}
       </div>
@@ -128,7 +149,7 @@ export default function SearchQuestions() {
           {question === 2 &&
             <>
             <h1 className="font-bold text-3xl mb-4  text-amber-700 text-center">Which meal type would you love to make?</h1>
-            {renderOptions("mealTypes", options.mealTypes, true, handleChange, values)}
+            {renderOptions("dishTypes", options.dishTypes, true, handleChange, values)}
             </>
           }
 
