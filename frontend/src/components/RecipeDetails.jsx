@@ -9,7 +9,7 @@ const RecipeDetails = function ({ id }) {
       try {
         // Fetch recipe details
         const recipeResponse = await axios.get(
-          `http://localhost:3000/api/recipes/5`
+          `http://localhost:3000/api/recipes/6`
         );
         console.log(recipeResponse);
         const recipeData = recipeResponse.data;
@@ -29,7 +29,18 @@ const RecipeDetails = function ({ id }) {
     fetchRecipe();
   }, [id]);
 
-  return <h1>Recipe Details Page</h1>;
+  return (
+    <div>
+      <h1>{recipeDetails.title}</h1>
+      <img src={recipeDetails.image} alt="" />
+      <p>Instructions: {recipeDetails.instructions}</p>
+      <p>No. of servings: {recipeDetails.number_of_servings}</p>
+      <p>Preparation time: {recipeDetails.prep_time} minutes</p>
+      <p>Proteins: {recipeDetails.proteins}</p>
+      <p>Carbs: {recipeDetails.carbs}</p>
+      <p>Fats: {recipeDetails.fats}</p>
+    </div>
+  );
 };
 
 export default RecipeDetails;
