@@ -5,9 +5,13 @@ import axios from "axios";
 // Define action types as constants
 const SET_RECIPES = "SET_RECIPES";
 
+//List of supported cuisines
+const cuisines = "African, Asian, American, British, Cajun, Caribbean, Chinese, Eastern European, European, French, German, Greek, Indian, Irish, Italian, Japanese, Jewish, Korean"
+
 //Initial state
 export const initialState = {
   recipes: [],
+  cuisines: []
 };
 
 //Define the reducer function to update state
@@ -38,7 +42,7 @@ const useAppData = () => {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get(
-          "https://api.spoonacular.com/recipes/complexSearch?apiKey=e2618c54ce47421791292129bc572c06&number=6"
+          "https://api.spoonacular.com/recipes/complexSearch?apiKey=e2618c54ce47421791292129bc572c06&number=3"
         );
 
         
