@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const db = require("../db/connection");
-const { getRecipes } = require("../db/queries/recipes");
+const { getRecipes, getRecipeById } = require("../db/queries/recipes");
 
 router.get("/", async (_req, res) => {
   try {
@@ -24,16 +24,16 @@ router.get("/:id", async (req, res) => {
     if (!recipeId) {
       return res.status(400).json("Invalid recipe ID");
     }
-    const recipe = await db.query(`SELECT * FROM recipes WHERE id = $1`, [
-      recipeId,
-    ]);
 
-    // Check if recipe exists
-    if (recipe.rows.length === 0) {
-      return res.status(404).json("Recipe not found");
+    const recipe = await getRecipeById(recipeId);
+
+    if ("message" in recipe) {
+      // Recipe not found
+      res.status(404).json(recipe);
+    } else {
+      // Recipe found
+      res.status(200).json(recipe);
     }
-
-    res.status(200).json(recipe.rows[0]);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error");
