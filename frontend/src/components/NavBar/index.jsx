@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Route, Routes } from "react-router-dom";
-import { Nav, NavLink, NavMenu, NavBtn, Bars, NavBtnLink, } from "./NavBarElements";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  Nav,
+  NavLink,
+  NavMenu,
+  NavBtn,
+  Bars,
+  NavBtnLink,
+} from "./NavBarElements";
 import axios from "axios";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
 import { FaAngleDoubleDown } from "react-icons/fa";
-
 
 function NavBar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -22,27 +28,31 @@ function NavBar() {
   };
 
   // Keep user login status and set 'setAuth' to 'true' upon page refresh
-  const isAuth = async() => {
+  const isAuth = async () => {
     try {
       const token = localStorage.token;
 
       // Set isAuthenticated to false if token doesn't exist
       if (!token) {
-        setIsAuthenticated(false); 
-        return; 
+        setIsAuthenticated(false);
+        return;
       }
-      
+
       const headers = {
-        token: token
-      }
-      const response = await axios.get("http://localhost:3000/auth/is-verify", {headers})
+        token: token,
+      };
+      const response = await axios.get("http://localhost:3000/auth/is-verify", {
+        headers,
+      });
       // console.log(response.data); //true
 
-      response.data === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+      response.data === true
+        ? setIsAuthenticated(true)
+        : setIsAuthenticated(false);
     } catch (error) {
       console.log(error.message);
     }
-  }  
+  };
 
   useEffect(() => {
     isAuth();
@@ -50,7 +60,7 @@ function NavBar() {
 
   return (
     <>
-      <Bars/>
+      <Bars />
 
       <Nav>
         <NavMenu>
@@ -74,22 +84,24 @@ function NavBar() {
             </>
           ) : (
             <>
-              <p>Logged In</p><br></br>
-              <NavBtnLink onClick={e => handleLogout(e)}>LOGOUT</NavBtnLink>
+              <p>Logged In</p>
+              <NavBtnLink onClick={(e) => handleLogout(e)}>LOGOUT</NavBtnLink>
             </>
           )}
         </NavBtn>
       </Nav>
 
-      <img src={require("../../Images/header-img.jpg")} alt="Header Image" className="w-full h-80 object-cover filter brightness-75"/>
+      <img
+        src={require("../../Images/header-img.jpg")}
+        alt="Header Image"
+        className="w-full h-80 object-cover filter brightness-75"
+      />
 
       <Routes>
         <Route path="/login" element={<Login setAuth={setAuth} />} />
         <Route path="/register" element={<Register setAuth={setAuth} />} />
-        <Route path="/about" element={<About />}/>
+        <Route path="/about" element={<About />} />
       </Routes>
-
-
     </>
   );
 }
