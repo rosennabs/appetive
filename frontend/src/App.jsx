@@ -1,17 +1,10 @@
-import React, { Fragment, useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Link,
-} from "react-router-dom";
-
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import NavBar from "./components/NavBar";
 
 function App() {
-
   return (
-    <Fragment>
+    <>
       <Router>
         <NavBar />
 
@@ -22,7 +15,7 @@ function App() {
           </h1>
         </div>
       </Router>
-    </Fragment>
+    </>
   );
 }
 
