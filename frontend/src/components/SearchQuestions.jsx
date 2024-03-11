@@ -2,46 +2,15 @@ import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 
 
-const options = {
+const cuisines = ['African', 'Asian', 'American', 'British', 'Cajun', 'Caribbean', 'Chinese', 'Eastern European', 'European', 'French', 'German', 'Greek', 'Indian', 'Irish', 'Italian', 'Japanese', 'Jewish', 'Korean','Latin American', 'Mediterranean', 'Mexican', 'Middle Eastern', 'Nordic', 'Southern', 'Spanish', 'Thai', 'Vietnamese'];
 
-  cuisines: [
-    { label: 'African', value: 'African'},
-    { label: 'Asian', value: 'Asian' },
-    { label: 'American', value: 'American' }
-  ],
+const allergies = ['Dairy', 'Egg', 'Gluten', 'Grain', 'Peanut', 'Seafood', 'Sesame', 'Shellfish', 'Soy', 'Sulfite', 'Tree Nut', 'Wheat'];
 
-  mealTypes: [
-    { label: 'main course', value: 'main course' },
-    { label: 'side dish', value: 'side dish' },
-    { label: 'dessert', value: 'dessert' }
-  ],
+const diets = ['Ketogenic', 'Vegetarian', 'Lacto-Vegetarian', 'Ovo-Vegetarian', 'Vegan', 'Pescetarian', 'Paleo', 'Primal', 'Low FODMAP', 'Whole30'];
 
-  diets: [
-    { label: 'Ketogenic', value: 'Ketogenic' },
-    { label: 'Vegetarian', value: 'Vegetarian' },
-    { label: 'Lacto-Vegetarian', value: 'Lacto-Vegetarian' }
-  ],
+const dishTypes = ['main course', 'side dish', 'dessert', 'appetizer', 'salad', 'bread', 'breakfast', 'soup', 'beverage', 'sauce', 'marinade', 'fingerfood', 'snack', 'drink'];
 
-  allergies: [
-    { label: 'Dairy', value: 'Dairy' },
-    { label: 'Peanut', value: 'Peanut' },
-    { label: 'Seafood', value: 'Seafood' }
-  ],
-
-  calories: [
-    { label: "< 300", value: "< 300" },
-    { label: "300 - 499", value: "300 - 499" },
-    { label: "500 - 699", value: "500 - 699" },
-    { label: "700 - 1000", value: "700 - 1000" },
-    { label: "> 1000", value: "> 1000" }
-  ],
-
-  // const excludeIngredients: [
-  //   { label: 'Dairy', value: 'Dairy' },
-  //   { label: 'Peanut', value: 'Peanut' },
-  //   { label: 'Seafood', value: 'Seafood' }
-  // ];
-}
+const calories = ["< 300", "300 - 499", "500 - 699", "700 - 1000", "> 1000"]
 
 
 export default function SearchQuestions() {
@@ -49,11 +18,10 @@ export default function SearchQuestions() {
 
   const initialValues={
     cuisines: [],
-    mealTypes: [],
+    dishTypes: [],
     diets: [],
     allergies: [],
-    calories: [],
-    excludeIngredients: []
+    calories: []
   }
 
   const handleNextQuestion = () => {
@@ -68,17 +36,17 @@ export default function SearchQuestions() {
     return (
       <div>
         {optionsArray.map(option => (
-          <div key={option.value}>
+          <div key={option}>
             <label>
               <Field
                 type="checkbox"
                 name={fieldName}
-                value={option.value}
-                checked={values[fieldName].includes(option.value)}
+                value={option}
+                checked={values[fieldName].includes(option)}
                 onChange={handleChange}
 
               />
-              {option.label}
+              {option}
             </label>
           </div>
         ))}
@@ -109,7 +77,7 @@ export default function SearchQuestions() {
           {question === 1 &&
             <>
             <h1 className="font-bold text-3xl mb-4  text-amber-700 text-center">Which cuisines most interests you?</h1>
-            {renderOptions("cuisines", options.cuisines, false, handleChange, values)}
+            {renderOptions("cuisines", cuisines, false, handleChange, values)}
             
             </>
           }
@@ -117,28 +85,28 @@ export default function SearchQuestions() {
           {question === 2 &&
             <>
             <h1 className="font-bold text-3xl mb-4  text-amber-700 text-center">Which meal type would you love to make?</h1>
-            {renderOptions("mealTypes", options.mealTypes, true, handleChange, values)}
+            {renderOptions("dishTypes", dishTypes, true, handleChange, values)}
             </>
           }
 
           {question === 3 &&
             <>
             <h1 className="font-bold text-3xl mb-4  text-amber-700 text-center">Do you have any dietiary preference?</h1>
-            {renderOptions("diets", options.diets, true, handleChange, values)}
+            {renderOptions("diets", diets, true, handleChange, values)}
             </>
           }
 
           {question === 4 &&
             <>
             <h1 className="font-bold text-3xl mb-4  text-amber-700 text-center">Do you have any food allergies?</h1>
-            {renderOptions("allergies", options.allergies, true, handleChange, values)}
+            {renderOptions("allergies", allergies, true, handleChange, values)}
             </>
           }
 
           {question === 5 &&
             <>
             <h1 className="font-bold text-3xl mb-4  text-amber-700 text-center">What calorie range would you prefer?</h1>
-            {renderOptions("calories", options.calories, true, handleChange, values)}
+            {renderOptions("calories", calories, true, handleChange, values)}
             <button type="submit">Search</button>
             </>
           }
