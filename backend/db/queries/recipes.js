@@ -16,6 +16,24 @@ const getRecipes = async function () {
   }
 };
 
+const getRecipeById = async function (recipe_id) {
+  try {
+    const queryString = `SELECT * FROM recipes WHERE id = $1;`;
+    const queryParams = [recipe_id];
+    const recipe = await db.query(queryString, queryParams);
+
+    if (recipe.rows.length === 0) {
+      return { message: "Recipe not found" };
+    }
+
+    return recipe.rows[0];
+  } catch (error) {
+    console.error("Error in getRecipeById:", error.message);
+    throw error;
+  }
+};
+
 module.exports = {
   getRecipes,
+  getRecipeById,
 };
