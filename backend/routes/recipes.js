@@ -33,4 +33,27 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/:id/reviews", async (req, res) => {
+  try {
+    const recipeId = req.params.id;
+    if (!recipeId) {
+      return res.status(400).json("Invalid recipe ID");
+    }
+    const reviews = await db.query(
+      `SELECT * FROM reviews WHERE recipe_id = $1`,
+      [recipeId]
+    );
+
+    // Check if reviews exist
+    if (reviews.rows.length === 0) {
+      return res.status(404).json("No reviews found");
+    }
+
+    res.status(200).json(reviews.rows);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;
