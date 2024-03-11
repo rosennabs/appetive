@@ -11,4 +11,26 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const recipeId = req.params.id;
+    if (!recipeId) {
+      return res.status(400).json("Invalid recipe ID");
+    }
+    const recipe = await db.query(`SELECT * FROM recipes WHERE id = $1`, [
+      recipeId,
+    ]);
+
+    // Check if recipe exists
+    if (recipe.rows.length === 0) {
+      return res.status(404).json("Recipe not found");
+    }
+
+    res.status(200).json(recipe.rows[0]);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;
