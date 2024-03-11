@@ -1,32 +1,35 @@
 import React, { Fragment, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Register( {setAuth} ) {
+function Register({ setAuth }) {
   const [inputs, setInputs] = useState({
     name: "",
     email: "",
-    password: ""
+    password: "",
   });
 
   const navigate = useNavigate();
 
-  const {name, email, password} = inputs;
+  const { name, email, password } = inputs;
 
   //Function to handle onChange for inputs
-  const handleOnChange = e => {
-    setInputs({...inputs, [e.target.name] : e.target.value})
+  const handleOnChange = (e) => {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
   // Function to handle onSubmit for signup
   const handleOnSubmitForm = async (e) => {
-    console.log("Form submitted")
+    console.log("Form submitted");
     e.preventDefault();
 
-    const body = {name, email, password};
+    const body = { name, email, password };
 
     try {
-      const response = await axios.post("http://localhost:3000/auth/register", body)
+      const response = await axios.post(
+        "http://localhost:3000/auth/register",
+        body
+      );
       console.log(response.data);
 
       //Save token in localStorge
@@ -38,20 +41,23 @@ function Register( {setAuth} ) {
     } catch (error) {
       console.error(error.message);
     }
-  }
+  };
 
   return (
     <Fragment>
       <h1 className="text-5xl py-10 mx-auto text-center">Register</h1>
 
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto max-w-lg justify-self-center" onSubmit={handleOnSubmitForm}>
+      <form
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto max-w-lg justify-self-center"
+        onSubmit={handleOnSubmitForm}
+      >
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="name"
           >
             Name
-          </label> 
+          </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="name"
@@ -59,7 +65,7 @@ function Register( {setAuth} ) {
             type="text"
             placeholder="Name"
             value={name}
-            onChange={e => handleOnChange(e)}
+            onChange={(e) => handleOnChange(e)}
           />
         </div>
 
@@ -77,7 +83,7 @@ function Register( {setAuth} ) {
             name="email"
             placeholder="Email"
             value={email}
-            onChange={e => handleOnChange(e)}
+            onChange={(e) => handleOnChange(e)}
           />
         </div>
 
@@ -95,7 +101,7 @@ function Register( {setAuth} ) {
             name="password"
             placeholder="Password"
             value={password}
-            onChange={e => handleOnChange(e)}
+            onChange={(e) => handleOnChange(e)}
           />
         </div>
 
@@ -106,7 +112,6 @@ function Register( {setAuth} ) {
           Sign Up
         </button>
       </form>
-      
     </Fragment>
   );
 }

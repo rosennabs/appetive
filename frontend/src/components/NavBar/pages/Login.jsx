@@ -1,12 +1,11 @@
 import React, { Fragment, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Login({ setAuth }) {
-
-  const [ inputs, setInputs ] = useState({
+  const [inputs, setInputs] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const navigate = useNavigate();
@@ -15,18 +14,21 @@ function Login({ setAuth }) {
 
   //Function to handle onChange for inputs
   const handleOnChange = (e) => {
-    setInputs({...inputs, [e.target.name] : e.target.value})
-  }
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
+  };
 
   // Function to handle onSubmit for login
   const handleOnSubmitForm = async (e) => {
-    console.log("Login clicked")
+    // console.log("Login clicked")
     e.preventDefault();
-    
+
     try {
-      const body = {email, password};
-      const response = await axios.post("http://localhost:3000/auth/login", body)
-      console.log(response.data);
+      const body = { email, password };
+      const response = await axios.post(
+        "http://localhost:3000/auth/login",
+        body
+      );
+      // console.log(response.data);
 
       //Save token to localStorage
       localStorage.setItem("token", response.data.token);
@@ -35,14 +37,15 @@ function Login({ setAuth }) {
     } catch (error) {
       console.error(error.message);
     }
-  }
-
+  };
 
   return (
     <Fragment>
-      <h1 className="text-5xl py-4 mx-auto text-center">Login</h1>
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto max-w-lg justify-self-center" onSubmit={handleOnSubmitForm}>
-
+      <h1 className="text-5xl py-10 mx-auto text-center">Login</h1>
+      <form
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto max-w-lg justify-self-center"
+        onSubmit={handleOnSubmitForm}
+      >
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -57,7 +60,7 @@ function Login({ setAuth }) {
             type="email"
             placeholder="Email"
             value={email}
-            onChange={e => handleOnChange(e)}
+            onChange={(e) => handleOnChange(e)}
           />
         </div>
 
@@ -75,7 +78,7 @@ function Login({ setAuth }) {
             type="password"
             placeholder="Password"
             value={password}
-            onChange={e => handleOnChange(e)}
+            onChange={(e) => handleOnChange(e)}
           />
         </div>
 
@@ -86,7 +89,6 @@ function Login({ setAuth }) {
           Login
         </button>
       </form>
-      
     </Fragment>
   );
 }
