@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Route, Routes } from "react-router-dom";
 import { Nav, NavLink, NavMenu, NavBtn, Bars, NavBtnLink, } from "./NavBarElements";
 import axios from "axios";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
 import { FaAngleDoubleDown } from "react-icons/fa";
-
 
 
 function NavBar() {
@@ -26,10 +25,11 @@ function NavBar() {
   const isAuth = async() => {
     try {
       const token = localStorage.token;
-      // Check if the token exists
+
+      // Set isAuthenticated to false if token doesn't exist
       if (!token) {
-        setIsAuthenticated(false); // Set isAuthenticated to false if token doesn't exist
-        return; // Exit the function early
+        setIsAuthenticated(false); 
+        return; 
       }
       
       const headers = {
@@ -81,6 +81,7 @@ function NavBar() {
         </NavBtn>
       </Nav>
 
+      <img src={require("../../Images/header-img.jpg")} alt="Header Image" className="w-full h-80 object-cover filter brightness-75"/>
 
       <Routes>
         <Route path="/login" element={<Login setAuth={setAuth} />} />
@@ -88,7 +89,6 @@ function NavBar() {
         <Route path="/about" element={<About />}/>
       </Routes>
 
-      <img src="../../Images/header-img.jpg" alt="Header Image" />
 
     </>
   );
