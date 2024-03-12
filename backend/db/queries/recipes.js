@@ -57,16 +57,16 @@ const addRecipe = function (recipe) {
 
   let queryString = `INSERT INTO recipes (
     title,
-    cuisine,
-    diet,
-    meal_type,
     prep_time,
     instructions,
     proteins,
     fats,
     carbs,
     number_of_servings,
-    calories
+    calories,
+    cuisine,
+    diet,
+    meal_type
     )
     VALUES (
   `;
@@ -81,6 +81,10 @@ const addRecipe = function (recipe) {
       queryString += `, `;
     }
   }
+
+  // add cuisine ID with lookup
+  // add diet ID with lookup
+  // add meal_type ID with lookup
 
   queryString += `);
   SELECT SCOPE_IDENTITY()`;
