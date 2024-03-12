@@ -84,6 +84,15 @@ const addRecipe = function (recipe) {
 
   queryString += `);
   SELECT SCOPE_IDENTITY()`;
+
+  return db.query(queryString, queryParams)
+    .then((data) => {
+      return data.rows[0]; // returned SCOPE_IDENTITY will be used as parameter for recipe_ingredients helper function
+    })
+    .catch((error) => {
+      console.error("Error in addRecipe:", error.message);
+      throw error;
+    })
 };
 
 // helper function to return ingredient ID by name
