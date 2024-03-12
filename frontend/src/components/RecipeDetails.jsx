@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
-const RecipeDetails = function ({ id }) {
+const RecipeDetails = function () {
+  const { id } = useParams();
   const [recipeDetails, setRecipeDetails] = useState(null);
   const [recipeReviews, setRecipeReviews] = useState([]);
 
@@ -10,7 +12,7 @@ const RecipeDetails = function ({ id }) {
       try {
         // Fetch recipe details
         const recipeResponse = await axios.get(
-          `http://localhost:3000/api/recipes/5`
+          `http://localhost:3000/api/recipes/${id}`
         );
         console.log(recipeResponse);
         const recipeData = recipeResponse.data;
@@ -25,7 +27,7 @@ const RecipeDetails = function ({ id }) {
 
         // Fetch recipe reviews
         const reviewsResponse = await axios.get(
-          `http://localhost:3000/api/recipes/1/reviews`
+          `http://localhost:3000/api/recipes/${id}/reviews`
         );
         console.log(reviewsResponse);
         const reviewsData = reviewsResponse.data;
@@ -60,13 +62,17 @@ const RecipeDetails = function ({ id }) {
         </div>
       )}
 
-      {recipeReviews.length !== 0 &&
+      <h3>Reviews</h3>
+      {recipeReviews.length !== 0 ? (
         recipeReviews.map((review) => (
           <div key={review.id}>
             <p>{review.rating}</p>
             <p>{review.review}</p>
           </div>
-        ))}
+        ))
+      ) : (
+        <p>There are no reviews</p>
+      )}
     </>
   );
 };
