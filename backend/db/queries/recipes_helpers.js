@@ -37,9 +37,27 @@ const getDietByName = async function (dietName) {
 };
 
 // lookup meal_type and return ID
+const getMealTypeByName = async function (mealTypeName) {
+  try {
+    const queryString = `SELECT id FROM meal_types WHERE name LIKE $1;`;
+    const queryParams = [`%${mealTypeName}%`];
+    const mealType = await db.query(queryString, queryParams);
+
+    if (mealType.rows.length === 0) {
+      return { message: "Meal Type not found" };
+    }
+
+    return mealType.rows[0];
+  } catch (error) {
+    console.error("Error in getMealTypeByName:", error.message);
+    throw error;
+  }
+};
+
 // lookup ingredient and return ID
 
 module.exports = {
   getCuisineByName,
-  getDietByName
+  getDietByName,
+  getMealTypeByName
 };
