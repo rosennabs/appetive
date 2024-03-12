@@ -50,14 +50,49 @@ const getReviewsByRecipeId = async function (recipe_id) {
   }
 };
 
-const addRecipe = async function(recipe) {
+const addRecipe = function (recipe) {
   // should insert to table
-  try {
+  const queryParams = [];
+  const keys = Object.keys(recipe)
 
-  } catch (error) {
-    console.error("Error in addRecipe:", error.message);
-    throw error;
+  let queryString = `INSERT INTO recipes (
+    title,
+    cuisine,
+    diet,
+    meal_type,
+    prep_time,
+    instructions,
+    proteins,
+    fats,
+    carbs,
+    number_of_servings,
+    calories
+    )
+    VALUES (
+  `;
+
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    queryParams.push(recipe[key]);
+    queryString += `$${queryParams.length}`;
+
+    // Add to all values except for final value
+    if (i < keys.length - 1) {
+      queryString += `, `;
+    }
   }
+
+  queryString += `);
+  SELECT SCOPE_IDENTITY()`;
+};
+
+// helper function to return ingredient ID by name
+
+// helper function to insert to recipes_ingredients table
+// recipe_id will be obtained from addRecipe via SCOPE_IDENTITY
+// ingredients is an array
+const addRecipeIngredients = function (recipe_id, ingredients) {
+
 };
 
 module.exports = {
