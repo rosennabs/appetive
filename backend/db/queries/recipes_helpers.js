@@ -62,7 +62,7 @@ const getIngredientByName = async function (ingredientName) {
     const ingredient = await db.query(queryString, queryParams);
 
     if (ingredient.rows.length === 0) {
-      return { message: "Meal Type not found" };
+      return { message: "Ingredient not found" };
     }
 
     return ingredient.rows[0];
