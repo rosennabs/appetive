@@ -8,7 +8,7 @@ const renderInstructions = (instructions) => {
   console.log(filteredInstructions.split("."));
   return filteredInstructions
     .split(".")
-    .map((instruction) => <li>{instruction}</li>);
+    .map((instruction) => <li class="mb-3">{instruction}</li>);
 };
 
 const RecipeDetails = function () {
@@ -60,30 +60,40 @@ const RecipeDetails = function () {
     <>
       {recipeDetails && (
         <div>
-          <h1>{recipeDetails.title}</h1>
-          <img src={recipeDetails.image} alt="" />
-          <p>
-            Instructions:
-            <ol>{renderInstructions(recipeDetails.instructions)}</ol>
+          <h2 class="text-4xl font-extrabold dark:text-white mb-10">
+            {recipeDetails.title}
+          </h2>
+          <img class="mb-10" src={recipeDetails.image} alt="" />
+          <div class="w-[800px] max-w-[800px]">
+            <p class="text-2xl font-extrabold dark:text-white mb-5">
+              Instructions:
+            </p>
+            <ol class="list-decimal">
+              {renderInstructions(recipeDetails.instructions)}
+            </ol>
+          </div>
+          <p class="mt-10 text-xl">
+            No. of servings: {recipeDetails.number_of_servings}
           </p>
-          <p>No. of servings: {recipeDetails.number_of_servings}</p>
-          <p>Preparation time: {recipeDetails.prep_time} minutes</p>
-          <p>Proteins: {recipeDetails.proteins}</p>
-          <p>Carbs: {recipeDetails.carbs}</p>
-          <p>Fats: {recipeDetails.fats}</p>
+          <p class="mt-3 text-xl">
+            Preparation time: {recipeDetails.prep_time} minutes
+          </p>
+          <p class="mt-3 text-xl">Proteins: {recipeDetails.proteins}</p>
+          <p class="mt-3 text-xl">Carbs: {recipeDetails.carbs}</p>
+          <p class="mt-3 text-xl">Fats: {recipeDetails.fats}</p>
         </div>
       )}
 
-      <h3>Reviews</h3>
+      <h3 class="text-3xl mt-20 font-extrabold">Reviews</h3>
       {recipeReviews.length !== 0 ? (
         recipeReviews.map((review) => (
-          <div key={review.id}>
-            <p>{review.rating}</p>
-            <p>{review.review}</p>
+          <div key={review.id} class="mb-5">
+            <p>Rating: {review.rating}</p>
+            <p>Comment: {review.review}</p>
           </div>
         ))
       ) : (
-        <p>There are no reviews</p>
+        <p>There are no reviews yet</p>
       )}
     </>
   );
