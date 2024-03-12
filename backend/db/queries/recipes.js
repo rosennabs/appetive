@@ -93,7 +93,7 @@ const addRecipe = function (recipe) {
     ${getCuisineByName(recipe[cuisine])},
     ${getDietByName(recipe[diet])},
     ${getMealTypeByName(recipe[meal_type])});
-    SELECT SCOPE_IDENTITY()
+    RETURNING id;
   `;
 
   return db.query(queryString, queryParams)
