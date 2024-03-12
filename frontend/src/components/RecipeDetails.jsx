@@ -59,6 +59,14 @@ const RecipeDetails = function ({ id }) {
           <p>Fats: {recipeDetails.fats}</p>
         </div>
       )}
+
+      {recipeReviews.length !== 0 &&
+        recipeReviews.map((review) => (
+          <div key={review.id}>
+            <p>{review.rating}</p>
+            <p>{review.review}</p>
+          </div>
+        ))}
     </>
   );
 };
