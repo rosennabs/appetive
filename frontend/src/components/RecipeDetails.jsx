@@ -5,7 +5,7 @@ const RecipeDetails = function ({ id }) {
   const [recipeDetails, setRecipeDetails] = useState(null);
 
   useEffect(() => {
-    const fetchRecipe = async function () {
+    const fetchRecipeAndReviews = async function () {
       try {
         // Fetch recipe details
         const recipeResponse = await axios.get(
@@ -21,12 +21,27 @@ const RecipeDetails = function ({ id }) {
         } else {
           console.error("Error fetching recipe:", recipeData);
         }
+
+        // Fetch recipe reviews
+        const reviewsResponse = await axios.get(
+          `http://localhost:3000/api/recipes/1/reviews`
+        );
+        console.log(reviewsResponse);
+        const reviewsData = reviewsResponse.data;
+        console.log(reviewsData);
+
+        // Check if response is ok
+        if (reviewsResponse.status === 200) {
+          // setRecipeDetails(recipeData);
+        } else {
+          console.error("Error fetching recipe reviews:", recipeData);
+        }
       } catch (error) {
         console.error("Error", error.message);
       }
     };
 
-    fetchRecipe();
+    fetchRecipeAndReviews();
   }, [id]);
 
   return (
