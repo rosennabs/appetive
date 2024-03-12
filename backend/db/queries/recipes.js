@@ -3,7 +3,7 @@ const {
   getCuisineByName,
   getDietByName,
   getMealTypeByName,
-  getIngredientByName
+  addRecipeIngredients
 } = require("./recipes_helpers");
 
 const getRecipes = async function () {
@@ -104,13 +104,6 @@ const addRecipe = function (recipe) {
       console.error("Error in addRecipe:", error.message);
       throw error;
     })
-};
-
-// helper function to insert to recipes_ingredients table
-// recipe_id will be obtained from addRecipe via SCOPE_IDENTITY
-// ingredients is an array
-const addRecipeIngredients = function (recipe_id, ingredients) {
-
 };
 
 module.exports = {

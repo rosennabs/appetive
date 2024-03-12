@@ -72,9 +72,17 @@ const getIngredientByName = async function (ingredientName) {
   }
 };
 
+// helper function to insert to recipes_ingredients table
+// recipe_id will be obtained from addRecipe
+// ingredients is an array
+const addRecipeIngredients = function (recipe_id, ingredients) {
+
+};
+
 module.exports = {
   getCuisineByName,
   getDietByName,
   getMealTypeByName,
-  getIngredientByName
+  getIngredientByName,
+  addRecipeIngredients
 };
