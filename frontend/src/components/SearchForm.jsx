@@ -13,7 +13,7 @@ const dishTypes = ['main course', 'side dish', 'dessert', 'appetizer', 'salad', 
 const calories = ["< 300", "300 - 499", "500 - 699", "700 - 1000", "> 1000"]
 
 
-export default function SearchQuestions() {
+export default function SearchForm() {
   const [question, setQuestion] = useState(1);
 
   const initialValues={

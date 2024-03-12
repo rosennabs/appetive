@@ -1,13 +1,13 @@
 
 import RecipesList from '../components/RecipesList.jsx'
-import SearchQuestions from '../components/SearchQuestions.jsx'
+import SearchForm from '../components/SearchForm.jsx'
 
 export default function HomePage() {
 
   return (
     <div>
       
-      <SearchQuestions/>
+      <SearchForm />
       <RecipesList />
 
     </div>
