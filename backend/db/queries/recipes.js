@@ -1,4 +1,10 @@
 const db = require("../connection");
+const {
+  getCuisineByName,
+  getDietByName,
+  getMealTypeByName,
+  getIngredientByName
+} = require("./recipes_helpers");
 
 const getRecipes = async function () {
   try {
@@ -81,10 +87,13 @@ const addRecipe = function (recipe) {
       queryString += `, `;
     }
   }
-
+  
   // add cuisine ID with lookup
+  queryString += `${getCuisineByName(recipe[cuisine])}`;
   // add diet ID with lookup
+  queryString += `${getDietByName(recipe[diet])}`;
   // add meal_type ID with lookup
+  queryString += `${getMealTypeByName(recipe[meal_type])}`;
 
   queryString += `);
   SELECT SCOPE_IDENTITY()`;
