@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 const RecipeDetails = function ({ id }) {
   const [recipeDetails, setRecipeDetails] = useState(null);
+  const [recipeReviews, setRecipeReviews] = useState([]);
 
   useEffect(() => {
     const fetchRecipeAndReviews = async function () {
@@ -32,7 +33,7 @@ const RecipeDetails = function ({ id }) {
 
         // Check if response is ok
         if (reviewsResponse.status === 200) {
-          // setRecipeDetails(recipeData);
+          setRecipeReviews(reviewsData);
         } else {
           console.error("Error fetching recipe reviews:", recipeData);
         }
