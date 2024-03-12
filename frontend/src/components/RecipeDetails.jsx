@@ -2,6 +2,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
+const renderInstructions = (instructions) => {
+  const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions)/g;
+  const filteredInstructions = instructions.replace(regex, "");
+  console.log(filteredInstructions.split("."));
+  return filteredInstructions
+    .split(".")
+    .map((instruction) => <li>{instruction}</li>);
+};
+
 const RecipeDetails = function () {
   const { id } = useParams();
   const [recipeDetails, setRecipeDetails] = useState(null);
@@ -53,7 +62,10 @@ const RecipeDetails = function () {
         <div>
           <h1>{recipeDetails.title}</h1>
           <img src={recipeDetails.image} alt="" />
-          <p>Instructions: {recipeDetails.instructions}</p>
+          <p>
+            Instructions:
+            <ol>{renderInstructions(recipeDetails.instructions)}</ol>
+          </p>
           <p>No. of servings: {recipeDetails.number_of_servings}</p>
           <p>Preparation time: {recipeDetails.prep_time} minutes</p>
           <p>Proteins: {recipeDetails.proteins}</p>
