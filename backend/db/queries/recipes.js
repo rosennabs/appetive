@@ -89,14 +89,12 @@ const addRecipe = function (recipe) {
   }
   
   // add cuisine ID with lookup
-  queryString += `${getCuisineByName(recipe[cuisine])}`;
-  // add diet ID with lookup
-  queryString += `${getDietByName(recipe[diet])}`;
-  // add meal_type ID with lookup
-  queryString += `${getMealTypeByName(recipe[meal_type])}`;
-
-  queryString += `);
-  SELECT SCOPE_IDENTITY()`;
+  queryString += `
+    ${getCuisineByName(recipe[cuisine])},
+    ${getDietByName(recipe[diet])},
+    ${getMealTypeByName(recipe[meal_type])});
+    SELECT SCOPE_IDENTITY()
+  `;
 
   return db.query(queryString, queryParams)
     .then((data) => {
@@ -107,8 +105,6 @@ const addRecipe = function (recipe) {
       throw error;
     })
 };
-
-// helper function to return ingredient ID by name
 
 // helper function to insert to recipes_ingredients table
 // recipe_id will be obtained from addRecipe via SCOPE_IDENTITY
