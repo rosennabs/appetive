@@ -57,9 +57,8 @@ const getReviewsByRecipeId = async function (recipe_id) {
 };
 
 const addRecipe = function (recipe) {
-  // should insert to table
   const queryParams = [];
-  const keys = Object.keys(recipe)
+  const keys = Object.keys(recipe);
 
   let queryString = `INSERT INTO recipes (
     title,
@@ -88,7 +87,7 @@ const addRecipe = function (recipe) {
     }
   }
   
-  // add cuisine ID with lookup
+  // add ID numbers by lookup
   queryString += `
     ${getCuisineByName(recipe[cuisine])},
     ${getDietByName(recipe[diet])},
@@ -98,7 +97,7 @@ const addRecipe = function (recipe) {
 
   return db.query(queryString, queryParams)
     .then((data) => {
-      return data.rows[0]; // returned SCOPE_IDENTITY will be used as parameter for recipe_ingredients helper function
+      return data.rows[0]; // returned ID will be used as parameter for recipe_ingredients helper function here
     })
     .catch((error) => {
       console.error("Error in addRecipe:", error.message);
