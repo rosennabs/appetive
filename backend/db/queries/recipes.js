@@ -1,10 +1,4 @@
 const db = require("../connection");
-const {
-  getCuisineByName,
-  getDietByName,
-  getMealTypeByName,
-  addRecipeIngredients
-} = require("./recipes_helpers");
 
 const getRecipes = async function () {
   try {
@@ -54,58 +48,6 @@ const getReviewsByRecipeId = async function (recipe_id) {
     console.error("Error in getReviewsByRecipeId:", error.message);
     throw error;
   }
-};
-
-const addRecipe = function (recipe) {
-  const queryParams = [];
-  const keys = Object.keys(recipe);
-  const ingredients = recipe.ingredients;
-
-  let queryString = `INSERT INTO recipes (
-    title,
-    prep_time,
-    instructions,
-    proteins,
-    fats,
-    carbs,
-    number_of_servings,
-    calories,
-    cuisine,
-    diet,
-    meal_type
-    )
-    VALUES (
-  `;
-
-  for (let i = 0; i < keys.length; i++) {
-    const key = keys[i];
-    queryParams.push(recipe[key]);
-    queryString += `$${queryParams.length}`;
-
-    // Add to all values except for final value
-    if (i < keys.length - 1) {
-      queryString += `, `;
-    }
-  }
-  
-  // add ID numbers by lookup
-  queryString += `
-    ${getCuisineByName(recipe[cuisine])},
-    ${getDietByName(recipe[diet])},
-    ${getMealTypeByName(recipe[meal_type])});
-    RETURNING id;
-  `;
-
-  return db.query(queryString, queryParams)
-    .then((data) => {
-      const recipe_id = data.rows[0].id;
-      addRecipeIngredients(recipe_id, ingredients); // DOESN'T WORK RIGHT NOW
-      return data.rows[0]; // returned ID will be used as parameter for recipe_ingredients helper function here
-    })
-    .catch((error) => {
-      console.error("Error in addRecipe:", error.message);
-      throw error;
-    })
 };
 
 module.exports = {
