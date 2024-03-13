@@ -12,9 +12,7 @@ function RecipeForm() {
     <Formik
       initialValues={{
         title: '',
-        cuisine: '',
-        diet: '',
-        meal_type: '',
+        image: '',
         prep_time: 0,
         ingredients: [emptyIngredient],
         instructions: '',
@@ -22,7 +20,13 @@ function RecipeForm() {
         fats: '',
         carbs: '',
         number_of_servings: 0,
-        calories: 0
+        calories: 0,
+        created_at: undefined,
+        updated_at: undefined,
+        cuisine: '',
+        diet: '',
+        meal_type: '',
+        intolerances: ''
       }}
       onSubmit={(values) => {
         console.log(values);
@@ -55,19 +59,37 @@ function RecipeForm() {
         <option value="Jamaican">Jamaican</option>
       </Field>
 
-      <label className="block" htmlFor="diet">Diet</label>
-      { /* to update with mock data */}
-      <Field
-        as="select"
-        id="diet"
-        name="diet"
-        value={values.diet}
-        onChange={handleChange}
-        className="border"
-      >
-        <option value="Keto">Keto</option>
-        <option value="Vegetarian">Vegetarian</option>
-      </Field>
+      <fieldset>
+        <legend>Dietary Restrictions</legend>
+
+        <label htmlFor="diet">Diet</label>
+        { /* to update with mock data */}
+        <Field
+          as="select"
+          id="diet"
+          name="diet"
+          value={values.diet}
+          onChange={handleChange}
+          className="border"
+        >
+          <option value="Keto">Keto</option>
+          <option value="Vegetarian">Vegetarian</option>
+        </Field>
+
+        <label htmlFor="intolerances">Intolerances</label>
+        { /* to update with mock data */}
+        <Field
+          as="select"
+          id="intolerances"
+          name="intolerances"
+          value={values.intolerances}
+          onChange={handleChange}
+          className="border"
+          >
+          <option value="Dairy">Dairy</option>
+          <option value="Wheat">Wheat</option>
+        </Field>
+      </fieldset>
 
       <label className="block" htmlFor="meal_type">Meal Type</label>
       { /* to update with mock data */}
