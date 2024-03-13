@@ -10,6 +10,7 @@ CREATE TABLE
     cuisine_id INTEGER REFERENCES cuisines (id) ON DELETE CASCADE,
     diet_id INTEGER REFERENCES diets (id) ON DELETE CASCADE,
     meal_type_id INTEGER REFERENCES meal_types (id) ON DELETE CASCADE,
+    intolerance_id INTEGER REFERENCES intolerances (id) ON DELETE CASCADE,
     title VARCHAR(255) NOT NULL,
     image TEXT NOT NULL,
     prep_time INTEGER NOT NULL,
