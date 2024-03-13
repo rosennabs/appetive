@@ -123,6 +123,9 @@ router.post("/search", async (req, res) => {
       queryString += ` AND intolerance_id = $${queryParams.length + 1}`;
       queryParams.push(id);
     }
+
+    if (minCalories && maxCalories) {
+    }
     const recipes = await db.query(queryString, queryParams);
     return res.status(200).json(recipes.rows);
   } catch (error) {
