@@ -76,6 +76,18 @@ router.post("/search", async (req, res) => {
       minCalories,
       maxCalories,
     } = req.query;
+
+    // database query based on search parameters
+    let queryString = "SELECT * FROM recipes WHERE ";
+    const queryParams = [];
+
+    //Add conditions based on query parameters
+    if (title) {
+      queryString += `title ILIKE $${queryParams.length + 1}`;
+      queryParams.push(`%${title}%`);
+      const recipes = await db.query(queryString, queryParams);
+      return res.status(200).json(recipes.rows);
+    }
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error");
