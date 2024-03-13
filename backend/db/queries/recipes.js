@@ -70,9 +70,12 @@ const addRecipe = function (recipe) {
     carbs,
     number_of_servings,
     calories,
+    created_at,
+    updated_at,
     cuisine,
     diet,
-    meal_type
+    meal_type,
+    intolerances
     )
     VALUES (
   `;
@@ -92,7 +95,8 @@ const addRecipe = function (recipe) {
   queryString += `
     ${getCuisineByName(recipe[cuisine])},
     ${getDietByName(recipe[diet])},
-    ${getMealTypeByName(recipe[meal_type])});
+    ${getMealTypeByName(recipe[meal_type])},
+    ${getIntoleranceByName(recipe[intolerances])})
     RETURNING id;
   `;
 
