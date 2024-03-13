@@ -73,8 +73,8 @@ const getIngredientByName = async function (ingredientName) {
 };
 
 const addRecipeIngredients = function (recipe_id, ingredients) {
-  ingredients.forEach((ingredient) => {
-  const ingredient_id = getIngredientByName(ingredient.name);
+  ingredients.forEach(async (ingredient) => {
+  const ingredient_id = await getIngredientByName(ingredient.name);
 
   if (ingredient_id) {
   const queryString = `INSERT INTO recipes_ingredients (recipe_id, ingredient_id, measurement) VALUES ($1, $2, $3)`;
@@ -89,7 +89,7 @@ const addRecipeIngredients = function (recipe_id, ingredients) {
       throw error;
     })
   } else {
-    return null;
+    return "Ingredient was not found";
   }
   });
 };
