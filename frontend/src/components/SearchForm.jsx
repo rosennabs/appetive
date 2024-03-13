@@ -171,10 +171,10 @@ export default function SearchForm() {
                   />
                 </div>
               </div>
-              <div className="flex justify-center mt-8">
-                <button type="button" onClick={handlePrevQuestion} className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-2 px-6 rounded-full mr-4">Back</button>
+               <div className="flex justify-center mt-16 mb-16">
+                <button type="button" onClick={handlePrevQuestion} className="hover:bg-amber-200 border-2 border-amber-700 text-black font-bold py-1 px-10 rounded-full mr-4">Back</button>
                 
-                <button type="submit" className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-2 px-6 rounded-full">Search</button>
+                <button type="submit" className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-1 px-10 rounded-full">Search</button>
               </div>
             </>
           }
