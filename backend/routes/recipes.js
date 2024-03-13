@@ -10,6 +10,7 @@ const {
   getCuisineByName,
   getDietByName,
   getMealTypeByName,
+  getIntoleranceByName,
 } = require("../db/queries/recipes_helpers");
 
 router.get("/", async (_req, res) => {
@@ -117,6 +118,8 @@ router.post("/search", async (req, res) => {
     }
 
     if (intolerance) {
+      const { id } = await getIntoleranceByName(intolerance);
+      console.log(id);
     }
     const recipes = await db.query(queryString, queryParams);
     return res.status(200).json(recipes.rows);
