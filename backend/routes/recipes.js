@@ -131,6 +131,8 @@ router.post("/search", async (req, res) => {
       queryParams.push(minCalories);
       queryParams.push(maxCalories);
     } else if (minCalories) {
+      queryString += ` AND calories >= $${queryParams.length + 1}`;
+      queryParams.push(minCalories);
     }
     const recipes = await db.query(queryString, queryParams);
     return res.status(200).json(recipes.rows);
