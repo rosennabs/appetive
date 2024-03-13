@@ -78,7 +78,7 @@ router.post("/search", async (req, res) => {
       diet,
       cuisine,
       mealType,
-      intolerances,
+      intolerance,
       minCalories,
       maxCalories,
     } = req.query;
@@ -114,6 +114,9 @@ router.post("/search", async (req, res) => {
       console.log(id);
       queryString += ` AND meal_type_id = $${queryParams.length + 1}`;
       queryParams.push(id);
+    }
+
+    if (intolerance) {
     }
     const recipes = await db.query(queryString, queryParams);
     return res.status(200).json(recipes.rows);
