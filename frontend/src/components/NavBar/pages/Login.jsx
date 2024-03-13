@@ -19,7 +19,6 @@ function Login({ setAuth }) {
 
   // Function to handle onSubmit for login
   const handleOnSubmitForm = async (e) => {
-    // console.log("Login clicked")
     e.preventDefault();
 
     try {
@@ -28,7 +27,6 @@ function Login({ setAuth }) {
         "http://localhost:8080/auth/login",
         body
       );
-      // console.log(response.data);
 
       //Save token to localStorage
       localStorage.setItem("token", response.data.token);

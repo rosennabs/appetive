@@ -29,9 +29,15 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 ## Seeding
 
+To reset the database and seed it with initial data, run the following command:
+``` 
+npm run db:reset
+```
+
+
 Run a the development server with `npm start` in the Host environment. 
 
-- Use the browser to navigate to `http://localhost:3000`.
+- Use the browser to navigate to `http://localhost:8080`.
 
 ## Run The Server
 
