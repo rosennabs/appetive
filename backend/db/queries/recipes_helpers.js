@@ -11,7 +11,7 @@ const getCuisineByName = async function (cuisineName) {
       return { message: "Cuisine not found" };
     }
 
-    return cuisine.rows[0];
+    return cuisine.rows[0].id;
   } catch (error) {
     console.error("Error in getCuisineByName:", error.message);
     throw error;
@@ -29,7 +29,7 @@ const getDietByName = async function (dietName) {
       return { message: "Diet not found" };
     }
 
-    return diet.rows[0];
+    return diet.rows[0].id;
   } catch (error) {
     console.error("Error in getDietByName:", error.message);
     throw error;
@@ -47,7 +47,7 @@ const getMealTypeByName = async function (mealTypeName) {
       return { message: "Meal Type not found" };
     }
 
-    return mealType.rows[0];
+    return mealType.rows[0].id;
   } catch (error) {
     console.error("Error in getMealTypeByName:", error.message);
     throw error;
@@ -83,7 +83,7 @@ const getIngredientByName = async function (ingredientName) {
       return { message: "Ingredient not found" };
     }
 
-    return ingredient.rows[0];
+    return ingredient.rows[0].id;
   } catch (error) {
     console.error("Error in getIngredientByName:", error.message);
     throw error;
