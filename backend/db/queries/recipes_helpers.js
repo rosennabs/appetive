@@ -54,6 +54,24 @@ const getMealTypeByName = async function (mealTypeName) {
   }
 };
 
+// lookup intolerance and return ID
+const getIntoleranceByName = async function (intoleranceName) {
+  try {
+    const queryString = `SELECT id FROM intolerances WHERE name LIKE $1;`;
+    const queryParams = [`%${intoleranceName}%`];
+    const intolerance = await db.query(queryString, queryParams);
+
+    if (intolerance.rows.length === 0) {
+      return { message: "Intolerance not found" };
+    }
+
+    return ingredient.rows[0].id;
+  } catch (error) {
+    console.error("Error in getIntoleranceByName:", error.message);
+    throw error;
+  }
+};
+
 // lookup ingredient and return ID
 const getIngredientByName = async function (ingredientName) {
   try {
@@ -98,6 +116,6 @@ module.exports = {
   getCuisineByName,
   getDietByName,
   getMealTypeByName,
-  getIngredientByName,
+  getIntoleranceByName,
   addRecipeIngredients
 };
