@@ -6,6 +6,8 @@ const {
   getReviewsByRecipeId,
 } = require("../db/queries/recipes");
 
+const { getCuisineByName } = require("../db/queries/recipes_helpers");
+
 router.get("/", async (_req, res) => {
   try {
     const allRecipes = await getRecipes();
@@ -88,6 +90,11 @@ router.post("/search", async (req, res) => {
       const recipes = await db.query(queryString, queryParams);
       return res.status(200).json(recipes.rows);
     }
+
+    if (cuisine) {
+    }
+    const recipes = await db.query(queryString, queryParams);
+    return res.status(200).json(recipes.rows);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error");
