@@ -27,7 +27,7 @@ function Register({ setAuth }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/auth/register",
+        "http://localhost:8080/auth/register",
         body
       );
       console.log(response.data);

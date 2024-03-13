@@ -25,7 +25,7 @@ function Login({ setAuth }) {
     try {
       const body = { email, password };
       const response = await axios.post(
-        "http://localhost:3000/auth/login",
+        "http://localhost:8080/auth/login",
         body
       );
       // console.log(response.data);

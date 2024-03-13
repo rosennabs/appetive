@@ -21,7 +21,7 @@ const RecipeDetails = function () {
       try {
         // Fetch recipe details
         const recipeResponse = await axios.get(
-          `http://localhost:3000/api/recipes/${id}`
+          `http://localhost:8080/api/recipes/${id}`
         );
         console.log(recipeResponse);
         const recipeData = recipeResponse.data;
@@ -36,7 +36,7 @@ const RecipeDetails = function () {
 
         // Fetch recipe reviews
         const reviewsResponse = await axios.get(
-          `http://localhost:3000/api/recipes/${id}/reviews`
+          `http://localhost:8080/api/recipes/${id}/reviews`
         );
         console.log(reviewsResponse);
         const reviewsData = reviewsResponse.data;
