@@ -20,7 +20,6 @@ function Register({ setAuth }) {
 
   // Function to handle onSubmit for signup
   const handleOnSubmitForm = async (e) => {
-    console.log("Form submitted");
     e.preventDefault();
 
     const body = { name, email, password };
@@ -30,7 +29,6 @@ function Register({ setAuth }) {
         "http://localhost:8080/auth/register",
         body
       );
-      console.log(response.data);
 
       //Save token in localStorge
       localStorage.setItem("token", response.data.token);
