@@ -12,7 +12,6 @@ const diet = ['Ketogenic', 'Vegetarian', 'Lacto-Vegetarian', 'Ovo-Vegetarian', '
 
 const type = ['main course', 'side dish', 'dessert', 'appetizer', 'salad', 'bread', 'breakfast', 'soup', 'beverage', 'sauce', 'marinade', 'fingerfood', 'snack', 'drink'];
 
-const calories = ["< 300", "300 - 499", "500 - 699", "700 - 1000", "> 1000"]
 
 
 export default function SearchForm() {
@@ -22,12 +21,13 @@ export default function SearchForm() {
   
   const [question, setQuestion] = useState(1);
 
-  const initialValues={
+  const initialValues = {
     cuisine: [],
     type: [],
     diet: [],
     intolerances: [],
-    calories: []
+    minCalories: [],
+    maxCalories: []
   }
 
   const handleNextQuestion = () => {
@@ -109,7 +109,7 @@ export default function SearchForm() {
 
       onSubmit={(values, actions) => {
         //Handle form submission
-        //console.log(values);
+        console.log(values);
         handleSearchSubmission(values);
         actions.setSubmitting(false);
       }}
@@ -150,8 +150,32 @@ export default function SearchForm() {
 
           {question === 5 &&
             <>
-            <h1 className="font-bold text-3xl mb-8  text-amber-700 text-center">What calorie range would you like your meals to fall within?</h1>
-            {renderMultiselectOptions("calories", calories, true, handleChange, values)}
+            <h1 className="font-bold text-3xl mb-8  text-amber-700 text-center">Enter calorie range per serving :</h1>
+              <div className="flex justify-center">
+                <div className="flex items-center space-x-4">
+                  <input
+                    type="number"
+                    name="minCalories"
+                    value={values.minCalories}
+                    onChange={handleChange}
+                    placeholder="Minimum Calories"
+                    className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                  />
+                  <input
+                    type="number"
+                    name="maxCalories"
+                    value={values.maxCalories}
+                    onChange={handleChange}
+                    placeholder="Maximum Calories"
+                    className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-center mt-8">
+                <button type="button" onClick={handlePrevQuestion} className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-2 px-6 rounded-full mr-4">Back</button>
+                
+                <button type="submit" className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-2 px-6 rounded-full">Search</button>
+              </div>
             </>
           }
            

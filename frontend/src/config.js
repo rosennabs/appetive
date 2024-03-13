@@ -1,5 +1,5 @@
 // config.js
-const apiKey = "956ace9cb1ba4d49a21090f0feb41e77";
+const apiKey = "956ace9cb1ba4d49a21090f0feb41e7";
 export default apiKey;
 
 

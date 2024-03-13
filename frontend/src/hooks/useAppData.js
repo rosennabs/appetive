@@ -19,7 +19,7 @@ export const initialState = {
 export const reducer = (state, action) => {
   switch (action.type) {
     case SET_RECIPES:
-      //console.log("New recipes: ", action.recipes);
+  
       return {
         ...state,
         recipes: action.recipes,
@@ -29,7 +29,6 @@ export const reducer = (state, action) => {
 
 const useAppData = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [recipeInfoFetched, setRecipeInfoFetched] = useState(false);
 
   //Dispatch recipes data
   const setRecipes = (data) => {
@@ -75,12 +74,15 @@ const useAppData = () => {
   // // Function to handle search form submission and make API call
   const handleSearchSubmission = async (values) => {
 
-    // Store selected options for each category
+    // Store selected options for each category. Convert minCalories and maxCalories to arrays with a single element
+
     const selectedOptions = {
       cuisine: values.cuisine,
       type: values.type,
       diet: values.diet.join("|"),
       intolerances: values.intolerances.join(","),
+      minCalories: values.minCalories !== "" ? [values.minCalories] : [],
+      maxCalories: values.maxCalories !== "" ? [values.maxCalories] : [],
     };
 
     // Remove categories with no selected options from the selectedOptions object
@@ -104,14 +106,10 @@ const useAppData = () => {
           })
           .join("");
 
-      //console.log("Request URL:", url);
-
       const response = await axios.get(url);
 
-      //console.log(response.data.results);
+      // console.log(response.data.results);
       dispatch({ type: SET_RECIPES, recipes: response.data.results });
-
-      setRecipeInfoFetched(false);
     } catch (error) {
       console.error("Error fetching filtered recipes: ", error);
     }
