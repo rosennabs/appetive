@@ -19,7 +19,7 @@ export const initialState = {
 export const reducer = (state, action) => {
   switch (action.type) {
     case SET_RECIPES:
-      console.log("New recipes: ", action.recipes);
+      //console.log("New recipes: ", action.recipes);
       return {
         ...state,
         recipes: action.recipes,
@@ -47,10 +47,22 @@ const useAppData = () => {
           `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=1&cuisine=${cuisine}`
         );
 
-        // Set recipes data in state
-        setRecipes(response.data.results);
-        // Set recipe info fetched to false when new recipes are fetched
-        setRecipeInfoFetched(false);
+        // Create an array of promises for fetching recipe information
+
+        const recipeInfoPromises = response.data.results.map(async (recipe) => {
+          const responseWithInfo = await axios.get(
+            `https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=${apiKey}&instructionsRequired=true&includeNutrition=true&includeInstructions=true`
+          );
+          return responseWithInfo.data; //return the fetched recipe information
+        });
+
+        //Wait for all recipe information promises to resolve
+        const recipeInfo = await Promise.all(recipeInfoPromises);
+
+        // Set the fetched recipes with information in state
+        setRecipes(recipeInfo);
+        // console.log("This is recipe info: ", recipeInfo);
+
       } catch (error) {
         console.error("Error fetching recipes: ", error);
       }
@@ -58,43 +70,7 @@ const useAppData = () => {
     fetchRecipes();
   }, []); 
 
-  // Fetch recipe information for each recipe rendered
-  useEffect(() => {
-    const fetchRecipeInfo = async () => {
-      if (state.recipes.length === 0 || recipeInfoFetched) {
-        // If no recipes or recipe info already fetched, return
-        return;
-      }
-
-      try {
-        const updatedRecipes = await Promise.all(
-          state.recipes.map(async (recipe) => {
-            // Fetch recipe information for the current recipe using id
-            const response = await axios.get(
-              `https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=${apiKey}&instructionsRequired=true&includeNutrition=true&includeInstructions=true`
-            );
-
-            // Add recipe information to the current recipe
-            return {
-              ...recipe,
-              information: response.data,
-            };
-          })
-        );
-
-        //Update recipes in state with recipe information
-        setRecipes(updatedRecipes);
-
-        // Set recipe info fetched to true after fetching recipe info for all recipes
-        setRecipeInfoFetched(true);
-      } catch (error) {
-        console.error("Error fetching recipe information: ", error);
-      }
-    };
-
-    // Fetch recipe information from api when state.recipes changes
-    fetchRecipeInfo();
-  }, [state.recipes, recipeInfoFetched]); //execute when state.recipes or recipeInfoFetched changes
+  
 
   // // Function to handle search form submission and make API call
   const handleSearchSubmission = async (values) => {
