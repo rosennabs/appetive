@@ -8,11 +8,11 @@ export const AppDataContext = createContext();
 export const AppDataProvider = ({ children }) => {
 
   //Destructure the useApplicationData function
-  const { state } = useAppData();
+  const { state, handleSearchSubmission } = useAppData();
   
 
   return (
-    <AppDataContext.Provider value={{ state }}>
+    <AppDataContext.Provider value={{ state, handleSearchSubmission }}>
       {children}
     </AppDataContext.Provider>
   );

@@ -1,10 +1,10 @@
 import React from 'react'
-import Recipes from './Recipes'
+import Recipe from './Recipes'
 
 export default function RecipesList() {
   return (
     <div >
-      <Recipes />
+      <Recipe />
     </div>
   )
 }

@@ -1,23 +1,25 @@
 import { useEffect, useState, useReducer } from "react";
 import axios from "axios";
-
+import apiKey from "../config";
 
 // Define action types as constants
 const SET_RECIPES = "SET_RECIPES";
 
 //List of supported cuisines
-const cuisines = "African, Asian, American, British, Cajun, Caribbean, Chinese, Eastern European, European, French, German, Greek, Indian, Irish, Italian, Japanese, Jewish, Korean, Latin American, Mediterranean, Mexican, Middle Eastern, Nordic, Southern, Spanish, Thai,Vietnamese"
+const cuisine =
+  "African, Asian, American, British, Cajun, Caribbean, Chinese, Eastern European, European, French, German, Greek, Indian, Irish, Italian, Japanese, Jewish, Korean, Latin American, Mediterranean, Mexican, Middle Eastern, Nordic, Southern, Spanish, Thai,Vietnamese";
 
 //Initial state
 export const initialState = {
   recipes: [],
-  cuisines: []
+  cuisine: [],
 };
 
 //Define the reducer function to update state
 export const reducer = (state, action) => {
   switch (action.type) {
     case SET_RECIPES:
+      console.log("New recipes: ", action.recipes);
       return {
         ...state,
         recipes: action.recipes,
@@ -27,7 +29,7 @@ export const reducer = (state, action) => {
 
 const useAppData = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const[recipeInfoFetched, setRecipeInfoFetched] = useState(false);
+  const [recipeInfoFetched, setRecipeInfoFetched] = useState(false);
 
   //Dispatch recipes data
   const setRecipes = (data) => {
@@ -37,29 +39,26 @@ const useAppData = () => {
     });
   };
 
-  //Fetch all recipes from api
+  //Fetch all recipes from api on initial render
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get(
-          `https://api.spoonacular.com/recipes/complexSearch?apiKey=18acf857f3d54a4dabd1d5c48a11f433&number=12&cuisine=${cuisines}`
+          `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=1&cuisine=${cuisine}`
         );
 
-        
         // Set recipes data in state
         setRecipes(response.data.results);
         // Set recipe info fetched to false when new recipes are fetched
         setRecipeInfoFetched(false);
-
       } catch (error) {
         console.error("Error fetching recipes: ", error);
       }
     };
     fetchRecipes();
-  }, [dispatch]); //Ensure the latest dispatch function is used to update the state.
+  }, []); 
 
-
-
+  // Fetch recipe information for each recipe rendered
   useEffect(() => {
     const fetchRecipeInfo = async () => {
       if (state.recipes.length === 0 || recipeInfoFetched) {
@@ -68,15 +67,13 @@ const useAppData = () => {
       }
 
       try {
-        // Fetch recipe information for each recipe in state.recipes
         const updatedRecipes = await Promise.all(
           state.recipes.map(async (recipe) => {
-
             // Fetch recipe information for the current recipe using id
             const response = await axios.get(
-              `https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=18acf857f3d54a4dabd1d5c48a11f433&instructionsRequired=true&includeNutrition=true&includeInstructions=true`
+              `https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=${apiKey}&instructionsRequired=true&includeNutrition=true&includeInstructions=true`
             );
-          
+
             // Add recipe information to the current recipe
             return {
               ...recipe,
@@ -84,14 +81,12 @@ const useAppData = () => {
             };
           })
         );
-          
 
         //Update recipes in state with recipe information
         setRecipes(updatedRecipes);
 
         // Set recipe info fetched to true after fetching recipe info for all recipes
-          setRecipeInfoFetched(true);
-          
+        setRecipeInfoFetched(true);
       } catch (error) {
         console.error("Error fetching recipe information: ", error);
       }
@@ -99,11 +94,55 @@ const useAppData = () => {
 
     // Fetch recipe information from api when state.recipes changes
     fetchRecipeInfo();
-  }, [state.recipes,recipeInfoFetched]); //execute when state.recipes or recipeInfoFetched changes
+  }, [state.recipes, recipeInfoFetched]); //execute when state.recipes or recipeInfoFetched changes
 
+  // // Function to handle search form submission and make API call
+  const handleSearchSubmission = async (values) => {
 
+    // Store selected options for each category
+    const selectedOptions = {
+      cuisine: values.cuisine,
+      type: values.type,
+      diet: values.diet.join("|"),
+      intolerances: values.intolerances.join(","),
+    };
+
+    // Remove categories with no selected options from the selectedOptions object
+    Object.keys(selectedOptions).forEach((key) => {
+      if (selectedOptions[key].length === 0) {
+        delete selectedOptions[key];
+      }
+    });
+
+    try {
+      const url =
+        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=1` +
+        // Construct the API call URL dynamically based on selected options
+        Object.entries(selectedOptions)
+          .map(([key, value]) => {
+            // Check if the value contains a space
+            const encodedValue = value.includes(" ")
+              ? encodeURIComponent(value)
+              : value;
+            return `&${key}=${encodedValue}`;
+          })
+          .join("");
+
+      //console.log("Request URL:", url);
+
+      const response = await axios.get(url);
+
+      //console.log(response.data.results);
+      dispatch({ type: SET_RECIPES, recipes: response.data.results });
+
+      setRecipeInfoFetched(false);
+    } catch (error) {
+      console.error("Error fetching filtered recipes: ", error);
+    }
+  };
   return {
     state,
+    handleSearchSubmission,
   };
 };
 

@@ -6,7 +6,7 @@ export default function Recipe() {
   //Access recipes from state
   const { state } = useContext(AppDataContext);
   const { recipes } = state;
-  //console.log(recipes);
+  console.log("Recipe state data: ", recipes);
 
   return (
     <div>
