@@ -72,6 +72,24 @@ const getIngredientByName = async function (ingredientName) {
   }
 };
 
+// lookup meal_type and return ID
+const getIntoleranceByName = async function (intoleranceName) {
+  try {
+    const queryString = `SELECT id FROM intolerances WHERE name LIKE $1;`;
+    const queryParams = [`%${intoleranceName}%`];
+    const intolerance = await db.query(queryString, queryParams);
+
+    if (intolerance.rows.length === 0) {
+      return { message: "Intolerance not found" };
+    }
+
+    return intolerance.rows[0];
+  } catch (error) {
+    console.error("Error in getIntoleranceByName:", error.message);
+    throw error;
+  }
+};
+
 // helper function to insert to recipes_ingredients table
 // recipe_id will be obtained from addRecipe
 // ingredients is an array
@@ -84,5 +102,6 @@ module.exports = {
   getDietByName,
   getMealTypeByName,
   getIngredientByName,
-//  addRecipeIngredients
+  getIntoleranceByName,
+  //  addRecipeIngredients
 };
