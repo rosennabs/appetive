@@ -3,6 +3,7 @@ const {
   getCuisineByName,
   getDietByName,
   getMealTypeByName,
+  getIntoleranceByName,
   addRecipeIngredients
 } = require("./recipes_helpers");
 
