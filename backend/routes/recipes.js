@@ -120,6 +120,8 @@ router.post("/search", async (req, res) => {
     if (intolerance) {
       const { id } = await getIntoleranceByName(intolerance);
       console.log(id);
+      queryString += ` AND intolerance_id = $${queryParams.length + 1}`;
+      queryParams.push(id);
     }
     const recipes = await db.query(queryString, queryParams);
     return res.status(200).json(recipes.rows);
