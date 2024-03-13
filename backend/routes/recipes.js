@@ -104,6 +104,8 @@ router.post("/search", async (req, res) => {
     if (diet) {
       const { id } = await getDietByName(diet);
       console.log(id);
+      queryString += ` AND diet_id = $${queryParams.length + 1}`;
+      queryParams.push(id);
     }
     const recipes = await db.query(queryString, queryParams);
     return res.status(200).json(recipes.rows);
