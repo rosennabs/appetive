@@ -72,17 +72,32 @@ const getIngredientByName = async function (ingredientName) {
   }
 };
 
-// helper function to insert to recipes_ingredients table
-// recipe_id will be obtained from addRecipe
-// ingredients is an array
-// const addRecipeIngredients = function (recipe_id, ingredients) {
+const addRecipeIngredients = function (recipe_id, ingredients) {
+  ingredients.forEach((ingredient) => {
+  const ingredient_id = getIngredientByName(ingredient.name);
 
-// };
+  if (ingredient_id) {
+  const queryString = `INSERT INTO recipes_ingredients (recipe_id, ingredient_id, measurement) VALUES ($1, $2, $3)`;
+  const queryParams = [recipe_id, ingredient_id, ingredient.measurement];
+
+  return db.query(queryString, queryParams)
+    .then((data) => {
+      return data.rows[0];
+    })
+    .catch((error) => {
+      console.error("Error in addRecipeIngredients:", error.message);
+      throw error;
+    })
+  } else {
+    return null;
+  }
+  });
+};
 
 module.exports = {
   getCuisineByName,
   getDietByName,
   getMealTypeByName,
   getIngredientByName,
-//  addRecipeIngredients
+  addRecipeIngredients
 };
