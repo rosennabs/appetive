@@ -64,6 +64,7 @@ const addRecipe = function (recipe) {
 
   let queryString = `INSERT INTO recipes (
     title,
+    image,
     prep_time,
     instructions,
     proteins,
