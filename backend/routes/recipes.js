@@ -92,6 +92,8 @@ router.post("/search", async (req, res) => {
     }
 
     if (cuisine) {
+      const { id } = await getCuisineByName(cuisine);
+      console.log(id);
     }
     const recipes = await db.query(queryString, queryParams);
     return res.status(200).json(recipes.rows);
