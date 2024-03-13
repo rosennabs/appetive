@@ -41,7 +41,7 @@ function NavBar() {
       const headers = {
         token: token,
       };
-      const response = await axios.get("http://localhost:3000/auth/is-verify", {
+      const response = await axios.get("http://localhost:8080/auth/is-verify", {
         headers,
       });
       // console.log(response.data); //true
