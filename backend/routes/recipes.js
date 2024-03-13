@@ -65,4 +65,21 @@ router.get("/:id/reviews", async (req, res) => {
   }
 });
 
+router.post("/search", async (req, res) => {
+  try {
+    const {
+      title,
+      diet,
+      cuisine,
+      mealType,
+      intolerances,
+      minCalories,
+      maxCalories,
+    } = req.query;
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;
