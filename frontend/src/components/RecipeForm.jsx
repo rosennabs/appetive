@@ -21,8 +21,6 @@ function RecipeForm() {
         carbs: '',
         number_of_servings: 0,
         calories: 0,
-        created_at: undefined,
-        updated_at: undefined,
         cuisine: '',
         diet: '',
         meal_type: '',
@@ -46,24 +44,47 @@ function RecipeForm() {
         />
 
       <label className="block" htmlFor="cuisine">Cuisine</label>
-      { /* to update with mock data */}
       <Field
         as="select"
-        id="diet"
-        name="diet"
+        id="cuisine"
+        name="cuisine"
         value={values.cuisine}
         onChange={handleChange}
         className="border"
       >
+        <option value="African">African</option>
+        <option value="Asian">Asian</option>
+        <option value="American">American</option>
+        <option value="British">British</option>
+        <option value="Cajun">Cajun</option>
+        <option value="Caribbean">Caribbean</option>
+        <option value="Chinese">Chinese</option>
+        <option value="Eastern European">Eastern European</option>
+        <option value="European">European</option>
         <option value="French">French</option>
-        <option value="Jamaican">Jamaican</option>
+        <option value="German">German</option>
+        <option value="Greek">Greek</option>
+        <option value="Indian">Indian</option>
+        <option value="Irish">Irish</option>
+        <option value="Italian">Italian</option>
+        <option value="Japanese">Japanese</option>
+        <option value="Jewish">Jewish</option>
+        <option value="Korean">Korean</option>
+        <option value="Latin American">Latin American</option>
+        <option value="Mediterranean">Mediterranean</option>
+        <option value="Mexican">Mexican</option>
+        <option value="Middle Eastern">Middle Eastern</option>
+        <option value="Nordic">Nordic</option>
+        <option value="Southern">Southern</option>
+        <option value="Spanish">Spanish</option>
+        <option value="Thai">Thai</option>
+        <option value="Vietnamese">Vietnamese</option>
       </Field>
 
       <fieldset>
         <legend>Dietary Restrictions</legend>
 
         <label htmlFor="diet">Diet</label>
-        { /* to update with mock data */}
         <Field
           as="select"
           id="diet"
@@ -72,12 +93,21 @@ function RecipeForm() {
           onChange={handleChange}
           className="border"
         >
-          <option value="Keto">Keto</option>
+          <option value="NULL">None</option>
+          <option value="Gluten Free">Gluten Free</option>
+          <option value="Ketogenic">Ketogenic</option>
           <option value="Vegetarian">Vegetarian</option>
+          <option value="Lacto-Vegetarian">Lacto-Vegetarian</option>
+          <option value="Ovo-Vegetarian">Ovo-Vegetarian</option>
+          <option value="Vegan">Vegan</option>
+          <option value="Pescetarian">Pescetarian</option>
+          <option value="Paleo">Paleo</option>
+          <option value="Primal">Primal</option>
+          <option value="Low FODMAP">Low FODMAP</option>
+          <option value="Whole30">Whole30</option>
         </Field>
 
         <label htmlFor="intolerances">Intolerances</label>
-        { /* to update with mock data */}
         <Field
           as="select"
           id="intolerances"
@@ -86,13 +116,23 @@ function RecipeForm() {
           onChange={handleChange}
           className="border"
           >
+          <option value="NULL">None</option>
           <option value="Dairy">Dairy</option>
+          <option value="Egg">Egg</option>
+          <option value="Gluten">Gluten</option>
+          <option value="Grain">Grain</option>
+          <option value="Peanut">Peanut</option>
+          <option value="Seafood">Seafood</option>
+          <option value="Sesame">Sesame</option>
+          <option value="Shellfish">Shellfish</option>
+          <option value="Soy">Soy</option>
+          <option value="Sulfite">Sulfite</option>
+          <option value="Tree Nut">Tree Nut</option>
           <option value="Wheat">Wheat</option>
         </Field>
       </fieldset>
 
       <label className="block" htmlFor="meal_type">Meal Type</label>
-      { /* to update with mock data */}
       <Field
         as="select"
         id="meal_type"
@@ -101,8 +141,20 @@ function RecipeForm() {
         onChange={handleChange}
         className="border"
       >
-        <option value="Breakfast">Breakfast</option>
-        <option value="Lunch">Lunch</option>
+        <option value="main course">main course</option>
+        <option value="side dish">side dish</option>
+        <option value="dessert">dessert</option>
+        <option value="appetizer">appetizer</option>
+        <option value="salad">salad</option>
+        <option value="bread">bread</option>
+        <option value="breakfast">breakfast</option>
+        <option value="soup">soup</option>
+        <option value="beverage">beverage</option>
+        <option value="sauce">sauce</option>
+        <option value="marinade">marinade</option>
+        <option value="fingerfood">fingerfood</option>
+        <option value="snack">snack</option>
+        <option value="drink">drink</option>
       </Field>
 
       <label className="block" htmlFor="prep_time">Prep Time</label>
