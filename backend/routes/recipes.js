@@ -6,7 +6,10 @@ const {
   getReviewsByRecipeId,
 } = require("../db/queries/recipes");
 
-const { getCuisineByName } = require("../db/queries/recipes_helpers");
+const {
+  getCuisineByName,
+  getDietByName,
+} = require("../db/queries/recipes_helpers");
 
 router.get("/", async (_req, res) => {
   try {
@@ -99,6 +102,8 @@ router.post("/search", async (req, res) => {
     }
 
     if (diet) {
+      const { id } = await getDietByName(diet);
+      console.log(id);
     }
     const recipes = await db.query(queryString, queryParams);
     return res.status(200).json(recipes.rows);
