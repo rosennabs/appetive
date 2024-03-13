@@ -59,6 +59,7 @@ const getReviewsByRecipeId = async function (recipe_id) {
 const addRecipe = function (recipe) {
   const queryParams = [];
   const keys = Object.keys(recipe);
+  const ingredients = recipe.ingredients;
 
   let queryString = `INSERT INTO recipes (
     title,
@@ -97,6 +98,8 @@ const addRecipe = function (recipe) {
 
   return db.query(queryString, queryParams)
     .then((data) => {
+      const recipe_id = data.rows[0].id;
+      addRecipeIngredients(recipe_id, ingredients); // DOESN'T WORK RIGHT NOW
       return data.rows[0]; // returned ID will be used as parameter for recipe_ingredients helper function here
     })
     .catch((error) => {
