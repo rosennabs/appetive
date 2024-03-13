@@ -125,6 +125,11 @@ router.post("/search", async (req, res) => {
     }
 
     if (minCalories && maxCalories) {
+      queryString += ` AND calories BETWEEN $${queryParams.length + 1} AND $${
+        queryParams.length + 2
+      }`;
+      queryParams.push(minCalories);
+      queryParams.push(maxCalories);
     }
     const recipes = await db.query(queryString, queryParams);
     return res.status(200).json(recipes.rows);
