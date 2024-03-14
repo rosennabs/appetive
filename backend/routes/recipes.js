@@ -124,10 +124,7 @@ router.post("/search", async (req, res) => {
     }
 
     if (diet) {
-      const id = await getDietByName(diet);
-      console.log(id);
-      queryString += ` AND diet_id = $${queryParams.length + 1}`;
-      queryParams.push(id);
+      const diet_array = diet.split(",");
     }
 
     if (mealType) {
