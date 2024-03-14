@@ -22,24 +22,38 @@ export default function SearchBar() {
     setSuggestions([]); //Clear suggestions after selection
   }
 
-  
+
   //Fetch autocomplete suggestions base on user's input
   useEffect(() => {
+    let isMounted = true;
+
     const fetchAutoComplete = async () => {
       try {
-        const response = await axios.get(
-          `https://api.spoonacular.com/recipes/autocomplete?apiKey=${apiKey}&number=2&query=${query}`
-        );
+        if (query.trim() !== '' && isMounted) {
+          const response = await axios.get(
+            `https://api.spoonacular.com/recipes/autocomplete?apiKey=${apiKey}&number=1&query=${query}`
+          );
 
-        console.log("Autocomplete recipe names: ", response.data);
-        setSuggestions(response.data);
+          console.log("Autocomplete recipe names: ", response.data);
+          setSuggestions(response.data);
+
+        } else {
+          setSuggestions([]); // Clear suggestions if query is empty
+        }
 
   } catch (error) {
         console.error("Error fetching autocomplete recipe names: ", error);
       }
     };
-    fetchAutoComplete();
-  }, []); 
+    
+    fetchAutoComplete()
+    
+    // Cleanup function to set isMounted to false when component unmounts
+  return () => {
+    isMounted = false;
+  };
+    
+  }, [query]); //Trigger effect when query changes
 
 
   return (
@@ -56,6 +70,7 @@ export default function SearchBar() {
     >
       {({ handleSubmit}) => (
         <Form onSubmit={handleSubmit}>
+          <div flex justify-center items-center>
           <div className="flex justify-center items-center bg-white border border-gray-300 rounded-md shadow-lg p-16">
           
           <input
@@ -68,14 +83,29 @@ export default function SearchBar() {
             aria-autocomplete='list'
             className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-500"
             />
+           </div>
+          <div>
+          {suggestions.length > 0 && (
+            <ul className="absolute z-10 bg-white border border-gray-300 rounded-md mt-1 w-full max-w-lg left-0 right-0 mx-auto">
+              {suggestions.map((suggestion) => (
+                <li
+                  key={suggestion.id}
+                  onClick={() => handleSuggestionClick(suggestion.title)}
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                >
+                  {suggestion.title}
+
+                </li>
+              ))}
+
+            </ul>
+              )}
+              </div>
             </div>
             
           
         </Form>
       )}
-
-      
-
       
     </Formik>
     
