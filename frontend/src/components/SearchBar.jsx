@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { AppDataContext } from '../contexts/AppDataContext';
 
 export default function SearchBar() {
+  const [query, setQuery] = useState(''); //State variable to store user's recipe input
+  const [suggestions, setSuggestions] = useState([]); //To store suggested possible recipe names
+
+  
+  //Set state as user inputs characters
+  const handleInputChange = (event) => {
+    const userInput = event.target.value;
+    setQuery(userInput);
+  }
 
   
 
