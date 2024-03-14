@@ -11,7 +11,7 @@ const getCuisineByName = async function (cuisineName) {
       return { message: "Cuisine not found" };
     }
 
-    return cuisine.rows[0];
+    return cuisine.rows[0].id;
   } catch (error) {
     console.error("Error in getCuisineByName:", error.message);
     throw error;
@@ -29,7 +29,7 @@ const getDietByName = async function (dietName) {
       return { message: "Diet not found" };
     }
 
-    return diet.rows[0];
+    return diet.rows[0].id;
   } catch (error) {
     console.error("Error in getDietByName:", error.message);
     throw error;
@@ -47,9 +47,27 @@ const getMealTypeByName = async function (mealTypeName) {
       return { message: "Meal Type not found" };
     }
 
-    return mealType.rows[0];
+    return mealType.rows[0].id;
   } catch (error) {
     console.error("Error in getMealTypeByName:", error.message);
+    throw error;
+  }
+};
+
+// lookup intolerance and return ID
+const getIntoleranceByName = async function (intoleranceName) {
+  try {
+    const queryString = `SELECT id FROM intolerances WHERE name LIKE $1;`;
+    const queryParams = [`%${intoleranceName}%`];
+    const intolerance = await db.query(queryString, queryParams);
+
+    if (intolerance.rows.length === 0) {
+      return { message: "Intolerance not found" };
+    }
+
+    return intolerance.rows[0].id;
+  } catch (error) {
+    console.error("Error in getIntoleranceByName:", error.message);
     throw error;
   }
 };
@@ -65,43 +83,41 @@ const getIngredientByName = async function (ingredientName) {
       return { message: "Ingredient not found" };
     }
 
-    return ingredient.rows[0];
+    return ingredient.rows[0].id;
   } catch (error) {
     console.error("Error in getIngredientByName:", error.message);
     throw error;
   }
 };
 
-// lookup meal_type and return ID
-const getIntoleranceByName = async function (intoleranceName) {
-  try {
-    const queryString = `SELECT id FROM intolerances WHERE name LIKE $1;`;
-    const queryParams = [`%${intoleranceName}%`];
-    const intolerance = await db.query(queryString, queryParams);
+const addRecipeIngredients = function (recipe_id, ingredients) {
+  ingredients.forEach(async (ingredient) => {
+    const ingredient_id = await getIngredientByName(ingredient.name);
 
-    if (intolerance.rows.length === 0) {
-      return { message: "Intolerance not found" };
+    if (ingredient_id) {
+      const queryString = `INSERT INTO recipes_ingredients (recipe_id, ingredient_id, measurement) VALUES ($1, $2, $3)`;
+      const queryParams = [recipe_id, ingredient_id, ingredient.measurement];
+
+      return db
+        .query(queryString, queryParams)
+        .then((data) => {
+          console.log("addRecipeIngredients was run");
+          return data.rows[0];
+        })
+        .catch((error) => {
+          console.error("Error in addRecipeIngredients:", error.message);
+          throw error;
+        });
+    } else {
+      return "Ingredient was not found";
     }
-
-    return intolerance.rows[0];
-  } catch (error) {
-    console.error("Error in getIntoleranceByName:", error.message);
-    throw error;
-  }
+  });
 };
-
-// helper function to insert to recipes_ingredients table
-// recipe_id will be obtained from addRecipe
-// ingredients is an array
-// const addRecipeIngredients = function (recipe_id, ingredients) {
-
-// };
 
 module.exports = {
   getCuisineByName,
   getDietByName,
   getMealTypeByName,
-  getIngredientByName,
   getIntoleranceByName,
-  //  addRecipeIngredients
+  addRecipeIngredients,
 };
