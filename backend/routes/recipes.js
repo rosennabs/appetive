@@ -103,6 +103,8 @@ router.post("/search", async (req, res) => {
       maxCalories,
     } = req.query;
 
+    const results = [];
+
     // database query based on search parameters
     //1 = 1 as placeholder so that the query wouldn't break in any case like if no parameters are passed or only cuisine is passed etc.
     let queryString = "SELECT * FROM recipes WHERE 1 = 1";
