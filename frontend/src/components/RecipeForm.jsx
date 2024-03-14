@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik, Form, FieldArray, Field } from "formik";
+import axios from "axios";
 
 function RecipeForm() {
   const emptyIngredient = {
@@ -27,7 +28,7 @@ function RecipeForm() {
         intolerances: ''
       }}
       onSubmit={(values) => {
-        console.log(values);
+        axios.post('http://localhost:8080/api/recipes/', values);
       }}
     >
     {({ values, handleChange, setFieldValue }) => (
@@ -284,7 +285,12 @@ function RecipeForm() {
         className="border"
         />
         <div>
-          <button type="submit" className="px-2 bg-gray-200">Submit Recipe</button>
+          <button
+            type="submit"
+            className="px-2 bg-gray-200"
+          >
+              Submit Recipe
+          </button>
         </div>
       </Form>
     )}
