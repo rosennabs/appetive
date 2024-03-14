@@ -167,6 +167,11 @@ router.post("/search", async (req, res) => {
           )
         );
         console.log(intolerance_ids);
+
+        queryString += ` AND intolerance_id IN (${intolerance_ids
+          .map((_, index) => `$${queryParams.length + index + 1}`)
+          .join(", ")})`;
+        queryParams.push(...intolerance_ids);
       }
     }
 
