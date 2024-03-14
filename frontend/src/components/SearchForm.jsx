@@ -26,8 +26,8 @@ export default function SearchForm() {
     type: [],
     diet: [],
     intolerances: [],
-    minCalories: [],
-    maxCalories: []
+    minCalories: "",
+    maxCalories: ""
   }
 
   const handleNextQuestion = () => {
@@ -109,7 +109,8 @@ export default function SearchForm() {
 
       onSubmit={(values, actions) => {
         //Handle form submission
-        console.log(values);
+        
+        //console.log(values);
         handleSearchSubmission(values);
         actions.setSubmitting(false);
       }}

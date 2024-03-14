@@ -21,9 +21,9 @@ function App() {
             </div>
           </AppDataProvider>
           
-          <Routes>
+          {/* <Routes>
           <Route path="/recipes/:id" element={<RecipeDetails />} />
-          </Routes>
+          </Routes> */}
             
         </Router>
       </Fragment>
