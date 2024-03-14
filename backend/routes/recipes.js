@@ -65,4 +65,15 @@ router.get("/:id/reviews", async (req, res) => {
   }
 });
 
+router.post("/", async (req, res) => {
+  try {
+    const newRecipe = req.body;
+    const currentTime = new Date();
+    console.log(newRecipe);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;
