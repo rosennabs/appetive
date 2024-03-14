@@ -4,6 +4,7 @@ const {
   getRecipes,
   getRecipeById,
   getReviewsByRecipeId,
+  addRecipe
 } = require("../db/queries/recipes");
 
 router.get("/", async (_req, res) => {
@@ -69,7 +70,14 @@ router.post("/", async (req, res) => {
   try {
     const newRecipe = req.body;
     const currentTime = new Date();
-    console.log(newRecipe);
+    const user = 'bd2a8a02-0f10-47b4-9422-92f35f0a4045'; // temporary
+    
+    newRecipe.user_id = user;
+    newRecipe.created_at = currentTime;
+    newRecipe.updated_at = currentTime;
+
+    await addRecipe(newRecipe);
+    res.redirect(201, 'http://www.google.com/');
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error");

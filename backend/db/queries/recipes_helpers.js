@@ -65,7 +65,7 @@ const getIntoleranceByName = async function (intoleranceName) {
       return { message: "Intolerance not found" };
     }
 
-    return ingredient.rows[0].id;
+    return intolerance.rows[0].id;
   } catch (error) {
     console.error("Error in getIntoleranceByName:", error.message);
     throw error;
@@ -100,6 +100,7 @@ const addRecipeIngredients = function (recipe_id, ingredients) {
 
   return db.query(queryString, queryParams)
     .then((data) => {
+      console.log('addRecipeIngredients was run');
       return data.rows[0];
     })
     .catch((error) => {

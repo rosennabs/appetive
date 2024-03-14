@@ -57,12 +57,17 @@ const getReviewsByRecipeId = async function (recipe_id) {
   }
 };
 
-const addRecipe = function (recipe) {
+const addRecipe = async function (recipe) {
   const queryParams = [];
   const keys = Object.keys(recipe);
   const ingredients = recipe.ingredients;
 
   let queryString = `INSERT INTO recipes (
+    cuisine_id,
+    diet_id,
+    meal_type_id,
+    intolerance_id,
+    user_id,
     title,
     image,
     prep_time,
@@ -73,17 +78,18 @@ const addRecipe = function (recipe) {
     number_of_servings,
     calories,
     created_at,
-    updated_at,
-    cuisine,
-    diet,
-    meal_type,
-    intolerances
+    updated_at
     )
     VALUES (
+      $1, $2, $3, $4,
   `;
 
-  // use 1 as starting point to exclude recipe.ingredients
-  for (let i = 1; i < keys.length; i++) {
+  queryParams.push(await getCuisineByName(recipe.cuisine));
+  queryParams.push(await getDietByName(recipe.diet));
+  queryParams.push(await getMealTypeByName(recipe.meal_type)),
+  queryParams.push(await getIntoleranceByName(recipe.intolerances));
+  // use 5 as starting point to exclude recipe.ingredients through intolerances
+  for (let i = 5; i < keys.length; i++) {
     const key = keys[i];
     queryParams.push(recipe[key]);
     queryString += `$${queryParams.length}`;
@@ -95,18 +101,17 @@ const addRecipe = function (recipe) {
   }
   
   // add ID numbers by lookup
-  queryString += `
-    ${getCuisineByName(recipe[cuisine])},
-    ${getDietByName(recipe[diet])},
-    ${getMealTypeByName(recipe[meal_type])},
-    ${getIntoleranceByName(recipe[intolerances])})
+  queryString += `)
     RETURNING id;
   `;
+  console.log(queryString);
+  console.log(queryParams);
 
   return db.query(queryString, queryParams)
     .then((data) => {
       const recipe_id = data.rows[0].id;
       addRecipeIngredients(recipe_id, ingredients);
+      // addRecipeUser(recipe_id, user_id);
       return data.rows[0];
     })
     .catch((error) => {

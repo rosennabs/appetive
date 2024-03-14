@@ -13,6 +13,11 @@ function RecipeForm() {
     <Formik
       initialValues={{
         ingredients: [emptyIngredient],
+        cuisine: 'African',
+        diet: '',
+        meal_type: 'main course',
+        intolerances: '',
+        user_id: '',
         title: '',
         image: '',
         prep_time: 0,
@@ -23,11 +28,7 @@ function RecipeForm() {
         number_of_servings: 0,
         calories: 0,
         created_at: 0,
-        updated_at: 0,
-        cuisine: 'African',
-        diet: '',
-        meal_type: 'main course',
-        intolerances: ''
+        updated_at: 0
       }}
       onSubmit={(values) => {
         axios.post('http://localhost:8080/api/recipes/', values);
