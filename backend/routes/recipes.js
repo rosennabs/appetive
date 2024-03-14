@@ -104,12 +104,13 @@ router.post("/search", async (req, res) => {
     } = req.query;
 
     // database query based on search parameters
-    let queryString = "SELECT * FROM recipes WHERE ";
+    //1 = 1 as placeholder so that the query wouldn't break in any case like if no parameters are passed or only cuisine is passed etc.
+    let queryString = "SELECT * FROM recipes WHERE 1 = 1";
     const queryParams = [];
 
     //Add conditions based on query parameters
     if (title) {
-      queryString += `title ILIKE $${queryParams.length + 1}`;
+      queryString += ` AND title ILIKE $${queryParams.length + 1}`;
       queryParams.push(`%${title}%`);
       const recipes = await db.query(queryString, queryParams);
       return res.status(200).json(recipes.rows);
