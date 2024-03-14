@@ -119,7 +119,7 @@ router.post("/search", async (req, res) => {
     if (cuisine) {
       const id = await getCuisineByName(cuisine);
       console.log(id);
-      queryString += `cuisine_id = $${queryParams.length + 1}`;
+      queryString += ` AND cuisine_id = $${queryParams.length + 1}`;
       queryParams.push(id);
     }
 
@@ -172,7 +172,7 @@ router.post("/search", async (req, res) => {
       queryString += ` AND calories <= $${queryParams.length + 1}`;
       queryParams.push(maxCalories);
     }
-
+    console.log(queryString);
     const recipes = await db.query(queryString, queryParams);
     return res.status(200).json(recipes.rows);
   } catch (error) {
