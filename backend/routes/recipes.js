@@ -6,6 +6,7 @@ const {
   getReviewsByRecipeId,
   addRecipe
 } = require("../db/queries/recipes");
+const jwtDecoder = require("../utils/jwtDecoder");
 
 router.get("/", async (_req, res) => {
   try {
@@ -70,14 +71,14 @@ router.post("/", async (req, res) => {
   try {
     const newRecipe = req.body;
     const currentTime = new Date();
-    const user = 'bd2a8a02-0f10-47b4-9422-92f35f0a4045'; // temporary
+    const { user } = await jwtDecoder(newRecipe.user_id);
     
     newRecipe.user_id = user;
     newRecipe.created_at = currentTime;
     newRecipe.updated_at = currentTime;
 
     await addRecipe(newRecipe);
-    res.redirect(201, 'http://www.google.com/');
+    res.status(201).send();
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error");

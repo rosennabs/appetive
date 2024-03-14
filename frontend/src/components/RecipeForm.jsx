@@ -17,7 +17,7 @@ function RecipeForm() {
         diet: '',
         meal_type: 'main course',
         intolerances: '',
-        user_id: '',
+        user_id: localStorage.getItem('token'),
         title: '',
         image: '',
         prep_time: 0,
@@ -34,7 +34,7 @@ function RecipeForm() {
         axios.post('http://localhost:8080/api/recipes/', values);
       }}
     >
-    {({ values, handleChange, setFieldValue }) => (
+    {({ values, handleChange }) => (
       <Form>
 
       <label className="block" htmlFor="title">Recipe Title</label>

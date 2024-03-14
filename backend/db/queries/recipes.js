@@ -111,7 +111,6 @@ const addRecipe = async function (recipe) {
     .then((data) => {
       const recipe_id = data.rows[0].id;
       addRecipeIngredients(recipe_id, ingredients);
-      // addRecipeUser(recipe_id, user_id);
       return data.rows[0];
     })
     .catch((error) => {
