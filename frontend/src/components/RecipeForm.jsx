@@ -22,9 +22,11 @@ function RecipeForm() {
         carbs: '',
         number_of_servings: 0,
         calories: 0,
-        cuisine: '',
+        created_at: 0,
+        updated_at: 0,
+        cuisine: 'African',
         diet: '',
-        meal_type: '',
+        meal_type: 'main course',
         intolerances: ''
       }}
       onSubmit={(values) => {
@@ -273,8 +275,8 @@ function RecipeForm() {
           />
       </fieldset>
 
-      <label className="block" htmlFor="image">Upload Image</label>
-      <input
+      <label className="block" htmlFor="image">Image URL</label>
+      {/* <input
         id="image"
         name="image"
         type="file"
@@ -283,6 +285,14 @@ function RecipeForm() {
           setFieldValue("file", event.currentTarget.files[0]);
         }}
         className="border"
+        /> */}
+        <Field
+          id="image"
+          name="image"
+          type="text"
+          value={values.image}
+          onChange={handleChange}
+          className="border"
         />
         <div>
           <button
