@@ -153,6 +153,8 @@ router.post("/search", async (req, res) => {
     }
 
     if (intolerance) {
+      const intolerance_array = intolerance.split(",");
+
       const id = await getIntoleranceByName(intolerance);
       console.log(id);
       queryString += ` AND intolerance_id = $${queryParams.length + 1}`;
