@@ -114,10 +114,29 @@ const addRecipeIngredients = function (recipe_id, ingredients) {
   });
 };
 
+// lookup user id and return user name
+const getUsernameById = async function (id) {
+  try {
+    const queryString = `SELECT name FROM users WHERE id = $1;`;
+    const queryParams = [`${id}`];
+    const user_name = await db.query(queryString, queryParams);
+
+    if (user_name.rows.length === 0) {
+      return { message: "User not found" };
+    }
+
+    return user_name.rows[0].name;
+  } catch (error) {
+    console.error("Error in getUsernameById:", error.message);
+    throw error;
+  }
+};
+
 module.exports = {
   getCuisineByName,
   getDietByName,
   getMealTypeByName,
   getIntoleranceByName,
   addRecipeIngredients,
+  getUsernameById,
 };
