@@ -6,6 +6,12 @@ const {
   getReviewsByRecipeId,
   addRecipe,
 } = require("../db/queries/recipes");
+const {
+  getCuisineByName,
+  getDietByName,
+  getMealTypeByName,
+  getIntoleranceByName,
+} = require("../db/queries/recipes_helpers");
 const jwtDecoder = require("../utils/jwtDecoder");
 
 router.get("/", async (_req, res) => {
@@ -110,28 +116,28 @@ router.post("/search", async (req, res) => {
     }
 
     if (cuisine) {
-      const { id } = await getCuisineByName(cuisine);
+      const id = await getCuisineByName(cuisine);
       console.log(id);
       queryString += `cuisine_id = $${queryParams.length + 1}`;
       queryParams.push(id);
     }
 
     if (diet) {
-      const { id } = await getDietByName(diet);
+      const id = await getDietByName(diet);
       console.log(id);
       queryString += ` AND diet_id = $${queryParams.length + 1}`;
       queryParams.push(id);
     }
 
     if (mealType) {
-      const { id } = await getMealTypeByName(mealType);
+      const id = await getMealTypeByName(mealType);
       console.log(id);
       queryString += ` AND meal_type_id = $${queryParams.length + 1}`;
       queryParams.push(id);
     }
 
     if (intolerance) {
-      const { id } = await getIntoleranceByName(intolerance);
+      const id = await getIntoleranceByName(intolerance);
       console.log(id);
       queryString += ` AND intolerance_id = $${queryParams.length + 1}`;
       queryParams.push(id);
@@ -150,6 +156,7 @@ router.post("/search", async (req, res) => {
       queryString += ` AND calories <= $${queryParams.length + 1}`;
       queryParams.push(maxCalories);
     }
+
     const recipes = await db.query(queryString, queryParams);
     return res.status(200).json(recipes.rows);
   } catch (error) {
