@@ -12,10 +12,10 @@ function RecipeForm() {
   return (
     <Formik
       initialValues={{
+        ingredients: [emptyIngredient],
         title: '',
         image: '',
         prep_time: 0,
-        ingredients: [emptyIngredient],
         instructions: '',
         proteins: '',
         fats: '',

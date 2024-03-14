@@ -82,7 +82,8 @@ const addRecipe = function (recipe) {
     VALUES (
   `;
 
-  for (let i = 0; i < keys.length; i++) {
+  // use 1 as starting point to exclude recipe.ingredients
+  for (let i = 1; i < keys.length; i++) {
     const key = keys[i];
     queryParams.push(recipe[key]);
     queryString += `$${queryParams.length}`;
