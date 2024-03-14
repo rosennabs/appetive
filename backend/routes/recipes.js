@@ -11,6 +11,8 @@ const {
   getDietByName,
   getMealTypeByName,
   getIntoleranceByName,
+  getUsernameById,
+  getUserNameById,
 } = require("../db/queries/recipes_helpers");
 const jwtDecoder = require("../utils/jwtDecoder");
 
@@ -115,6 +117,15 @@ router.post("/search", async (req, res) => {
       queryString += ` AND title ILIKE $${queryParams.length + 1}`;
       queryParams.push(`%${title}%`);
       const recipes = await db.query(queryString, queryParams);
+
+      for (const recipe of recipes.rows) {
+        const recipe_obj = {};
+
+        //get author of the recipe by user id
+        const user_name = await getUserNameById(recipe.user_id);
+        console.log(user_name);
+        recipe_obj["sourceName"] = user_name;
+      }
       return res.status(200).json(recipes.rows);
     }
 

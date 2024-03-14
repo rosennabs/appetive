@@ -115,7 +115,7 @@ const addRecipeIngredients = function (recipe_id, ingredients) {
 };
 
 // lookup user id and return user name
-const getUsernameById = async function (id) {
+const getUserNameById = async function (id) {
   try {
     const queryString = `SELECT name FROM users WHERE id = $1;`;
     const queryParams = [`${id}`];
@@ -127,7 +127,7 @@ const getUsernameById = async function (id) {
 
     return user_name.rows[0].name;
   } catch (error) {
-    console.error("Error in getUsernameById:", error.message);
+    console.error("Error in getUserNameById:", error.message);
     throw error;
   }
 };
@@ -138,5 +138,5 @@ module.exports = {
   getMealTypeByName,
   getIntoleranceByName,
   addRecipeIngredients,
-  getUsernameById,
+  getUserNameById,
 };
