@@ -7,53 +7,34 @@ import apiKey from "../config";
 export default function SearchBar() {
   const [query, setQuery] = useState(''); //State variable to store user's recipe input
   const [suggestions, setSuggestions] = useState([]); //To store suggested possible recipe names
-
-
-  //Set state with user's input
-  const handleInputChange = (event) => {
-    const userInput = event.target.value;
-    //console.log("User's input: ", userInput);
+ 
+  const handleInputChange = async (event) => {
+    const userInput = event.target.value
     setQuery(userInput);
+   
+    if (userInput.trim() !== '') {
+      try {
+        const response = await axios.get(
+          `https://api.spoonacular.com/recipes/autocomplete?apiKey=${apiKey}&number=2&query=${userInput}`
+        );
+        console.log("Autocomplete recipe names: ", response.data);
+        setSuggestions(response.data);
+
+      } catch (error) {
+        console.error("Error fetching autocomplete recipe names: ", error);
+      }
+    } else {
+      setSuggestions([]); // Clear suggestions if query is empty
+    }
   }
+
+
 
   //Handle suggestion selection by user
   const handleSuggestionClick = (suggestion) => {
     setQuery(suggestion);
     setSuggestions([]); //Clear suggestions after selection
   }
-
-
-  //Fetch autocomplete suggestions base on user's input
-  useEffect(() => {
-    let isMounted = true;
-
-    const fetchAutoComplete = async () => {
-      try {
-        if (query.trim() !== '' && isMounted) {
-          const response = await axios.get(
-            `https://api.spoonacular.com/recipes/autocomplete?apiKey=${apiKey}&number=1&query=${query}`
-          );
-
-          console.log("Autocomplete recipe names: ", response.data);
-          setSuggestions(response.data);
-
-        } else {
-          setSuggestions([]); // Clear suggestions if query is empty
-        }
-
-  } catch (error) {
-        console.error("Error fetching autocomplete recipe names: ", error);
-      }
-    };
-    
-    fetchAutoComplete()
-    
-    // Cleanup function to set isMounted to false when component unmounts
-  return () => {
-    isMounted = false;
-  };
-    
-  }, [query]); //Trigger effect when query changes
 
 
   return (
