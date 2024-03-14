@@ -132,10 +132,16 @@ router.post("/search", async (req, res) => {
         queryString += ` AND diet_id = $${queryParams.length + 1}`;
         queryParams.push(id);
       } else {
+        //get diet_id for each diet value
         const diet_ids = await Promise.all(
           diet_array.map((d) => getDietByName(d.trim()))
         );
         console.log(diet_ids);
+
+        queryString += ` AND diet_id IN (${diet_ids
+          .map((_, index) => `$${queryParams.length + index + 1}`)
+          .join(", ")})`;
+        queryParams.push(...diet_ids);
       }
     }
 
