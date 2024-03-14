@@ -9,13 +9,20 @@ export default function SearchBar() {
   const [suggestions, setSuggestions] = useState([]); //To store suggested possible recipe names
 
 
-  //Set state as user inputs characters
+  //Set state with user's input
   const handleInputChange = (event) => {
     const userInput = event.target.value;
     //console.log("User's input: ", userInput);
     setQuery(userInput);
   }
 
+  //Handle suggestion selection by user
+  const handleSuggestionClick = (suggestion) => {
+    setQuery(suggestion);
+    setSuggestions([]); //Clear suggestions after selection
+  }
+
+  
   //Fetch autocomplete suggestions base on user's input
   useEffect(() => {
     const fetchAutoComplete = async () => {
