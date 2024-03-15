@@ -8,7 +8,7 @@ const renderInstructions = (instructions) => {
   console.log(filteredInstructions.split("."));
   return filteredInstructions
     .split(".")
-    .map((instruction) => <li class="mb-3">{instruction}</li>);
+    .map((instruction) => <li className="mb-3">{instruction}</li>);
 };
 
 const RecipeDetails = function () {
@@ -60,34 +60,34 @@ const RecipeDetails = function () {
     <>
       {recipeDetails && (
         <div>
-          <h2 class="text-4xl font-extrabold dark:text-white mb-10">
+          <h2 className="text-4xl font-extrabold dark:text-white mb-10">
             {recipeDetails.title}
           </h2>
-          <img class="mb-10" src={recipeDetails.image} alt="" />
-          <div class="w-[800px] max-w-[800px]">
-            <p class="text-2xl font-extrabold dark:text-white mb-5">
+          <img className="mb-10" src={recipeDetails.image} alt="" />
+          <div className="w-[800px] max-w-[800px]">
+            <p className="text-2xl font-extrabold dark:text-white mb-5">
               Instructions:
             </p>
-            <ol class="list-decimal">
+            <ol className="list-decimal">
               {renderInstructions(recipeDetails.instructions)}
             </ol>
           </div>
-          <p class="mt-10 text-xl">
+          <p className="mt-10 text-xl">
             No. of servings: {recipeDetails.number_of_servings}
           </p>
-          <p class="mt-3 text-xl">
+          <p className="mt-3 text-xl">
             Preparation time: {recipeDetails.prep_time} minutes
           </p>
-          <p class="mt-3 text-xl">Proteins: {recipeDetails.proteins}</p>
-          <p class="mt-3 text-xl">Carbs: {recipeDetails.carbs}</p>
-          <p class="mt-3 text-xl">Fats: {recipeDetails.fats}</p>
+          <p className="mt-3 text-xl">Proteins: {recipeDetails.proteins}</p>
+          <p className="mt-3 text-xl">Carbs: {recipeDetails.carbs}</p>
+          <p className="mt-3 text-xl">Fats: {recipeDetails.fats}</p>
         </div>
       )}
 
-      <h3 class="text-3xl mt-20 font-extrabold">Reviews</h3>
+      <h3 className="text-3xl mt-20 font-extrabold">Reviews</h3>
       {recipeReviews.length !== 0 ? (
         recipeReviews.map((review) => (
-          <div key={review.id} class="mb-5">
+          <div key={review.id} className="mb-5">
             <p>Rating: {review.rating}</p>
             <p>Comment: {review.review}</p>
           </div>

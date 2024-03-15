@@ -85,9 +85,11 @@ const useAppData = () => {
       maxCalories: values.maxCalories !== "" ? [values.maxCalories] : [],
     };
 
+    
     // Remove categories with no selected options from the selectedOptions object
     Object.keys(selectedOptions).forEach((key) => {
       if (selectedOptions[key].length === 0) {
+        
         delete selectedOptions[key];
       }
     });
@@ -108,7 +110,7 @@ const useAppData = () => {
 
       const response = await axios.get(url);
 
-      // console.log(response.data.results);
+    console.log(response.data.results);
       dispatch({ type: SET_RECIPES, recipes: response.data.results });
     } catch (error) {
       console.error("Error fetching filtered recipes: ", error);
