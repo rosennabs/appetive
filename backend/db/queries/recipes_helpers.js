@@ -150,6 +150,24 @@ const getCuisineNameById = async function (id) {
   }
 };
 
+// lookup diet id and return diet name
+const getDietNameById = async function (id) {
+  try {
+    const queryString = `SELECT name FROM diets WHERE id = $1;`;
+    const queryParams = [`${id}`];
+    const diet_name = await db.query(queryString, queryParams);
+
+    if (diet_name.rows.length === 0) {
+      return { message: "Diet not found" };
+    }
+
+    return diet_name.rows[0].name;
+  } catch (error) {
+    console.error("Error in getDietNameById:", error.message);
+    throw error;
+  }
+};
+
 module.exports = {
   getCuisineByName,
   getDietByName,
@@ -158,4 +176,5 @@ module.exports = {
   addRecipeIngredients,
   getUserNameById,
   getCuisineNameById,
+  getDietNameById,
 };
