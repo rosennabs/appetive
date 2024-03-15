@@ -88,7 +88,8 @@ const getIngredientByName = async function (ingredientName) {
     const ingredient = await db.query(queryString, queryParams);
 
     if (ingredient.rows.length === 0) {
-      return { message: "Ingredient not found" };
+      const newIngredient = await addIngredient(ingredientName);
+      return newIngredient;
     }
 
     return ingredient.rows[0].id;
@@ -98,12 +99,26 @@ const getIngredientByName = async function (ingredientName) {
   }
 };
 
+const addIngredient = function (ingredientName) {
+    const queryString = `INSERT INTO ingredients (name) VALUES ($1) RETURNING id;`;
+    const queryParams = [ingredientName];
+
+    return db.query(queryString, queryParams)
+      .then((data) => {
+        return data.rows[0].id;
+      })
+      .catch((error) => {
+        console.error("Error in addIngredient:", error.message);
+        throw error;
+      })
+}
+
 const addRecipeIngredients = function (recipe_id, ingredients) {
   ingredients.forEach(async (ingredient) => {
   const ingredient_id = await getIngredientByName(ingredient.name);
 
   if (ingredient_id) {
-  const queryString = `INSERT INTO recipes_ingredients (recipe_id, ingredient_id, measurement) VALUES ($1, $2, $3)`;
+  const queryString = `INSERT INTO recipes_ingredients (recipe_id, ingredient_id, measurement) VALUES ($1, $2, $3);`;
   const queryParams = [recipe_id, ingredient_id, ingredient.measurement];
 
   return db.query(queryString, queryParams)
