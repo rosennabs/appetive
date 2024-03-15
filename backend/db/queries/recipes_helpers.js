@@ -186,6 +186,24 @@ const getMealTypeNameById = async function (id) {
   }
 };
 
+// lookup intolerance id and return intolerance name
+const getIntoleranceNameById = async function (id) {
+  try {
+    const queryString = `SELECT name FROM intolerances WHERE id = $1;`;
+    const queryParams = [`${id}`];
+    const intolerance_name = await db.query(queryString, queryParams);
+
+    if (intolerance_name.rows.length === 0) {
+      return { message: "Intolerance not found" };
+    }
+
+    return intolerance_name.rows[0].name;
+  } catch (error) {
+    console.error("Error in getIntoleranceNameById:", error.message);
+    throw error;
+  }
+};
+
 module.exports = {
   getCuisineByName,
   getDietByName,
@@ -196,4 +214,5 @@ module.exports = {
   getCuisineNameById,
   getDietNameById,
   getMealTypeNameById,
+  getIntoleranceNameById,
 };
