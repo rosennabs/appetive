@@ -204,6 +204,28 @@ const getIntoleranceNameById = async function (id) {
   }
 };
 
+// lookup recipe id and return ingredients
+const getRecipeIngredientsById = async function (id) {
+  try {
+    const queryString = `SELECT ingredients.*, recipes_ingredients.measurement 
+    FROM recipes_ingredients
+    JOIN ingredients
+    ON recipes_ingredients.ingredient_id = ingredients.id
+    WHERE recipes_ingredients.recipe_id = $1;`;
+    const queryParams = [`${id}`];
+    const ingredients = await db.query(queryString, queryParams);
+
+    if (ingredients.rows.length === 0) {
+      return { message: "Ingredients not found" };
+    }
+
+    return ingredients.rows;
+  } catch (error) {
+    console.error("Error in getRecipeIngredientsById:", error.message);
+    throw error;
+  }
+};
+
 module.exports = {
   getCuisineByName,
   getDietByName,
@@ -215,4 +237,5 @@ module.exports = {
   getDietNameById,
   getMealTypeNameById,
   getIntoleranceNameById,
+  getRecipeIngredientsById,
 };
