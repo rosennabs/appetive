@@ -119,6 +119,7 @@ router.post("/search", async (req, res) => {
       queryParams.push(`%${title}%`);
       const recipes = await db.query(queryString, queryParams);
 
+      //get title and image for recipe and put it inside an object
       for (const recipe of recipes.rows) {
         const recipe_obj = {};
         recipe_obj["title"] = recipe.title;
@@ -203,7 +204,16 @@ router.post("/search", async (req, res) => {
     }
     console.log(queryString);
     const recipes = await db.query(queryString, queryParams);
-    return res.status(200).json(recipes.rows);
+
+    //get title and image for recipe and put it inside an object
+    for (const recipe of recipes.rows) {
+      const recipe_obj = {};
+      recipe_obj["title"] = recipe.title;
+      recipe_obj["image"] = recipe.image;
+
+      results.push(recipe_obj);
+    }
+    return res.status(200).json(results);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error");
