@@ -168,6 +168,24 @@ const getDietNameById = async function (id) {
   }
 };
 
+// lookup mealType id and return mealType name
+const getMealTypeNameById = async function (id) {
+  try {
+    const queryString = `SELECT name FROM meal_types WHERE id = $1;`;
+    const queryParams = [`${id}`];
+    const meal_type_name = await db.query(queryString, queryParams);
+
+    if (meal_type_name.rows.length === 0) {
+      return { message: "Meal Type not found" };
+    }
+
+    return meal_type_name.rows[0].name;
+  } catch (error) {
+    console.error("Error in getMealTypeNameById:", error.message);
+    throw error;
+  }
+};
+
 module.exports = {
   getCuisineByName,
   getDietByName,
@@ -177,4 +195,5 @@ module.exports = {
   getUserNameById,
   getCuisineNameById,
   getDietNameById,
+  getMealTypeNameById,
 };
