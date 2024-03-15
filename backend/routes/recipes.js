@@ -105,6 +105,43 @@ router.get("/:id", async (req, res) => {
       //add meal_type name into recipe object
       // recipe_obj["type"] = [intolerance_name];
 
+      //create nutrients array and add calories, proteins, fats and carbs
+      const nutrients = [];
+      const calories = {
+        name: "Calories",
+        amount: recipe.calories,
+        unit: "kcal",
+      };
+
+      nutrients.push(calories);
+
+      const proteins = {
+        name: "Protein",
+        amount: Number(recipe.proteins.replace("g", "")),
+        unit: "g",
+      };
+
+      nutrients.push(proteins);
+
+      const fats = {
+        name: "Fat",
+        amount: Number(recipe.fats.replace("g", "")),
+        unit: "g",
+      };
+
+      nutrients.push(fats);
+
+      const carbs = {
+        name: "Carbohydrates",
+        amount: Number(recipe.carbs.replace("g", "")),
+        unit: "g",
+      };
+
+      nutrients.push(carbs);
+
+      //add nutrients into recipe object
+      recipe_obj["nutrients"] = nutrients;
+
       res.status(200).json(recipe);
     }
   } catch (error) {
