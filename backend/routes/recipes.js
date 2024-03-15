@@ -4,7 +4,9 @@ const {
   getRecipes,
   getRecipeById,
   getReviewsByRecipeId,
+  addRecipe
 } = require("../db/queries/recipes");
+const jwtDecoder = require("../utils/jwtDecoder");
 
 router.get("/", async (_req, res) => {
   try {
@@ -59,6 +61,24 @@ router.get("/:id/reviews", async (req, res) => {
       // Reviews found, return the array
       res.status(200).json(reviews);
     }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server error");
+  }
+});
+
+router.post("/", async (req, res) => {
+  try {
+    const newRecipe = req.body;
+    const currentTime = new Date();
+    const { user } = await jwtDecoder(newRecipe.user_id);
+    
+    newRecipe.user_id = user;
+    newRecipe.created_at = currentTime;
+    newRecipe.updated_at = currentTime;
+
+    await addRecipe(newRecipe);
+    res.status(201).send();
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error");

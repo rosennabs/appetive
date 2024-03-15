@@ -1,9 +1,17 @@
 INSERT INTO
   meal_types (name)
 VALUES
-  ('breakfast');
-
-INSERT INTO
-  meal_types (name)
-VALUES
-  ('salad');
+  ('main course'),
+  ('side dish'),
+  ('dessert'),
+  ('appetizer'),
+  ('salad'),
+  ('bread'),
+  ('breakfast'),
+  ('soup'),
+  ('beverage'),
+  ('sauce'),
+  ('marinade'),
+  ('fingerfood'),
+  ('snack'),
+  ('drink');
