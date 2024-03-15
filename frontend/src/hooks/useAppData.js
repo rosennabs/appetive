@@ -63,8 +63,7 @@ const useAppData = () => {
       console.error("Error fetching recipe information: ", error);
     }
   }
-          
-          
+                  
 
   //Fetch all recipes from api on initial render
   useEffect(() => {
@@ -76,17 +75,38 @@ const useAppData = () => {
 
         // Create an array of promises for fetching recipe information
 
-        const recipeInfoPromises = response.data.results.map(async (recipe) => fetchRecipeInfo(recipe.id));
+        const recipeInfoPromises = response.data.results.map(async (recipe) =>
+          fetchRecipeInfo(recipe.id)
+        );
 
-          
         //Wait for all recipe information promises to resolve
         const recipes = await Promise.all(recipeInfoPromises);
 
-        // Set the fetched recipes with information in state
         setRecipes(recipes);
 
-        // console.log("This is all recipe info: ", recipes);
+        //Fetch all user's stored recipes from the database
+        const fetchDatabaseRecipes = async () => {
+          try {
+            const response = await axios.get(
+              "http://localhost:8080/api/recipes"
+            );
 
+            const databaseRecipes = response.data;
+            console.log("Database recipes: ", databaseRecipes);
+
+            // Set the fetched recipes with information in state
+            // setRecipes((prev) => {
+            //   return [...prev, databaseRecipes];
+            // });
+          } catch (error) {
+            console.error("Error fetching recipes from database: ", error);
+          }
+        };
+        
+        // Await fetching of database recipes before setting state
+        await fetchDatabaseRecipes();
+
+        // console.log("This is all recipe info: ", recipes);
       } catch (error) {
         console.error("Error fetching recipes: ", error);
       }
@@ -140,7 +160,7 @@ const useAppData = () => {
         );
 
         // console.log("Filtered Results: ", filteredRecipes);
-        dispatch({ type: SET_RECIPES, recipes: filteredRecipes });
+        setRecipes(filteredRecipes);
 
       } catch (error) {
         console.error("Error fetching filtered recipes: ", error);
