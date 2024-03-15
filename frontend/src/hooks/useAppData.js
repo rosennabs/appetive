@@ -153,10 +153,9 @@ const useAppData = () => {
     
       try {
         const response = await axios.get(url);
-        
+
         const filteredRecipes = await Promise.all(
-          response.data.results.map(
-          (recipe) => fetchRecipeInfo(recipe.id))
+          response.data.results.map((recipe) => fetchRecipeInfo(recipe.id))
         );
 
         // console.log("Filtered Results: ", filteredRecipes);
