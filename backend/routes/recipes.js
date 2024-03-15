@@ -40,6 +40,8 @@ router.get("/:id", async (req, res) => {
       return res.status(400).json("Invalid recipe ID");
     }
 
+    const results = [];
+
     const recipe = await getRecipeById(recipeId);
 
     if ("message" in recipe) {
