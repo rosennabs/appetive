@@ -17,7 +17,7 @@ export default function SearchBar() {
         const response = await axios.get(
           `https://api.spoonacular.com/recipes/autocomplete?apiKey=${apiKey}&number=2&query=${userInput}`
         );
-        console.log("Autocomplete recipe names: ", response.data);
+        // console.log("Autocomplete recipe names: ", response.data);
         setSuggestions(response.data);
 
       } catch (error) {

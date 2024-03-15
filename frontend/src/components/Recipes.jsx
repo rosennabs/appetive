@@ -10,6 +10,9 @@ export default function Recipe() {
 
   return (
     <div>
+      {recipes.length === 0 ? (
+        <h1 className="font-bold text-3xl mb-8  text-amber-700 text-center"> No results found! </h1>
+      ) : (  
 
       <section className="md:container max-w-screen-xl mx-auto flex flex-wrap justify-between">
         {recipes && recipes.map(recipe => (
@@ -21,12 +24,11 @@ export default function Recipe() {
 {/*             
             {recipe.information && <a className="uppercase font-serif text-center text-xs text-gray-500 hover:text-amber-700" href={recipe.information.sourceUrl}> {recipe.information.creditsText} </a>} */}
             
-            
-
           </div>
         ))}
 
-      </section>
+          </section>
+          )} 
     </div>
   )
 }
