@@ -67,6 +67,9 @@ router.get("/:id", async (req, res) => {
       //add preparation minutes into recipe object
       recipe_obj["readyInMinutes"] = recipe.prep_time;
 
+      //add no. of servings into recipe object
+      recipe_obj["servings"] = recipe.number_of_servings;
+
       res.status(200).json(recipe);
     }
   } catch (error) {
