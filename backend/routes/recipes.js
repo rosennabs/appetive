@@ -58,6 +58,9 @@ router.get("/:id", async (req, res) => {
       //add title into recipe object
       recipe_obj["title"] = recipe.title;
 
+      //add image into recipe object
+      recipe_obj["image"] = recipe.image;
+
       res.status(200).json(recipe);
     }
   } catch (error) {
