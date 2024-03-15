@@ -132,6 +132,24 @@ const getUserNameById = async function (id) {
   }
 };
 
+// lookup cuisine id and return cuisine name
+const getCuisineNameById = async function (id) {
+  try {
+    const queryString = `SELECT name FROM cuisines WHERE id = $1;`;
+    const queryParams = [`${id}`];
+    const cuisine_name = await db.query(queryString, queryParams);
+
+    if (cuisine_name.rows.length === 0) {
+      return { message: "Cuisine not found" };
+    }
+
+    return cuisine_name.rows[0].name;
+  } catch (error) {
+    console.error("Error in getUsernameById:", error.message);
+    throw error;
+  }
+};
+
 module.exports = {
   getCuisineByName,
   getDietByName,
@@ -139,4 +157,5 @@ module.exports = {
   getIntoleranceByName,
   addRecipeIngredients,
   getUserNameById,
+  getCuisineNameById,
 };
