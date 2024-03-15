@@ -17,6 +17,7 @@ const {
   getDietNameById,
   getMealTypeNameById,
   getIntoleranceNameById,
+  getRecipeIngredientsById,
 } = require("../db/queries/recipes_helpers");
 const jwtDecoder = require("../utils/jwtDecoder");
 
@@ -141,6 +142,13 @@ router.get("/:id", async (req, res) => {
 
       //add nutrients into recipe object
       recipe_obj["nutrients"] = nutrients;
+
+      //create ingredients array and push all the ingredients
+      const ingredients = [];
+
+      //get ingredients of the recipe by recipe id
+      const ingredients_all = await getRecipeIngredientsById(recipe.id);
+      console.log(ingredients_all);
 
       res.status(200).json(recipe);
     }
