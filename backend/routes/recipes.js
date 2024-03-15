@@ -13,6 +13,7 @@ const {
   getIntoleranceByName,
   getUsernameById,
   getUserNameById,
+  getCuisineNameById,
 } = require("../db/queries/recipes_helpers");
 const jwtDecoder = require("../utils/jwtDecoder");
 
@@ -120,13 +121,12 @@ router.post("/search", async (req, res) => {
 
       for (const recipe of recipes.rows) {
         const recipe_obj = {};
+        recipe_obj["title"] = recipe.title;
+        recipe_obj["image"] = recipe.image;
 
-        //get author of the recipe by user id
-        const user_name = await getUserNameById(recipe.user_id);
-        console.log(user_name);
-        recipe_obj["sourceName"] = user_name;
+        results.push(recipe_obj);
       }
-      return res.status(200).json(recipes.rows);
+      return res.status(200).json(results);
     }
 
     if (cuisine) {
