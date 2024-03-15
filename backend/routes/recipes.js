@@ -70,6 +70,12 @@ router.get("/:id", async (req, res) => {
       //add no. of servings into recipe object
       recipe_obj["servings"] = recipe.number_of_servings;
 
+      //get author of the recipe by user id
+      const user_name = await getUserNameById(recipe.user_id);
+      console.log(user_name);
+      //add author name into recipe object
+      recipe_obj["sourceName"] = user_name;
+
       res.status(200).json(recipe);
     }
   } catch (error) {
