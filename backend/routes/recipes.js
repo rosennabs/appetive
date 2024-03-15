@@ -51,6 +51,9 @@ router.get("/:id", async (req, res) => {
       // Recipe found
 
       const recipe_obj = {};
+
+      //add recipe id into recipe object
+      recipe_obj["id"] = recipe.id;
       res.status(200).json(recipe);
     }
   } catch (error) {
