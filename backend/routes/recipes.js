@@ -76,6 +76,12 @@ router.get("/:id", async (req, res) => {
       //add author name into recipe object
       recipe_obj["sourceName"] = user_name;
 
+      //get cuisine of the recipe by cuisine id
+      const cuisine_name = await getCuisineNameById(recipe.cuisine_id);
+      console.log(cuisine_name);
+      //add cuisine name into recipe object
+      recipe_obj["cuisines"] = [cuisine_name];
+
       res.status(200).json(recipe);
     }
   } catch (error) {
