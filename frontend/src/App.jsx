@@ -14,11 +14,11 @@ function App() {
         
         <Router>
           <NavBar />
-          <SearchBar/>
+          
           
           <AppDataProvider>
             <div className="items-center mt-10 text-black font-sans-serif">
-              
+              <SearchBar/>
               <SearchForm />
               <RecipesList />
             </div>

@@ -92,7 +92,7 @@ const useAppData = () => {
             );
 
             const databaseRecipes = response.data;
-            console.log("Database recipes: ", databaseRecipes);
+            //console.log("Database recipes: ", databaseRecipes);
 
             // Set the fetched recipes with information in state
             // setRecipes((prev) => {
@@ -168,6 +168,8 @@ const useAppData = () => {
   return {
     state,
     handleSearchSubmission,
+    fetchRecipeInfo,
+    setRecipes
   };
 };
 
