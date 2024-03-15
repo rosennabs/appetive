@@ -20,19 +20,23 @@ const getCuisineByName = async function (cuisineName) {
 
 // lookup diet and return ID
 const getDietByName = async function (dietName) {
-  try {
-    const queryString = `SELECT id FROM diets WHERE name LIKE $1;`;
-    const queryParams = [`%${dietName}%`];
-    const diet = await db.query(queryString, queryParams);
+  if (dietName === NULL) {
+    return NULL;
+  } else {
+    try {
+      const queryString = `SELECT id FROM diets WHERE name LIKE $1;`;
+      const queryParams = [`%${dietName}%`];
+      const diet = await db.query(queryString, queryParams);
 
-    if (diet.rows.length === 0) {
-      return { message: "Diet not found" };
+      if (diet.rows.length === 0) {
+        return { message: "Diet not found" };
+      }
+
+      return diet.rows[0].id;
+    } catch (error) {
+      console.error("Error in getDietByName:", error.message);
+      throw error;
     }
-
-    return diet.rows[0].id;
-  } catch (error) {
-    console.error("Error in getDietByName:", error.message);
-    throw error;
   }
 };
 
@@ -56,19 +60,23 @@ const getMealTypeByName = async function (mealTypeName) {
 
 // lookup intolerance and return ID
 const getIntoleranceByName = async function (intoleranceName) {
-  try {
-    const queryString = `SELECT id FROM intolerances WHERE name LIKE $1;`;
-    const queryParams = [`%${intoleranceName}%`];
-    const intolerance = await db.query(queryString, queryParams);
+  if (intoleranceName === NULL) {
+    return NULL;
+  } else {
+    try {
+      const queryString = `SELECT id FROM intolerances WHERE name LIKE $1;`;
+      const queryParams = [`%${intoleranceName}%`];
+      const intolerance = await db.query(queryString, queryParams);
 
-    if (intolerance.rows.length === 0) {
-      return { message: "Intolerance not found" };
+      if (intolerance.rows.length === 0) {
+        return { message: "Intolerance not found" };
+      }
+
+      return intolerance.rows[0].id;
+    } catch (error) {
+      console.error("Error in getIntoleranceByName:", error.message);
+      throw error;
     }
-
-    return intolerance.rows[0].id;
-  } catch (error) {
-    console.error("Error in getIntoleranceByName:", error.message);
-    throw error;
   }
 };
 
