@@ -150,6 +150,23 @@ router.get("/:id", async (req, res) => {
       const ingredients_all = await getRecipeIngredientsById(recipe.id);
       console.log(ingredients_all);
 
+      for (const ingr of ingredients_all) {
+        const ingredient = {};
+        ingredient["id"] = ingr.id;
+        ingredient["name"] = ingr.name;
+        ingredient["amount"] = Number(
+          ingr.measurement.replace(/[^0-9/]/g, "").trim()
+        );
+        ingredient["unit"] = ingr.measurement.replace(/[0-9/]/g, "").trim();
+
+        ingredients.push(ingredient);
+      }
+
+      console.log(ingredients);
+
+      //add ingredients into recipe object
+      recipe_obj["ingredients"] = ingredients;
+
       res.status(200).json(recipe);
     }
   } catch (error) {
