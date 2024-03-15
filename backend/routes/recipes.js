@@ -167,7 +167,10 @@ router.get("/:id", async (req, res) => {
       //add ingredients into recipe object
       recipe_obj["ingredients"] = ingredients;
 
-      res.status(200).json(recipe);
+      //push final recipe object into results array
+      results.push(recipe_obj);
+
+      res.status(200).json(results);
     }
   } catch (error) {
     console.error(error.message);
