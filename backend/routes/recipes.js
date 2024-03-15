@@ -16,6 +16,7 @@ const {
   getCuisineNameById,
   getDietNameById,
   getMealTypeNameById,
+  getIntoleranceNameById,
 } = require("../db/queries/recipes_helpers");
 const jwtDecoder = require("../utils/jwtDecoder");
 
@@ -95,6 +96,14 @@ router.get("/:id", async (req, res) => {
       console.log(meal_type_name);
       //add meal_type name into recipe object
       recipe_obj["type"] = [meal_type_name];
+
+      //get intolerance of the recipe by intolerance id
+      const intolerance_name = await getIntoleranceNameById(
+        recipe.intolerance_id
+      );
+      console.log(intolerance_name);
+      //add meal_type name into recipe object
+      // recipe_obj["type"] = [intolerance_name];
 
       res.status(200).json(recipe);
     }
