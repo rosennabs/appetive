@@ -18,7 +18,16 @@ const getRecipes = async function () {
       return { message: "No recipes found" };
     }
 
-    return allRecipes.rows;
+    //get id, title and image for recipe and put it inside an object
+    for (const recipe of allRecipes.rows) {
+      const recipe_obj = {};
+      recipe_obj["id"] = recipe.id;
+      recipe_obj["title"] = recipe.title;
+      recipe_obj["image"] = recipe.image;
+
+      results.push(recipe_obj);
+    }
+    return results;
   } catch (error) {
     console.error("Error in getRecipes:", error.message);
     throw error;
