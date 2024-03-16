@@ -22,7 +22,6 @@ function ReviewForm({onSubmit}) {
               type="hidden"
               value={values.user_id}
             />
-            <ErrorMessage name="review" component="div" className="error" />
           </div>
 
           <div>
