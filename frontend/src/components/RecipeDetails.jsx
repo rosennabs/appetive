@@ -20,7 +20,6 @@ const RecipeDetails = function () {
   const [updated, setUpdated] = useState(0);
 
   const onSubmit = async (values, {resetForm}) => {
-    console.log("Values:", values);
     try {
       const res = await axios.post(`http://localhost:8080/api/recipes/${id}/reviews`, values);
       console.log('Response from review: ', res.data);
