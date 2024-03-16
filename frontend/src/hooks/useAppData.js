@@ -75,11 +75,20 @@ const useAppData = () => {
 
   //Fetch all recipes from api on initial render
   useEffect(() => {
+  
     const fetchRecipes = async () => {
+      const options = {
+        method: "GET",
+        url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch",
+        headers: {
+          "X-RapidAPI-Key": apiKey,
+          "X-RapidAPI-Host": host
+        },
+      };
+
       try {
-        const response = await axios.get(
-          `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=2`
-        );
+        const response = await axios.request(options);
+        // console.log("New api response: ", response.data.results);
 
         // Create an array of promises for fetching recipe information
 
@@ -101,7 +110,6 @@ const useAppData = () => {
 
             const dbRecipesPromises = response.data.map(async (recipe) => {
               fetchRecipeInfo(recipe.id);
-              console.log("recipe id: ", recipe.id);
             }
               
             );
@@ -169,6 +177,14 @@ const useAppData = () => {
           })
           .join("");
     
+    const options = {
+      method: "GET",
+      url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch",
+      headers: {
+        "X-RapidAPI-Key": apiKey,
+        "X-RapidAPI-Host": host,
+      },
+    };
       try {
         const response = await axios.get(url);
 

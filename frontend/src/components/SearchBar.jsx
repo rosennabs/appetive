@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Formik, Form } from 'formik';
 import { AppDataContext } from '../contexts/AppDataContext';
 import axios from "axios";
-import apiKey from "../config";
+import { apiKey, host } from "../config";
 
 export default function SearchBar() {
 
