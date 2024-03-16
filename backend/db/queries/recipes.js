@@ -96,7 +96,7 @@ const getRecipeById = async function (recipe_id) {
     );
     console.log(meal_type_name);
     //add meal_type name into recipe object
-    recipe_obj["type"] = [meal_type_name];
+    recipe_obj["dishTypes"] = [meal_type_name];
 
     //get intolerance of the recipe by intolerance id
     const intolerance_name = await getIntoleranceNameById(
@@ -140,8 +140,12 @@ const getRecipeById = async function (recipe_id) {
 
     nutrients.push(carbs);
 
-    //add nutrients into recipe object
-    recipe_obj["nutrients"] = nutrients;
+    //create an empty nutrition object
+    const nutrition = {};
+    nutrition["nutrients"] = nutrients;
+
+    //add nutrient object into recipe object
+    recipe_obj["nutrition"] = nutrition;
 
     //create ingredients array and push all the ingredients
     const ingredients = [];
@@ -165,7 +169,11 @@ const getRecipeById = async function (recipe_id) {
     console.log(ingredients);
 
     //add ingredients into recipe object
-    recipe_obj["ingredients"] = ingredients;
+    recipe_obj["extendedIngredients"] = ingredients;
+
+    //add empty reviews and comments
+    recipe_obj["reviews"] = "";
+    recipe_obj["comments"] = "";
 
     //push final recipe object into results array
     results.push(recipe_obj);
