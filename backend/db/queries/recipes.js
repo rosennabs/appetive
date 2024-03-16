@@ -161,6 +161,7 @@ const getRecipesBySearchQuery = async function (
       //get title and image for recipe and put it inside an object
       for (const recipe of recipes.rows) {
         const recipe_obj = {};
+        recipe_obj["id"] = recipe.id;
         recipe_obj["title"] = recipe.title;
         recipe_obj["image"] = recipe.image;
 
@@ -251,6 +252,7 @@ const getRecipesBySearchQuery = async function (
     //get title and image for recipe and put it inside an object
     for (const recipe of recipes.rows) {
       const recipe_obj = {};
+      recipe_obj["id"] = recipe.id;
       recipe_obj["title"] = recipe.title;
       recipe_obj["image"] = recipe.image;
 
