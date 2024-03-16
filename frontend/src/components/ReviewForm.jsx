@@ -1,22 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik, Form, FieldArray, Field, ErrorMessage } from "formik";
-import axios from "axios";
-import { apiKey, host } from "../config";
 
-function ReviewForm() {
+function ReviewForm({onSubmit}) {
+  const user = localStorage.getItem("token");
   const initialValues = {
+    user_id: user,
     review: "",
     rating: "",
-  };
-
-  const onSubmit = async (values, { resetForm }) => {
-    try {
-      const res = await axios.post('http://localhost:8080/api/recipes/${values.recipeId}/reviews', values);
-      console.log('Response from review: ', res.data);
-      resetForm();
-    } catch (error) {
-      console.error('Error submitting review: ', error);
-    }
   };
 
   return (
@@ -26,6 +16,15 @@ function ReviewForm() {
         {({ values, handleChange }) => (
 
         <Form>
+          <div>
+            <Field
+              name="user_id"
+              type="hidden"
+              value={values.user_id}
+            />
+            <ErrorMessage name="review" component="div" className="error" />
+          </div>
+
           <div>
             <label htmlFor="rating">Rating</label>
             <Field
