@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import ReviewForm from "./ReviewForm";
+
 
 const renderInstructions = (instructions) => {
   const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions)/g;
@@ -15,6 +17,19 @@ const RecipeDetails = function () {
   const { id } = useParams();
   const [recipeDetails, setRecipeDetails] = useState(null);
   const [recipeReviews, setRecipeReviews] = useState([]);
+  const [updated, setUpdated] = useState(0);
+
+  const onSubmit = async (values, {resetForm}) => {
+    console.log("Values:", values);
+    try {
+      const res = await axios.post(`http://localhost:8080/api/recipes/${id}/reviews`, values);
+      console.log('Response from review: ', res.data);
+      setUpdated(prev => ++prev);
+      resetForm();
+    } catch (error) {
+      console.error('Error submitting review: ', error);
+    }
+  };
 
   useEffect(() => {
     const fetchRecipeAndReviews = async function () {
@@ -54,7 +69,7 @@ const RecipeDetails = function () {
     };
 
     fetchRecipeAndReviews();
-  }, [id]);
+  }, [id, updated]);
 
   return (
     <>
@@ -84,6 +99,8 @@ const RecipeDetails = function () {
         </div>
       )}
 
+      <div>
+
       <h3 className="text-3xl mt-20 font-extrabold">Reviews</h3>
       {recipeReviews.length !== 0 ? (
         recipeReviews.map((review) => (
@@ -95,6 +112,9 @@ const RecipeDetails = function () {
       ) : (
         <p>There are no reviews yet</p>
       )}
+
+      <ReviewForm onSubmit={onSubmit}/>
+    </div>
     </>
   );
 };
