@@ -34,20 +34,29 @@ const useAppData = () => {
 
   const fetchRecipeInfo = async (recipeId) => {
     let response;
+    const options = {
+      method: "GET",
+      url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${recipeId}/information`,
+      params: {
+        includeNutrition: "true",
+      },
+      headers: {
+        "X-RapidAPI-Key": apiKey,
+        "X-RapidAPI-Host": host,
+      },
+    };
 
     try {
       recipeId >= 5 &&
-        (response = await axios.get(
-          `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}&instructionsRequired=true&includeNutrition=true&includeInstructions=true`
-        ));
-      recipeId <5 &&
+        (response = await axios.request(options));
+      
+      recipeId < 5 &&
         (response = await axios.get(
           `http://localhost:8080/api/recipes/${recipeId}`
         ));
       
       
       const recipeInfo = response.data;
-      //console.log("Recipe Info response: ", recipeInfo);
 
       // Extract only necessary information from each recipe
       const extractedRecipeInfo = {
@@ -64,7 +73,7 @@ const useAppData = () => {
         instructions: recipeInfo.instructions,
         sourceName: recipeInfo.sourceName
       };
-      console.log("Extracted recipes: ", extractedRecipeInfo);
+      // console.log("Extracted recipes: ", extractedRecipeInfo);
       return extractedRecipeInfo;
     }
     catch (error) {
@@ -177,14 +186,14 @@ const useAppData = () => {
           })
           .join("");
     
-    const options = {
-      method: "GET",
-      url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch",
-      headers: {
-        "X-RapidAPI-Key": apiKey,
-        "X-RapidAPI-Host": host,
-      },
-    };
+    // const options = {
+    //   method: "GET",
+    //   url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${}/information",
+    //   headers: {
+    //     "X-RapidAPI-Key": "apiKey",
+    //     "X-RapidAPI-Host": host,
+    //   },
+    // };
       try {
         const response = await axios.get(url);
 
