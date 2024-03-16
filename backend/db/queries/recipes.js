@@ -202,6 +202,31 @@ const getReviewsByRecipeId = async function (recipe_id) {
   }
 };
 
+const addReview = async function (recipe_id, rating, review, user_id) {
+  try {
+    const queryString = `
+      INSERT INTO reviews (
+        recipe_id,
+        user_id,
+        rating,
+        review,
+        created_at
+      )
+      VALUES ($1, $2, $3, $4, NOW())
+      RETURNING *
+      ;`;
+
+    const queryParams = [recipe_id, user_id, rating, review];
+
+    const result = await db.query(queryString, queryParams);
+    return result;
+  } catch (error) {
+    console.error("Error from addReview:", error.message);
+    throw error;
+  }
+};
+
+
 const addRecipe = async function (recipe) {
   const queryParams = [];
   const keys = Object.keys(recipe);
@@ -405,4 +430,5 @@ module.exports = {
   getReviewsByRecipeId,
   addRecipe,
   getRecipesBySearchQuery,
+  addReview
 };
