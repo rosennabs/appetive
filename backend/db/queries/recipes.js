@@ -5,6 +5,12 @@ const {
   getMealTypeByName,
   getIntoleranceByName,
   addRecipeIngredients,
+  getUserNameById,
+  getCuisineNameById,
+  getDietNameById,
+  getMealTypeNameById,
+  getIntoleranceNameById,
+  getRecipeIngredientsById,
 } = require("./recipes_helpers");
 
 const getRecipes = async function () {
@@ -36,6 +42,8 @@ const getRecipes = async function () {
 
 const getRecipeById = async function (recipe_id) {
   try {
+    const results = [];
+
     const queryString = `SELECT * FROM recipes WHERE id = $1;`;
     const queryParams = [recipe_id];
     const recipe = await db.query(queryString, queryParams);
@@ -44,7 +52,125 @@ const getRecipeById = async function (recipe_id) {
       return { message: "Recipe not found" };
     }
 
-    return recipe.rows[0];
+    const recipe_obj = {};
+
+    //add recipe id into recipe object
+    recipe_obj["id"] = recipe.rows[0].id;
+
+    //add title into recipe object
+    recipe_obj["title"] = recipe.rows[0].title;
+
+    //add image into recipe object
+    recipe_obj["image"] = recipe.rows[0].image;
+
+    //add instructions into recipe object
+    recipe_obj["instructions"] = recipe.rows[0].instructions;
+
+    //add preparation minutes into recipe object
+    recipe_obj["readyInMinutes"] = recipe.rows[0].prep_time;
+
+    //add no. of servings into recipe object
+    recipe_obj["servings"] = recipe.rows[0].number_of_servings;
+
+    //get author of the recipe by user id
+    const user_name = await getUserNameById(recipe.rows[0].user_id);
+    console.log(user_name);
+    //add author name into recipe object
+    recipe_obj["sourceName"] = user_name;
+
+    //get cuisine of the recipe by cuisine id
+    const cuisine_name = await getCuisineNameById(recipe.rows[0].cuisine_id);
+    console.log(cuisine_name);
+    //add cuisine name into recipe object
+    recipe_obj["cuisines"] = [cuisine_name];
+
+    //get diet of the recipe by diet id
+    const diet_name = await getDietNameById(recipe.rows[0].diet_id);
+    console.log(diet_name);
+    //add diet name into recipe object
+    recipe_obj["diets"] = [diet_name];
+
+    //get meal_type of the recipe by meal_type id
+    const meal_type_name = await getMealTypeNameById(
+      recipe.rows[0].meal_type_id
+    );
+    console.log(meal_type_name);
+    //add meal_type name into recipe object
+    recipe_obj["type"] = [meal_type_name];
+
+    //get intolerance of the recipe by intolerance id
+    const intolerance_name = await getIntoleranceNameById(
+      recipe.rows[0].intolerance_id
+    );
+    console.log(intolerance_name);
+    //add meal_type name into recipe object
+    // recipe_obj["type"] = [intolerance_name];
+
+    //create nutrients array and add calories, proteins, fats and carbs
+    const nutrients = [];
+    const calories = {
+      name: "Calories",
+      amount: recipe.calories,
+      unit: "kcal",
+    };
+
+    nutrients.push(calories);
+
+    const proteins = {
+      name: "Protein",
+      amount: Number(recipe.rows[0].proteins.replace("g", "")),
+      unit: "g",
+    };
+
+    nutrients.push(proteins);
+
+    const fats = {
+      name: "Fat",
+      amount: Number(recipe.rows[0].fats.replace("g", "")),
+      unit: "g",
+    };
+
+    nutrients.push(fats);
+
+    const carbs = {
+      name: "Carbohydrates",
+      amount: Number(recipe.rows[0].carbs.replace("g", "")),
+      unit: "g",
+    };
+
+    nutrients.push(carbs);
+
+    //add nutrients into recipe object
+    recipe_obj["nutrients"] = nutrients;
+
+    //create ingredients array and push all the ingredients
+    const ingredients = [];
+
+    //get ingredients of the recipe by recipe id
+    const ingredients_all = await getRecipeIngredientsById(recipe.rows[0].id);
+    console.log(ingredients_all);
+
+    for (const ingr of ingredients_all) {
+      const ingredient = {};
+      ingredient["id"] = ingr.id;
+      ingredient["name"] = ingr.name;
+      ingredient["amount"] = Number(
+        ingr.measurement.replace(/[^0-9/]/g, "").trim()
+      );
+      ingredient["unit"] = ingr.measurement.replace(/[0-9/]/g, "").trim();
+
+      ingredients.push(ingredient);
+    }
+
+    console.log(ingredients);
+
+    //add ingredients into recipe object
+    recipe_obj["ingredients"] = ingredients;
+
+    //push final recipe object into results array
+    results.push(recipe_obj);
+
+    return results;
   } catch (error) {
     console.error("Error in getRecipeById:", error.message);
     throw error;
