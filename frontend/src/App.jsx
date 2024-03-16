@@ -12,9 +12,10 @@ function App() {
       <Fragment>
         
         <Router>
+          <AppDataProvider>
           <NavBar />
           
-          <AppDataProvider>
+          
             <div className="items-center mt-10 text-black font-sans-serif">
               <SearchForm />
               <RecipesList />

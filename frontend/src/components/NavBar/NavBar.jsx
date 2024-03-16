@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import SearchBar from "../SearchBar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
   Nav,
@@ -12,7 +13,7 @@ import axios from "axios";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
-import { FaAngleDoubleDown } from "react-icons/fa";
+import { FaAngleDoubleDown, FaSearch } from "react-icons/fa";
 
 function NavBar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -26,6 +27,14 @@ function NavBar() {
     localStorage.clear();
     setAuth(false);
   };
+
+  //Define state to manage search bar
+  const [showSearchBar, setShowSearchBar] = useState(false);
+
+  const toggleSearchBar = () => {
+    setShowSearchBar(!showSearchBar);
+  };
+
 
   // Keep user login status and set 'setAuth' to 'true' upon page refresh
   const isAuth = async () => {
@@ -81,6 +90,9 @@ function NavBar() {
             <>
               <NavBtnLink to="/login">LOGIN</NavBtnLink>
               <NavBtnLink to="/register">SIGN UP</NavBtnLink>
+              <div className="ps-8 cursor-pointer" onClick={()=>toggleSearchBar()}>
+                <FaSearch />
+              </div>
             </>
           ) : (
             <>
@@ -89,14 +101,24 @@ function NavBar() {
             </>
           )}
         </NavBtn>
+        
       </Nav>
-
+     
+   
       <img
         src={require("../../Images/header-img.jpg")}
         alt="Header Image"
         className="w-full h-80 object-cover filter brightness-75"
       />
 
+           {/* Search bar */}
+        {showSearchBar && (
+          <div>
+            <SearchBar />
+          </div>
+      )}
+
+      
       <Routes>
         <Route path="/login" element={<Login setAuth={setAuth} />} />
         <Route path="/register" element={<Register setAuth={setAuth} />} />
