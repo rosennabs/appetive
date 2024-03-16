@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Formik, Form, Field } from 'formik';
+import React, { useState, useContext } from 'react';
+import { Formik, Form } from 'formik';
 import { AppDataContext } from '../contexts/AppDataContext';
 import axios from "axios";
 import apiKey from "../config";
 
 export default function SearchBar() {
+
+  //Access recipes from state
+  const { state, fetchRecipeInfo, setRecipes } = useContext(AppDataContext);
+  const { recipes } = state;
+
   const [query, setQuery] = useState(''); //State variable to store user's recipe input
   const [suggestions, setSuggestions] = useState([]); //To store suggested possible recipe names
  
@@ -15,10 +20,11 @@ export default function SearchBar() {
     if (userInput.trim() !== '') {
       try {
         const response = await axios.get(
-          `https://api.spoonacular.com/recipes/autocomplete?apiKey=${apiKey}&number=2&query=${userInput}`
+          `https://api.spoonacular.com/recipes/autocomplete?apiKey=${apiKey}&number=25&query=${userInput}`
         );
-        // console.log("Autocomplete recipe names: ", response.data);
+        
         setSuggestions(response.data);
+        
 
       } catch (error) {
         console.error("Error fetching autocomplete recipe names: ", error);
@@ -29,11 +35,21 @@ export default function SearchBar() {
   }
 
 
-
   //Handle suggestion selection by user
-  const handleSuggestionClick = (suggestion) => {
+  const handleSuggestionClick = async(suggestion, recipeId) => {
     setQuery(suggestion);
     setSuggestions([]); //Clear suggestions after selection
+
+    try {
+      const recipeInfo = await fetchRecipeInfo(recipeId);
+      setRecipes([recipeInfo]);
+
+
+    } catch (error) {
+    console.error("Error fetching recipe information: ", error);
+  }
+   
+    
   }
 
 
@@ -51,7 +67,7 @@ export default function SearchBar() {
     >
       {({ handleSubmit}) => (
         <Form onSubmit={handleSubmit}>
-          <div flex justify-center items-center>
+          
           <div className="flex justify-center items-center bg-white border border-gray-300 rounded-md shadow-lg p-16">
           
           <input
@@ -71,7 +87,7 @@ export default function SearchBar() {
               {suggestions.map((suggestion) => (
                 <li
                   key={suggestion.id}
-                  onClick={() => handleSuggestionClick(suggestion.title)}
+                  onClick={() => handleSuggestionClick(suggestion.title, suggestion.id)}
                   className="px-4 py-2 cursor-pointer hover:bg-gray-100"
                 >
                   {suggestion.title}
@@ -82,7 +98,7 @@ export default function SearchBar() {
             </ul>
               )}
               </div>
-            </div>
+           
             
           
         </Form>
