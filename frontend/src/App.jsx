@@ -1,6 +1,5 @@
 import NavBar from "./components/NavBar/NavBar";
 import SearchForm from "./components/SearchForm";
-import SearchBar from "./components/SearchBar";
 import RecipesList from "./components/RecipesList";
 import { AppDataProvider } from "./contexts/AppDataContext";
 import React, { Fragment } from "react";
@@ -13,12 +12,11 @@ function App() {
       <Fragment>
         
         <Router>
+          <AppDataProvider>
           <NavBar />
           
           
-          <AppDataProvider>
             <div className="items-center mt-10 text-black font-sans-serif">
-              <SearchBar/>
               <SearchForm />
               <RecipesList />
             </div>
