@@ -9,6 +9,8 @@ const {
 
 const getRecipes = async function () {
   try {
+    const results = [];
+
     const queryString = `SELECT * FROM recipes;`;
     const allRecipes = await db.query(queryString);
 
