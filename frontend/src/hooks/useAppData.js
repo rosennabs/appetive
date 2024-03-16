@@ -1,6 +1,6 @@
 import { useEffect, useState, useReducer } from "react";
 import axios from "axios";
-import apiKey from "../config";
+import { apiKey, host } from "../config";
 
 // Define action types as constants
 const SET_RECIPES = "SET_RECIPES";
@@ -33,12 +33,21 @@ const useAppData = () => {
   };
 
   const fetchRecipeInfo = async (recipeId) => {
+    let response;
+
     try {
-      const response = await axios.get(
-        `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}&instructionsRequired=true&includeNutrition=true&includeInstructions=true`
-      );
-    
+      recipeId >= 5 &&
+        (response = await axios.get(
+          `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}&instructionsRequired=true&includeNutrition=true&includeInstructions=true`
+        ));
+      recipeId <5 &&
+        (response = await axios.get(
+          `http://localhost:8080/api/recipes/${recipeId}`
+        ));
+      
+      
       const recipeInfo = response.data;
+      //console.log("Recipe Info response: ", recipeInfo);
 
       // Extract only necessary information from each recipe
       const extractedRecipeInfo = {
@@ -53,10 +62,9 @@ const useAppData = () => {
         ingredients: recipeInfo.extendedIngredients,
         nutrients: recipeInfo.nutrition.nutrients,
         instructions: recipeInfo.instructions,
-        sourceName: recipeInfo.sourceName,
-        reviews: "",
-        comments: "",
+        sourceName: recipeInfo.sourceName
       };
+      console.log("Extracted recipes: ", extractedRecipeInfo);
       return extractedRecipeInfo;
     }
     catch (error) {
@@ -70,7 +78,7 @@ const useAppData = () => {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get(
-          `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=4`
+          `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=2`
         );
 
         // Create an array of promises for fetching recipe information
@@ -91,8 +99,18 @@ const useAppData = () => {
               "http://localhost:8080/api/recipes"
             );
 
-            const databaseRecipes = response.data;
-            //console.log("Database recipes: ", databaseRecipes);
+            const dbRecipesPromises = response.data.map(async (recipe) => {
+              fetchRecipeInfo(recipe.id);
+              console.log("recipe id: ", recipe.id);
+            }
+              
+            );
+
+            
+            //Wait for all recipe information promises to resolve
+            const databaseRecipes = await Promise.all(dbRecipesPromises);
+
+            // console.log("Database recipes: ", databaseRecipes);
 
             // Set the fetched recipes with information in state
             // setRecipes((prev) => {
@@ -138,7 +156,7 @@ const useAppData = () => {
 
     
       const url =
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=4` +
+        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=2` +
        
         // Construct the API call URL dynamically based on selected options
         Object.entries(selectedOptions)
