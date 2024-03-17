@@ -53,7 +53,7 @@ function RecipeForm() {
               type="text"
               value={values.title}
               onChange={handleChange}
-              className="border"
+              className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
             />
             <label className="block" htmlFor="cuisine">
               Cuisine
@@ -64,7 +64,7 @@ function RecipeForm() {
               name="cuisine"
               value={values.cuisine}
               onChange={handleChange}
-              className="border"
+              className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
             >
               <option value="African">African</option>
               <option value="Asian">Asian</option>
@@ -104,7 +104,7 @@ function RecipeForm() {
                 name="diet"
                 value={values.diet}
                 onChange={handleChange}
-                className="border"
+                className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
               >
                 <option value="NULL">None</option>
                 <option value="Gluten Free">Gluten Free</option>
@@ -127,7 +127,7 @@ function RecipeForm() {
                 name="intolerances"
                 value={values.intolerances}
                 onChange={handleChange}
-                className="border"
+                className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
               >
                 <option value="NULL">None</option>
                 <option value="Dairy">Dairy</option>
@@ -153,7 +153,7 @@ function RecipeForm() {
               name="meal_type"
               value={values.meal_type}
               onChange={handleChange}
-              className="border"
+              className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
             >
               <option value="main course">main course</option>
               <option value="side dish">side dish</option>
@@ -179,7 +179,7 @@ function RecipeForm() {
               type="number"
               value={values.prep_time}
               onChange={handleChange}
-              className="border"
+              className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
             />{" "}
             minutes
             <label className="block" htmlFor="number_of_servings">
@@ -191,7 +191,7 @@ function RecipeForm() {
               type="number"
               value={values.number_of_servings}
               onChange={handleChange}
-              className="border"
+              className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
             />
             <label className="block" htmlFor="ingredients">
               Ingredients
@@ -210,7 +210,7 @@ function RecipeForm() {
                           placeholder="50g"
                           value={values.ingredients[index].measurement}
                           onChange={handleChange}
-                          className="border"
+                          className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                         />
                         <Field
                           name={`${startName}.name`}
@@ -218,7 +218,7 @@ function RecipeForm() {
                           placeholder="carrots"
                           value={values.ingredients[index].name}
                           onChange={handleChange}
-                          className="border"
+                          className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                         />
                         {index > 0 && (
                           <button
@@ -251,7 +251,7 @@ function RecipeForm() {
               name="instructions"
               value={values.instructions}
               onChange={handleChange}
-              className="border"
+              className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
             />
             <fieldset>
               <legend>Nutritional Information</legend>
@@ -265,7 +265,7 @@ function RecipeForm() {
                 type="text"
                 value={values.proteins}
                 onChange={handleChange}
-                className="border"
+                className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
               />
               <label className="inline" htmlFor="fats">
                 Fats
@@ -276,7 +276,7 @@ function RecipeForm() {
                 type="text"
                 value={values.fats}
                 onChange={handleChange}
-                className="border"
+                className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
               />
               <label className="inline" htmlFor="carbs">
                 Carbs
@@ -287,7 +287,7 @@ function RecipeForm() {
                 type="text"
                 value={values.carbs}
                 onChange={handleChange}
-                className="border"
+                className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
               />
 
               <br />
@@ -301,7 +301,7 @@ function RecipeForm() {
                 type="number"
                 value={values.calories}
                 onChange={handleChange}
-                className="border"
+                className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
               />
             </fieldset>
             <label className="block" htmlFor="image">
@@ -315,7 +315,7 @@ function RecipeForm() {
         onChange={(event) => {
           setFieldValue("file", event.currentTarget.files[0]);
         }}
-        className="border"
+        className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
         /> */}
             <Field
               id="image"
@@ -323,10 +323,10 @@ function RecipeForm() {
               type="text"
               value={values.image}
               onChange={handleChange}
-              className="border"
+              className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
             />
             <div>
-              <button type="submit" className="px-2 bg-gray-200">
+              <button type="submit" className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-1 px-5 rounded-full mr-4">
                 Submit Recipe
               </button>
             </div>
