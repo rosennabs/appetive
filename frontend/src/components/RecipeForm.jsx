@@ -53,6 +53,7 @@ function RecipeForm() {
       >
         {({ values, handleChange }) => (
           <Form>
+            <div className="my-5">
             <label className="block" htmlFor="title">
               Recipe Title*
             </label>
@@ -63,8 +64,9 @@ function RecipeForm() {
               value={values.title}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500 my-1"
-            />
-            <div className="flex justify-between my-1">
+              />
+            </div>
+            <div className="flex justify-between my-5">
               <div className="basis-1/2 space-x-1">
                 <label className="block" htmlFor="cuisine">Cuisine*</label>
                 <Field
@@ -73,7 +75,7 @@ function RecipeForm() {
                   name="cuisine"
                   value={values.cuisine}
                   onChange={handleChange}
-                  className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                  className="w-48 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                   >
                   {cuisine.map((cuisineName, index) => <option key={`cuisine-${index}`} value={cuisineName}>{cuisineName}</option>)}
                 </Field>
@@ -86,13 +88,13 @@ function RecipeForm() {
                   name="meal_type"
                   value={values.meal_type}
                   onChange={handleChange}
-                  className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                  className="w-48 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                 >
                   {type.map((typeName, index) => <option key={`type-${index}`} value={typeName}>{typeName}</option>)}
                 </Field>
               </div>
             </div>
-            <fieldset className="my-1">
+            <fieldset className="my-5">
               <legend>Dietary Restrictions</legend>
               <div className="flex justify-between my-1">
                 <div className="basis-1/2 space-x-1">
@@ -103,7 +105,7 @@ function RecipeForm() {
                     name="diet"
                     value={values.diet}
                     onChange={handleChange}
-                    className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                    className="w-48 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                     >
                     <option value="">None</option>
                     {diet.map((dietName, index) => <option key={`diet-${index}`} value={dietName}>{dietName}</option>)}
@@ -117,7 +119,7 @@ function RecipeForm() {
                     name="intolerances"
                     value={values.intolerances}
                     onChange={handleChange}
-                    className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                    className="w-48 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                     >
                     <option value="">None</option>
                     {intolerances.map((intoleranceName, index) => <option key={`intolerance-${index}`} value={intoleranceName}>{intoleranceName}</option>)}
@@ -125,7 +127,7 @@ function RecipeForm() {
                 </div>
               </div>
             </fieldset>
-            <div className="flex justify-between my-1">
+            <div className="flex justify-between my-5">
               <div className="basis-1/2 space-x-1">
                 <label className="block" htmlFor="prep_time">
                   Prep Time*
@@ -136,7 +138,7 @@ function RecipeForm() {
                   type="number"
                   value={values.prep_time}
                   onChange={handleChange}
-                  className="w-[100px] px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                  className="w-48 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                   />{" "}
                 minutes
               </div>
@@ -150,73 +152,77 @@ function RecipeForm() {
                   type="number"
                   value={values.number_of_servings}
                   onChange={handleChange}
-                  className="w-[100px] px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                  className="w-48 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                   />
               </div>
             </div>
-            <label className="block" htmlFor="ingredients">
-              Ingredients*
-            </label>
-            <FieldArray name="ingredients">
-              {({ push, remove }) => (
-                <div>
-                  {values.ingredients.map((ingredient, index) => {
-                    const startName = `ingredients[${index.toString()}]`;
-
-                    return (
-                      <div className="flex space-x-1 my-1" key={`ingredient-${index.toString()}`}>
-                        <Field
-                          name={`${startName}.measurement`}
-                          type="text"
-                          placeholder="50g"
-                          value={values.ingredients[index].measurement}
-                          onChange={handleChange}
-                          className="w-1/6 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
-                        />
-                        <Field
-                          name={`${startName}.name`}
-                          type="text"
-                          placeholder="carrots"
-                          value={values.ingredients[index].name}
-                          onChange={handleChange}
-                          className="w-4/6 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
-                        />
-                        {index > 0 ? (
-                          <button
+            <fieldset className="my-5">
+              <label className="block" htmlFor="ingredients">
+                Ingredients*
+              </label>
+              <FieldArray name="ingredients">
+                {({ push, remove }) => (
+                  <div>
+                    {values.ingredients.map((ingredient, index) => {
+                      const startName = `ingredients[${index.toString()}]`;
+                      
+                      return (
+                        <div className="flex space-x-1 my-1" key={`ingredient-${index.toString()}`}>
+                          <Field
+                            name={`${startName}.measurement`}
+                            type="text"
+                            placeholder="50g"
+                            value={values.ingredients[index].measurement}
+                            onChange={handleChange}
+                            className="w-1/6 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                            />
+                          <Field
+                            name={`${startName}.name`}
+                            type="text"
+                            placeholder="carrots"
+                            value={values.ingredients[index].name}
+                            onChange={handleChange}
+                            className="w-4/6 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                            />
+                          {index > 0 ? (
+                            <button
                             type="button"
                             onClick={() => remove(index)}
                             className="w-1/6 bg-amber-600 hover:bg-amber-700 text-black font-bold py-1 px-5 rounded-full"
-                          >
-                            Remove
-                          </button>
-                        ) : (
-                          <div className="w-1/6"></div>
-                        )}
-                      </div>
-                    );
-                  })}
-                  <button
-                    type="button"
-                    onClick={() => push(emptyIngredient)}
-                    className="bg-amber-600 hover:bg-amber-700 text-black font-bold my-2 py-1 px-5 rounded-full"
-                  >
-                    Add More Ingredients
-                  </button>
-                </div>
-              )}
-            </FieldArray>
-            <label className="block" htmlFor="instructions">
-              Instructions*
-            </label>
-            <Field
-              as="textarea"
-              id="instructions"
-              name="instructions"
-              value={values.instructions}
-              onChange={handleChange}
-              className="w-full h-[100px] px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500 resize-none"
-            />
-            <fieldset>
+                            >
+                              Remove
+                            </button>
+                          ) : (
+                            <div className="w-1/6"></div>
+                            )}
+                        </div>
+                      );
+                    })}
+                    <button
+                      type="button"
+                      onClick={() => push(emptyIngredient)}
+                      className="bg-amber-600 hover:bg-amber-700 text-black font-bold my-2 py-1 px-5 rounded-full"
+                      >
+                      Add More Ingredients
+                    </button>
+                  </div>
+                )}
+              </FieldArray>
+            </fieldset>
+            <div className="my-5">
+              <label className="block" htmlFor="instructions">
+                Instructions*
+              </label>
+              <Field
+                as="textarea"
+                id="instructions"
+                name="instructions"
+                value={values.instructions}
+                onChange={handleChange}
+                className="w-full h-[100px] px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500 resize-none"
+                />
+            </div>
+            <fieldset className="my-5">
               <legend>Nutritional Information</legend>
 
               <div className="flex justify-between">
@@ -230,7 +236,7 @@ function RecipeForm() {
                   type="text"
                   value={values.proteins}
                   onChange={handleChange}
-                  className="w-32 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                  className="w-40 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                   />
                 </div>
                 <div className="basis-1/4">
@@ -243,7 +249,7 @@ function RecipeForm() {
                   type="text"
                   value={values.fats}
                   onChange={handleChange}
-                  className="w-32 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                  className="w-40 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                   />
                   </div>
                   <div className="basis-1/4">
@@ -256,7 +262,7 @@ function RecipeForm() {
                   type="text"
                   value={values.carbs}
                   onChange={handleChange}
-                  className="w-32 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                  className="w-40 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                   />
                   </div>
                   <div className="basis-1/4">
@@ -269,33 +275,35 @@ function RecipeForm() {
                   type="number"
                   value={values.calories}
                   onChange={handleChange}
-                  className="w-32 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                  className="w-40 px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                   />
                   </div>
                 </div>
             </fieldset>
-            <label className="block" htmlFor="image">
-              Image URL*
-            </label>
-            {/* <input
-        id="image"
-        name="image"
-        type="file"
-        value={values.image}
-        onChange={(event) => {
-          setFieldValue("file", event.currentTarget.files[0]);
-        }}
-        className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
-        /> */}
-            <Field
-              id="image"
-              name="image"
-              type="text"
-              placeholder="http://"
-              value={values.image}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
-            />
+            <div className="my-5">
+              <label className="block" htmlFor="image">
+                Image URL*
+              </label>
+              {/* <input
+                id="image"
+                name="image"
+                type="file"
+                value={values.image}
+                onChange={(event) => {
+                  setFieldValue("file", event.currentTarget.files[0]);
+                }}
+                className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+              /> */}
+              <Field
+                id="image"
+                name="image"
+                type="text"
+                placeholder="http://"
+                value={values.image}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                />
+            </div>
             <div>
               <button type="submit" className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-1 px-5 rounded-full">
                 Submit Recipe
