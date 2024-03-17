@@ -4,12 +4,11 @@ import { apiKey, host } from "../config";
 
 // Define action types as constants
 const SET_RECIPES = "SET_RECIPES";
-const SET_RECIPE_INFO_MODAL = "SET_RECIPE_INFO_MODAL";
+
 
 //Initial state
 export const initialState = {
-  recipes: [],
-  recipeInfo: false
+  recipes: []
 };
 
 //Define the reducer function to update state
@@ -19,11 +18,6 @@ export const reducer = (state, action) => {
       return {
         ...state,
         recipes: action.recipes,
-      };
-    case SET_RECIPE_INFO_MODAL:
-      return {
-        ...state,
-        recipeInfo: action.recipeInfo,
       };
   }
 };
@@ -36,14 +30,6 @@ const useAppData = () => {
     dispatch({
       type: SET_RECIPES,
       recipes: data,
-    });
-  };
-
-  //Dispatch recipe Info
-  const setRecipeInfo = (recipeId) => {
-    dispatch({
-      type: SET_RECIPE_INFO_MODAL,
-      recipeInfo: recipeId,
     });
   };
 
@@ -179,7 +165,6 @@ const useAppData = () => {
     handleSearchSubmission,
     fetchRecipeInfo,
     setRecipes,
-    setRecipeInfo,
   };
 };
 
