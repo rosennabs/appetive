@@ -1,3 +1,70 @@
+import React from "react";
+
+
+
+const renderInstructions = (instructions) => {
+  const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions)/g;
+  const filteredInstructions = instructions.replace(regex, "");
+  
+  return filteredInstructions
+    .split(".")
+    .map((instruction) => <li className="mb-3">{instruction}</li>);
+};
+
+
+const RecipeDetails = function ({ recipe, setSelected}) {
+  
+  return (
+  <>
+    {recipe && (
+      <div className="flex justify-center items-center mt-16">
+        <div className="max-w-3xl p-4">
+          <h2 className="text-4xl font-extrabold dark:text-white mb-10">
+            {recipe.title}
+          </h2>
+          <img className="mb-10" src={recipe.image} alt="" />
+          <div className="max-w-lg">
+            <p className="text-2xl font-extrabold dark:text-white mb-5">
+              Instructions:
+            </p>
+            <ol className="list-decimal">
+              {renderInstructions(recipe.instructions)}
+            </ol>
+          </div>
+          <p className="mt-10 text-xl">
+            No. of servings: {recipe.servings}
+          </p>
+          <p className="mt-3 text-xl">
+            Preparation time: {recipe.readyInMinutes} minutes
+            </p>
+            
+          <div className="mt-3 text-xl">
+            {recipe.nutrients.map((nutrient) => (
+              <p key={nutrient.name}>
+                {nutrient.name}: {nutrient.amount}{nutrient.unit}
+              </p>
+            ))}
+            </div>
+            
+              <button type="button" onClick={()=> setSelected(null)} className="hover:bg-amber-200 border-2 border-amber-700 text-black font-bold py-1 px-10 rounded-full float-right">Back</button>
+              
+        </div>
+      </div>
+    )}
+  </>
+);
+
+};
+
+export default RecipeDetails;
+
+
+
+
+
+
+
+
 // import axios from "axios";
 // import { useEffect, useState } from "react";
 // import { useParams } from "react-router";
@@ -103,66 +170,3 @@
 
 
 
-import React from "react";
-
-
-
-const renderInstructions = (instructions) => {
-  const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions)/g;
-  const filteredInstructions = instructions.replace(regex, "");
-  console.log(filteredInstructions.split("."));
-  return filteredInstructions
-    .split(".")
-    .map((instruction) => <li className="mb-3">{instruction}</li>);
-};
-
-
-const RecipeDetails = function ({ recipe, setSelected}) {
-  
-  const handleGoBack = () => {
-    setSelected(null); // Go back to the previous page
-  };
-  
-  return (
-  <>
-    {recipe && (
-      <div className="flex justify-center items-center mt-16">
-        <div className="max-w-3xl p-4">
-          <h2 className="text-4xl font-extrabold dark:text-white mb-10">
-            {recipe.title}
-          </h2>
-          <img className="mb-10" src={recipe.image} alt="" />
-          <div className="max-w-lg">
-            <p className="text-2xl font-extrabold dark:text-white mb-5">
-              Instructions:
-            </p>
-            <ol className="list-decimal">
-              {renderInstructions(recipe.instructions)}
-            </ol>
-          </div>
-          <p className="mt-10 text-xl">
-            No. of servings: {recipe.servings}
-          </p>
-          <p className="mt-3 text-xl">
-            Preparation time: {recipe.readyInMinutes} minutes
-            </p>
-            
-          <div className="mt-3 text-xl">
-            {recipe.nutrients.map((nutrient) => (
-              <p key={nutrient.name}>
-                {nutrient.name}: {nutrient.amount}{nutrient.unit}
-              </p>
-            ))}
-            </div>
-            
-              <button type="button" onClick={handleGoBack} className="hover:bg-amber-200 border-2 border-amber-700 text-black font-bold py-1 px-10 rounded-full float-right">Back</button>
-              
-        </div>
-      </div>
-    )}
-  </>
-);
-
-};
-
-export default RecipeDetails;
