@@ -54,9 +54,7 @@ function RecipeForm() {
         {({ values, handleChange }) => (
           <Form>
             <div className="my-5">
-            <label className="block" htmlFor="title">
-              Recipe Title*
-            </label>
+            <label className="block font-bold text-amber-700 text-lg" htmlFor="title">Recipe Title*</label>
             <Field
               id="title"
               name="title"
@@ -68,7 +66,7 @@ function RecipeForm() {
             </div>
             <div className="flex justify-between my-5">
               <div className="basis-1/2 space-x-1">
-                <label className="block" htmlFor="cuisine">Cuisine*</label>
+                <label className="block font-bold text-amber-700 text-lg" htmlFor="cuisine">Cuisine*</label>
                 <Field
                   as="select"
                   id="cuisine"
@@ -81,7 +79,7 @@ function RecipeForm() {
                 </Field>
               </div>
               <div className="basis-1/2 space-x-1">
-                <label className="block" htmlFor="meal_type">Meal Type*</label>
+                <label className="block font-bold text-amber-700 text-lg" htmlFor="meal_type">Meal Type*</label>
                 <Field
                   as="select"
                   id="meal_type"
@@ -95,7 +93,7 @@ function RecipeForm() {
               </div>
             </div>
             <fieldset className="my-5">
-              <legend>Dietary Restrictions</legend>
+              <legend className="font-bold text-amber-700 text-lg">Dietary Restrictions</legend>
               <div className="flex justify-between my-1">
                 <div className="basis-1/2 space-x-1">
                   <label className="block" htmlFor="diet">Diet</label>
@@ -129,9 +127,7 @@ function RecipeForm() {
             </fieldset>
             <div className="flex justify-between my-5">
               <div className="basis-1/2 space-x-1">
-                <label className="block" htmlFor="prep_time">
-                  Prep Time*
-                </label>
+                <label className="block font-bold text-amber-700 text-lg" htmlFor="prep_time">Prep Time*</label>
                 <Field
                   id="prep_time"
                   name="prep_time"
@@ -143,9 +139,7 @@ function RecipeForm() {
                 minutes
               </div>
               <div className="basis-1/2 space-x-1">
-                <label className="block" htmlFor="number_of_servings">
-                  Number of Servings*
-                </label>
+                <label className="block font-bold text-amber-700 text-lg" htmlFor="number_of_servings">Number of Servings*</label>
                 <Field
                   id="number_of_servings"
                   name="number_of_servings"
@@ -157,9 +151,7 @@ function RecipeForm() {
               </div>
             </div>
             <fieldset className="my-5">
-              <label className="block" htmlFor="ingredients">
-                Ingredients*
-              </label>
+              <label className="block font-bold text-amber-700 text-lg" htmlFor="ingredients">Ingredients*</label>
               <FieldArray name="ingredients">
                 {({ push, remove }) => (
                   <div>
@@ -210,9 +202,7 @@ function RecipeForm() {
               </FieldArray>
             </fieldset>
             <div className="my-5">
-              <label className="block" htmlFor="instructions">
-                Instructions*
-              </label>
+              <label className="block font-bold text-amber-700 text-lg" htmlFor="instructions">Instructions*</label>
               <Field
                 as="textarea"
                 id="instructions"
@@ -223,7 +213,7 @@ function RecipeForm() {
                 />
             </div>
             <fieldset className="my-5">
-              <legend>Nutritional Information</legend>
+              <legend className="font-bold text-amber-700 text-lg">Nutritional Information</legend>
 
               <div className="flex justify-between">
                 <div className="basis-1/4">
@@ -281,9 +271,7 @@ function RecipeForm() {
                 </div>
             </fieldset>
             <div className="my-5">
-              <label className="block" htmlFor="image">
-                Image URL*
-              </label>
+              <label className="block font-bold text-amber-700 text-lg" htmlFor="image">Image URL*</label>
               {/* <input
                 id="image"
                 name="image"
