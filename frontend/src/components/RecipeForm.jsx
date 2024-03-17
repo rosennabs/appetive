@@ -304,7 +304,7 @@ function RecipeForm() {
                 className="w-full px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                 />
             </div>
-            <div>
+            <div className="flex justify-center">
               <button type="submit" className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-1 px-5 rounded-full">
                 Submit Recipe
               </button>
