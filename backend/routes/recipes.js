@@ -6,6 +6,7 @@ const {
   getReviewsByRecipeId,
   addRecipe,
   getRecipesBySearchQuery,
+  addReview
 } = require("../db/queries/recipes");
 
 const jwtDecoder = require("../utils/jwtDecoder");
@@ -40,7 +41,7 @@ router.get("/:id", async (req, res) => {
       res.status(404).json(recipe);
     } else {
       // Recipe found
-      res.status(200).json(recipe);
+      res.status(200).json(recipe[0]);
     }
   } catch (error) {
     console.error(error.message);
@@ -63,6 +64,22 @@ router.get("/:id/reviews", async (req, res) => {
       // Reviews found, return the array
       res.status(200).json(reviews);
     }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server error");
+  }
+});
+
+router.post("/:id/reviews", async (req,res) => {
+  const recipeId = req.params.id;
+  const newReview = req.body;
+  const { user } = await jwtDecoder(newReview.user_id);
+  newReview.user_id = user;
+  try {
+    const result = await addReview(recipeId, newReview.rating, newReview.review, newReview.user_id);
+    console.log("Review added", result.rows);
+    res.status(201).send(newReview);
+    
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error");
