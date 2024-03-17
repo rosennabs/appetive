@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export const Nav = styled.nav`
     background: #EBB22F;
-    height: 85px;
+    height: 70px;
     width: 100vw;
     display: flex;
     justify-content: space-between;
@@ -15,7 +15,7 @@ export const Nav = styled.nav`
 `;
 
 export const NavLink = styled(Link)`
-    color: #F5F5EF;
+    color: #00000;
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -23,16 +23,16 @@ export const NavLink = styled(Link)`
     height: 100%;
     cursor: pointer;
     &:hover {
-        color: #000000;
+        color: #F5F5EF;
     }
     &.active {
-        color: #000000;
+        color: #F5F5EF;
     }
 `;
 
 export const Bars = styled(FaBars)`
     display: none;
-    color: #F5F5EF;
+    color: #00000;
     @media screen and (max-width: 768px) {
         display: block;
         position: absolute;
@@ -72,18 +72,47 @@ export const NavBtn = styled.nav`
 export const NavBtnLink = styled(Link)`
     border-radius: 4px;
     background: #F5F5EF;
-    padding: 10px 22px;
-    color: #000000;
+    padding: 7px 20px;
+    color: #00000;
     outline: none;
     border: none;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     text-decoration: none;
     /* Second Nav */
-    margin-left: 24px;
+    margin-left: 10px;
     &:hover {
         transition: all 0.2s ease-in-out;
         background: #fff;
         color: #808080;
+    }
+`;
+
+
+export const ImgBtnLink = styled(Link)`
+    position: absolute;
+    border-radius: 4px;
+    background: #EBB22F;
+    padding: 7px 20px;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    font-size: 15px;
+    margin-left: 40px;
+    margin-top: -80px;
+    &:hover {
+        transition: all 0.2s ease-in-out;
+        background: #F5F5EF;
+    }
+    @media screen and (max-width: 768px) {
+        margin-top: -60px;
+        margin-left: 30px;
+        font-size: 10px;
+    }
+    @media screen and (min-width: 1080px) {
+        margin-top: -110px;
+        margin-left: 60px;
+        font-size: 22px;
     }
 `;
