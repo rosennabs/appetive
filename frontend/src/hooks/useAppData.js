@@ -136,7 +136,7 @@ const useAppData = () => {
       Object.entries(selectedOptions).filter(([key, value]) => value !== "")
     );
 
-    //Fetch data from api
+    
     const options = {
       method: "GET",
       url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch",
@@ -147,11 +147,19 @@ const useAppData = () => {
       },
     };
     try {
+      //Fetch search results from api
       const response = await axios.request(options);
-
       const apiSearchResponse = response.data.results;
+
+      // // Fetch search results from database
+      // const dbResponse = await axios.get("http://localhost:8080/api/recipes/search");
+      // const dbSearchResponse = dbResponse.data;
+
+      // // Merge API and database search results
+      // const allSearchResults = [...dbSearchResponse, ...apiSearchResponse];
+
       setRecipes(apiSearchResponse);
-   
+
     } catch (error) {
       console.error("Error fetching filtered recipes: ", error);
     }

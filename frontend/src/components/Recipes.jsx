@@ -25,7 +25,7 @@ export default function Recipe({setSelected}) {
         <h1 className="font-bold text-3xl mb-8  text-amber-700 text-center"> No results found! </h1>
       ) : (  
 
-      <section className="md:container max-w-screen-xl mx-auto flex flex-wrap justify-between">
+      <section className="md:container max-w-screen-xl mx-auto flex flex-wrap">
           {recipes && recipes.map(recipe => (
           
           <div key={recipe.id} onClick={()=>handleRecipeClick(recipe.id)} className="w-1/4 p-4 mb-4">
