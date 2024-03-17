@@ -42,7 +42,6 @@ const getRecipes = async function () {
 
 const getRecipeById = async function (recipe_id) {
   try {
-    const results = [];
 
     const queryString = `SELECT * FROM recipes WHERE id = $1;`;
     const queryParams = [recipe_id];
@@ -110,7 +109,7 @@ const getRecipeById = async function (recipe_id) {
     const nutrients = [];
     const calories = {
       name: "Calories",
-      amount: recipe.calories,
+      amount: recipe.rows[0].calories,
       unit: "kcal",
     };
 
@@ -172,13 +171,10 @@ const getRecipeById = async function (recipe_id) {
     recipe_obj["extendedIngredients"] = ingredients;
 
     //add empty reviews and comments
-    recipe_obj["reviews"] = "";
-    recipe_obj["comments"] = "";
+    // recipe_obj["reviews"] = [];
+    // recipe_obj["comments"] = [];
 
-    //push final recipe object into results array
-    results.push(recipe_obj);
-
-    return results;
+    return recipe_obj;
   } catch (error) {
     console.error("Error in getRecipeById:", error.message);
     throw error;
