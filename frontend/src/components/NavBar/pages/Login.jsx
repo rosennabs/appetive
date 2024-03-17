@@ -39,7 +39,8 @@ function Login({ setAuth }) {
 
   return (
     <Fragment>
-      <h1 className="text-5xl py-10 mx-auto text-center">Login</h1>
+      <h1 className="text-4xl pt-10 font-bold mx-auto text-center">Log into Your Account</h1>
+      <h1 className="text-yellow text-xl pt-3 pb-10 mx-auto text-center">Welcome back to Appetive!</h1>
       <form
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto max-w-lg justify-self-center"
         onSubmit={handleOnSubmitForm}
@@ -49,7 +50,7 @@ function Login({ setAuth }) {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="email"
           >
-            Email
+            Email Address
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -80,12 +81,14 @@ function Login({ setAuth }) {
           />
         </div>
 
-        <button
-          className="border-black border-2 rounded-2xl py-2 px-4"
-          type="submit"
-        >
-          Login
-        </button>
+        <div className="pt-3">
+          <button
+            className="bg-yellow rounded-xl py-2 px-6"
+            type="submit"
+          >
+            Login
+          </button>
+        </div>
       </form>
     </Fragment>
   );

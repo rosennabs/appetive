@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "../SearchBar";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import {
   Nav,
   NavLink,
@@ -8,12 +8,14 @@ import {
   NavBtn,
   Bars,
   NavBtnLink,
+  ImgBtnLink,
 } from "./NavBarElements";
 import axios from "axios";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
-import { FaAngleDoubleDown, FaSearch } from "react-icons/fa";
+import { FaCaretDown, FaSearch, FaHome } from "react-icons/fa";
+import RecipeForm from "../RecipeForm";
 
 function NavBar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -35,7 +37,6 @@ function NavBar() {
     setShowSearchBar(!showSearchBar);
   };
 
-
   // Keep user login status and set 'setAuth' to 'true' upon page refresh
   const isAuth = async () => {
     try {
@@ -53,8 +54,6 @@ function NavBar() {
       const response = await axios.get("http://localhost:8080/auth/is-verify", {
         headers,
       });
-      // console.log(response.data); //true
-
       response.data === true
         ? setIsAuthenticated(true)
         : setIsAuthenticated(false);
@@ -73,15 +72,17 @@ function NavBar() {
 
       <Nav>
         <NavMenu>
-          <NavLink to="/">HOME</NavLink>
+          <NavLink to="/">
+            <FaHome className="size-7" />
+          </NavLink>
           <NavLink to="/about">ABOUT US</NavLink>
           <NavLink to="/browse-recipes" className="dropdown-menu">
             BROWSE RECIPES
-            <FaAngleDoubleDown className="ml-1" />
+            <FaCaretDown className="ml-1" />
           </NavLink>
           <NavLink to="/my-profile">
             MY PROFLE
-            <FaAngleDoubleDown className="ml-1" />
+            <FaCaretDown className="ml-1" />
           </NavLink>
         </NavMenu>
 
@@ -90,7 +91,10 @@ function NavBar() {
             <>
               <NavBtnLink to="/login">LOGIN</NavBtnLink>
               <NavBtnLink to="/register">SIGN UP</NavBtnLink>
-              <div className="ps-8 cursor-pointer" onClick={()=>toggleSearchBar()}>
+              <div
+                className="ps-8 cursor-pointer"
+                onClick={() => toggleSearchBar()}
+              >
                 <FaSearch />
               </div>
             </>
@@ -101,28 +105,28 @@ function NavBar() {
             </>
           )}
         </NavBtn>
-        
       </Nav>
-     
-   
+
       <img
-        src={require("../../Images/header-img.jpg")}
+        src={require("../../Images/header.png")}
         alt="Header Image"
-        className="w-full h-80 object-cover filter brightness-75"
+        className="h-auto max-w-full"
       />
 
-           {/* Search bar */}
-        {showSearchBar && (
-          <div>
-            <SearchBar />
-          </div>
+      <ImgBtnLink to="/add-recipe">MAKE YOUR RECIPE</ImgBtnLink>
+
+      {/* Search bar */}
+      {showSearchBar && (
+        <div>
+          <SearchBar />
+        </div>
       )}
 
-      
       <Routes>
         <Route path="/login" element={<Login setAuth={setAuth} />} />
         <Route path="/register" element={<Register setAuth={setAuth} />} />
         <Route path="/about" element={<About />} />
+        <Route path="/add-recipe" element={<RecipeForm />} />
       </Routes>
     </>
   );
