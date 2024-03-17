@@ -75,7 +75,7 @@ function RecipeForm() {
                   onChange={handleChange}
                   className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                   >
-                  {cuisine.map((cuisineName, index) => <option key={index} value={cuisineName}>{cuisineName}</option>)}
+                  {cuisine.map((cuisineName, index) => <option key={`cuisine-${index}`} value={cuisineName}>{cuisineName}</option>)}
                 </Field>
               </div>
               <div className="basis-1/2 space-x-1">
@@ -88,7 +88,7 @@ function RecipeForm() {
                   onChange={handleChange}
                   className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                 >
-                  {type.map((typeName, index) => <option key={index} value={typeName}>{typeName}</option>)}
+                  {type.map((typeName, index) => <option key={`type-${index}`} value={typeName}>{typeName}</option>)}
                 </Field>
               </div>
             </div>
@@ -106,7 +106,7 @@ function RecipeForm() {
                     className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                     >
                     <option value="">None</option>
-                    {diet.map((dietName, index) => <option key={index} value={dietName}>{dietName}</option>)}
+                    {diet.map((dietName, index) => <option key={`diet-${index}`} value={dietName}>{dietName}</option>)}
                   </Field>
                 </div>
                 <div className="basis-1/2 space-x-1">
@@ -120,7 +120,7 @@ function RecipeForm() {
                     className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                     >
                     <option value="">None</option>
-                    {intolerances.map((intoleranceName, index) => <option key={index} value={intoleranceName}>{intoleranceName}</option>)}
+                    {intolerances.map((intoleranceName, index) => <option key={`intolerance-${index}`} value={intoleranceName}>{intoleranceName}</option>)}
                   </Field>
                 </div>
               </div>
