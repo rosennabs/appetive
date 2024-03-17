@@ -220,13 +220,6 @@ function RecipeForm() {
                           onChange={handleChange}
                           className="border"
                         />
-                        <button
-                          type="button"
-                          onClick={() => push(emptyIngredient)}
-                          className="mx-1 px-2 bg-gray-200"
-                        >
-                          Add
-                        </button>
                         {index > 0 && (
                           <button
                             type="button"
@@ -239,6 +232,13 @@ function RecipeForm() {
                       </div>
                     );
                   })}
+                  <button
+                    type="button"
+                    onClick={() => push(emptyIngredient)}
+                    className="mx-1 px-2 bg-gray-200"
+                  >
+                    Add More Ingredients
+                  </button>
                 </>
               )}
             </FieldArray>
