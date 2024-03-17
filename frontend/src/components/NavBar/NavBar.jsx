@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "../SearchBar";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import {
   Nav,
   NavLink,
@@ -14,6 +14,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
 import { FaCaretDown, FaSearch, FaHome } from "react-icons/fa";
+import RecipeForm from "../RecipeForm";
 
 function NavBar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -72,7 +73,9 @@ function NavBar() {
 
       <Nav>
         <NavMenu>
-          <NavLink to="/"><FaHome className="size-7"/></NavLink>
+          <NavLink to="/">
+            <FaHome className="size-7" />
+          </NavLink>
           <NavLink to="/about">ABOUT US</NavLink>
           <NavLink to="/browse-recipes" className="dropdown-menu">
             BROWSE RECIPES
@@ -105,11 +108,18 @@ function NavBar() {
         </NavBtn>
       </Nav>
 
+      <div className="relative">
         <img
           src={require("../../Images/header.png")}
           alt="Header Image"
           className="h-auto max-w-full"
         />
+        <div className="absolute top-96 left-12">
+          <Link to="/add-recipe" className="bg-yellow rounded-xl py-2.5 px-7 hover:text-darker-white">
+            MAKE YOUR RECIPE
+          </Link>
+        </div>
+      </div>
 
       {/* Search bar */}
       {showSearchBar && (
@@ -122,6 +132,7 @@ function NavBar() {
         <Route path="/login" element={<Login setAuth={setAuth} />} />
         <Route path="/register" element={<Register setAuth={setAuth} />} />
         <Route path="/about" element={<About />} />
+        <Route path="/add-recipe" element={<RecipeForm />} />
       </Routes>
     </>
   );
