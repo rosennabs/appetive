@@ -93,14 +93,14 @@ export const ImgBtnLink = styled(Link)`
     position: absolute;
     border-radius: 4px;
     background: #EBB22F;
-    padding: 7px 20px;
+    padding: 8px 30px;
     color: #000000;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     text-decoration: none;
     font-size: 15px;
     margin-left: 40px;
-    margin-top: -80px;
+    margin-top: -85px;
     &:hover {
         transition: all 0.2s ease-in-out;
         background: #F5F5EF;
@@ -109,6 +109,7 @@ export const ImgBtnLink = styled(Link)`
         margin-top: -60px;
         margin-left: 30px;
         font-size: 10px;
+        padding: 7px 20px;
     }
     @media screen and (min-width: 1080px) {
         margin-top: -110px;
