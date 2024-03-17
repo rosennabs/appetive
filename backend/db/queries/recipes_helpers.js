@@ -21,7 +21,7 @@ const getCuisineByName = async function (cuisineName) {
 // lookup diet and return ID
 const getDietByName = async function (dietName) {
   if (dietName === "NULL") {
-    return NULL;
+    return "NULL";
   } else {
     try {
       const queryString = `SELECT id FROM diets WHERE name LIKE $1;`;
@@ -61,7 +61,7 @@ const getMealTypeByName = async function (mealTypeName) {
 // lookup intolerance and return ID
 const getIntoleranceByName = async function (intoleranceName) {
   if (intoleranceName === "NULL") {
-    return NULL;
+    return "NULL";
   } else {
     try {
       const queryString = `SELECT id FROM intolerances WHERE name LIKE $1;`;
