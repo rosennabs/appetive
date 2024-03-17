@@ -52,17 +52,17 @@ const useAppData = () => {
       // Make the API request
       if (recipeId >= 5) {
         response = await axios.request(options);
-        console.log("apiResponse: ", response.data);
+        
       } else {
         response = await axios.get(
           `http://localhost:8080/api/recipes/${recipeId}`
         );
       }
 
-      
+      const recipe = response.data;
       // Extract only necessary information from each recipe
 
-       const extractRecipeInfo = response.data.map((recipe) => ({
+       const extractedRecipeInfo = {
           id: recipe.id,
           title: recipe.title,
           image: recipe.image,
@@ -75,8 +75,9 @@ const useAppData = () => {
           nutrients: recipe.nutrition.nutrients,
           instructions: recipe.instructions,
           sourceName: recipe.sourceName,
-        }))
-      return extractRecipeInfo;
+       }
+      // console.log("Extracted Recipe Info: ", extractedRecipeInfo);
+      return extractedRecipeInfo;
     }
     catch (error) {
       console.error("Error fetching recipe information: ", error);
