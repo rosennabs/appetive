@@ -20,7 +20,7 @@ const getCuisineByName = async function (cuisineName) {
 
 // lookup diet and return ID
 const getDietByName = async function (dietName) {
-  if (dietName === NULL) {
+  if (dietName === "NULL") {
     return NULL;
   } else {
     try {
@@ -60,7 +60,7 @@ const getMealTypeByName = async function (mealTypeName) {
 
 // lookup intolerance and return ID
 const getIntoleranceByName = async function (intoleranceName) {
-  if (intoleranceName === NULL) {
+  if (intoleranceName === "NULL") {
     return NULL;
   } else {
     try {
