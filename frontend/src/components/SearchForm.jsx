@@ -61,9 +61,9 @@ export default function SearchForm() {
           </div>
           </div>
         <div className="flex justify-center mt-16 mb-16">
-          {showBackButton && <button type="button" onClick={handlePrevQuestion} className="hover:bg-amber-200 border-2 border-amber-700 text-black font-bold py-1 px-10 rounded-full mr-4">Back</button>}
-          {question < 5 && <button type="button" onClick={handleNextQuestion} className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-1 px-10 rounded-full mr-4">Next</button>}
-          {question === 5 && <button type="submit" className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-1 px-10 rounded-full mr-4">Search</button>}
+          {showBackButton && <button type="button" onClick={handlePrevQuestion} className="hover:bg-amber-200 border-2 border-yellow text-black font-bold py-1 px-10 rounded-full mr-4">Back</button>}
+          {question < 5 && <button type="button" onClick={handleNextQuestion} className="bg-yellow hover:bg-yellow text-black font-bold py-1 px-10 rounded-full mr-4">Next</button>}
+          {question === 5 && <button type="submit" className="bg-yellow hover:bg-yellow text-black font-bold py-1 px-10 rounded-full mr-4">Search</button>}
         </div>
         </>
     ); 
@@ -92,9 +92,9 @@ export default function SearchForm() {
           </div>
           </div>
         <div className="flex justify-center mt-16 mb-16">
-          {showBackButton && <button type="button" onClick={handlePrevQuestion} className="hover:bg-amber-200 border-2 border-amber-700 text-black font-bold py-1 px-10 rounded-full mr-4">Back</button>}
-          {question < 5 && <button type="button" onClick={handleNextQuestion} className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-1 px-10 rounded-full mr-4">Next</button>}
-          {question === 5 && <button type="submit" className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-1 px-10 rounded-full mr-4">Search</button>}
+          {showBackButton && <button type="button" onClick={handlePrevQuestion} className="hover:bg-amber-200 border-2 border-yellow text-black font-bold py-1 px-10 rounded-full mr-4">Back</button>}
+          {question < 5 && <button type="button" onClick={handleNextQuestion} className="bg-yellow hover:bg-yellow text-black font-bold py-1 px-10 rounded-full mr-4">Next</button>}
+          {question === 5 && <button type="submit" className="bg-yellow hover:bg-yellow text-black font-bold py-1 px-10 rounded-full mr-4">Search</button>}
         </div>
         </>
     ); 
@@ -122,7 +122,7 @@ export default function SearchForm() {
 
           {question === 1 &&
             <>
-            <h1 className="font-bold text-3xl mb-8  text-amber-700 text-center">Which type of cuisine are you most interested in?</h1>
+            <h1 className="font-bold text-3xl mb-8  text-yellow text-center">Which type of cuisine are you most interested in?</h1>
             {renderSingleselectOptions("cuisine", cuisine, false, handleChange, values)}
             
             </>
@@ -130,28 +130,28 @@ export default function SearchForm() {
 
           {question === 2 &&
             <>
-            <h1 className="font-bold text-3xl mb-8  text-amber-700 text-center">What kind of meal would you like to prepare?</h1>
+            <h1 className="font-bold text-3xl mb-8  text-yellow text-center">What kind of meal would you like to prepare?</h1>
             {renderSingleselectOptions("type", type, true, handleChange, values)}
             </>
           }
 
           {question === 3 &&
             <>
-            <h1 className="font-bold text-3xl mb-8  text-amber-700 text-center">Do you have any specific dietary preferences?</h1>
+            <h1 className="font-bold text-3xl mb-8  text-yellow text-center">Do you have any specific dietary preferences?</h1>
             {renderMultiselectOptions("diet", diet, true, handleChange, values)}
             </>
           }
 
           {question === 4 &&
             <>
-            <h1 className="font-bold text-3xl mb-8  text-amber-700 text-center">Are there any food allergies you need to consider?</h1>
+            <h1 className="font-bold text-3xl mb-8  text-yellow text-center">Are there any food allergies you need to consider?</h1>
             {renderMultiselectOptions("intolerances", intolerances, true, handleChange, values)}
             </>
           }
 
           {question === 5 &&
             <>
-            <h1 className="font-bold text-3xl mb-8  text-amber-700 text-center">Enter calorie range per serving :</h1>
+            <h1 className="font-bold text-3xl mb-8  text-yellow text-center">Enter calorie range per serving :</h1>
               <div className="flex justify-center">
                 <div className="flex items-center space-x-4">
                   <input
@@ -160,7 +160,7 @@ export default function SearchForm() {
                     value={values.minCalories}
                     onChange={handleChange}
                     placeholder="Minimum Calories"
-                    className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                    className="px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
                   />
                   <input
                     type="number"
@@ -168,14 +168,14 @@ export default function SearchForm() {
                     value={values.maxCalories}
                     onChange={handleChange}
                     placeholder="Maximum Calories"
-                    className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
+                    className="px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
                   />
                 </div>
               </div>
                <div className="flex justify-center mt-16 mb-16">
-                <button type="button" onClick={handlePrevQuestion} className="hover:bg-amber-200 border-2 border-amber-700 text-black font-bold py-1 px-10 rounded-full mr-4">Back</button>
+                <button type="button" onClick={handlePrevQuestion} className="hover:bg-amber-200 border-2 border-yellow text-black font-bold py-1 px-10 rounded-full mr-4">Back</button>
                 
-                <button type="submit" className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-1 px-10 rounded-full">Search</button>
+                <button type="submit" className="bg-yellow hover:bg-yellow text-black font-bold py-1 px-10 rounded-full">Search</button>
               </div>
             </>
           }
