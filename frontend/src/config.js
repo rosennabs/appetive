@@ -1,5 +1,5 @@
 // config.js
-export const apiKey = "b088ef5345msh7e0c03306191838p106b9bjsnff7c1b7cb0d";
+export const apiKey = "b088ef5345msh7e0c03306191838p106b9bjsnff7c1b7cb0d9";
 export const host = "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com";
 
 

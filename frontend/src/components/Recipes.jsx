@@ -15,7 +15,7 @@ export default function Recipe() {
       ) : (  
 
       <section className="md:container max-w-screen-xl mx-auto flex flex-wrap justify-between">
-        {recipes && recipes.map(recipe => (
+            {recipes && recipes.map(recipe => (
           
           <div key={recipe.id} className="w-1/4 p-4 mb-4">
 
