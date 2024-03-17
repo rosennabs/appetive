@@ -158,6 +158,7 @@ function RecipeForm() {
                           placeholder="50g"
                           value={values.ingredients[index].measurement}
                           onChange={handleChange}
+                          style={{width: "100px"}}
                           className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
                         />
                         <Field
@@ -172,7 +173,7 @@ function RecipeForm() {
                           <button
                             type="button"
                             onClick={() => remove(index)}
-                            className="mx-1 px-2 bg-gray-200"
+                            className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-1 px-5 rounded-full ml-1"
                           >
                             Remove
                           </button>
@@ -183,7 +184,7 @@ function RecipeForm() {
                   <button
                     type="button"
                     onClick={() => push(emptyIngredient)}
-                    className="mx-1 px-2 bg-gray-200"
+                    className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-1 px-5 rounded-full"
                   >
                     Add More Ingredients
                   </button>
@@ -213,6 +214,7 @@ function RecipeForm() {
                 type="text"
                 value={values.proteins}
                 onChange={handleChange}
+                style={{width: "100px"}}
                 className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
               />
               <label className="inline" htmlFor="fats">
@@ -224,6 +226,7 @@ function RecipeForm() {
                 type="text"
                 value={values.fats}
                 onChange={handleChange}
+                style={{width: "100px"}}
                 className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
               />
               <label className="inline" htmlFor="carbs">
@@ -235,6 +238,7 @@ function RecipeForm() {
                 type="text"
                 value={values.carbs}
                 onChange={handleChange}
+                style={{width: "100px"}}
                 className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
               />
 
@@ -249,6 +253,7 @@ function RecipeForm() {
                 type="number"
                 value={values.calories}
                 onChange={handleChange}
+                style={{width: "100px"}}
                 className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
               />
             </fieldset>
@@ -274,7 +279,7 @@ function RecipeForm() {
               className="px-4 py-2 border border-amber-700 rounded-md focus:outline-none focus:border-amber-500"
             />
             <div>
-              <button type="submit" className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-1 px-5 rounded-full mr-4">
+              <button type="submit" className="bg-amber-600 hover:bg-amber-700 text-black font-bold py-1 px-5 rounded-full">
                 Submit Recipe
               </button>
             </div>
