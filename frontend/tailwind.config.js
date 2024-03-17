@@ -36,12 +36,12 @@ module.exports = {
       },
       colors: {
         yellow: '#EBB22F',
-        brown: '#503106',
+        brown: {
+          dark: '#503106',
+          light: '#64471D',
+        },
         'darker-white': '#F5F5EF',
       },
-      fontFamily: {
-        
-      }
     },
   },
   plugins: [],
