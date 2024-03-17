@@ -1,24 +1,26 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext} from 'react';
 import { AppDataContext } from '../contexts/AppDataContext';
-import RecipeDetails from './RecipeDetails';
 
-export default function Recipe() {
+
+export default function Recipe({setSelected}) {
 
   //Access recipes from state
   const { state, fetchRecipeInfo } = useContext(AppDataContext);
   const { recipes } = state;
-  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  
 
   //Function to handle click on a recipe
   const handleRecipeClick = async (recipeId) => {
     const recipeInfo = await fetchRecipeInfo(recipeId);
-    setSelectedRecipe(recipeInfo); //Set selected recipe details in state
-    console.log("Recipe Information: ", recipeInfo);
+    setSelected(recipeInfo); //Set selected recipe details in state
+    
   }
   
 
   return (
     <div>
+      <h1 className='text-l mb-4 mt-32 ml-16 uppercase font-serif text-gray-500'> Make Yourself A Treat</h1>
+
       {recipes.length === 0 ? (
         <h1 className="font-bold text-3xl mb-8  text-amber-700 text-center"> No results found! </h1>
       ) : (  
@@ -36,8 +38,7 @@ export default function Recipe() {
 
           </section>
       )} 
-      {/* Conditionally render RecipeDetails component*/}
-      {selectedRecipe && <RecipeDetails recipe={selectedRecipe}/>}
+      
     </div>
   )
 }

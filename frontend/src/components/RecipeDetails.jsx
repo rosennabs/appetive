@@ -116,19 +116,18 @@ const renderInstructions = (instructions) => {
 };
 
 
-
 const RecipeDetails = function ({ recipe }) {
  
-  
   return (
-    <>
-      {recipe && (
-        <div>
+  <>
+    {recipe && (
+      <div className="flex justify-center items-center h-screen">
+        <div className="max-w-3xl p-4">
           <h2 className="text-4xl font-extrabold dark:text-white mb-10">
             {recipe.title}
           </h2>
-          <img className="mb-10" src={recipe.image} alt="" />
-          <div className="w-[800px] max-w-[800px]">
+          <img className="mb-10 pt-32" src={recipe.image} alt="" />
+          <div className="max-w-lg">
             <p className="text-2xl font-extrabold dark:text-white mb-5">
               Instructions:
             </p>
@@ -143,19 +142,18 @@ const RecipeDetails = function ({ recipe }) {
             Preparation time: {recipe.readyInMinutes} minutes
           </p>
           <div className="mt-3 text-xl">
-            {recipe.nutrients.map((nutrient) => {
+            {recipe.nutrients.map((nutrient) => (
               <p key={nutrient.name}>
                 {nutrient.name}: {nutrient.amount}{nutrient.unit}
               </p>
-            })}
-            
+            ))}
           </div>
-         
         </div>
-      )}
+      </div>
+    )}
+  </>
+);
 
-    </>
-  );
 };
 
 export default RecipeDetails;

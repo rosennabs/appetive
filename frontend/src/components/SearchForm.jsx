@@ -118,7 +118,7 @@ export default function SearchForm() {
       {({ handleSubmit, handleChange, values }) => (
         <Form onSubmit={handleSubmit}>
 
-          <p className='text-xs mb-4 uppercase font-serif text-gray-500 text-center'>Personalize your search</p>
+          <p className='text-xs mb-4 mt-16 uppercase font-serif text-gray-500 text-center'>Personalize your search</p>
 
           {question === 1 &&
             <>
