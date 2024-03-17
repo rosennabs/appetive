@@ -4,11 +4,12 @@ import Recipes from "./components/Recipes";
 import RecipeDetails from "./components/RecipeDetails";
 import React, { Fragment } from "react";
 import { useSelectedRecipe } from "./hooks/useSelectedRecipe";
+import { useSearchBar } from "./hooks/useSearchBar";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 
 function App() {
   const { selectedRecipe, setSelected } = useSelectedRecipe();
-
+  const { showSearchBar, toggleSearchBar } = useSearchBar();
   
 
   return (
@@ -16,15 +17,19 @@ function App() {
       <Fragment>
         
         <Router>
-          <NavBar />  
+          <NavBar
+            toggleSearchBar={toggleSearchBar}
+            showSearchBar={showSearchBar} />  
         </Router>
 
         
          {selectedRecipe ? (
-          <RecipeDetails recipe={selectedRecipe} setSelected={setSelected} />
+          <RecipeDetails
+            recipe={selectedRecipe}
+            setSelected={setSelected} />
         ) : (
           <div>
-            <SearchForm />
+            {!showSearchBar && <SearchForm />}
             <Recipes setSelected={setSelected} />
           </div>
         )}

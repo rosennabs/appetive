@@ -15,7 +15,7 @@ import Register from "./pages/Register";
 import About from "./pages/About";
 import { FaAngleDoubleDown, FaSearch } from "react-icons/fa";
 
-function NavBar() {
+function NavBar({ toggleSearchBar, showSearchBar }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const setAuth = (boolean) => {
@@ -27,14 +27,6 @@ function NavBar() {
     localStorage.clear();
     setAuth(false);
   };
-
-  //Define state to manage search bar
-  const [showSearchBar, setShowSearchBar] = useState(false);
-
-  const toggleSearchBar = () => {
-    setShowSearchBar(!showSearchBar);
-  };
-
 
   // Keep user login status and set 'setAuth' to 'true' upon page refresh
   const isAuth = async () => {
@@ -112,11 +104,11 @@ function NavBar() {
       />
 
            {/* Search bar */}
-        {showSearchBar && (
-          <div>
-            <SearchBar />
+        
+          <div onClick={()=> toggleSearchBar()}>
+            {showSearchBar && <SearchBar />}
           </div>
-      )}
+      
 
       
       <Routes>
