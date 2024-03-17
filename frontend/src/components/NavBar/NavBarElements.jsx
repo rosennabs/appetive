@@ -72,7 +72,7 @@ export const NavBtn = styled.nav`
 export const NavBtnLink = styled(Link)`
     border-radius: 4px;
     background: #F5F5EF;
-    padding: 7px 20px;
+    padding: 8px 22px;
     color: #00000;
     outline: none;
     border: none;
@@ -83,8 +83,12 @@ export const NavBtnLink = styled(Link)`
     margin-left: 10px;
     &:hover {
         transition: all 0.2s ease-in-out;
-        background: #fff;
-        color: #808080;
+        background: #64471D;
+        color: #F5F5EF;
+    }
+    &.active {
+        background: #64471D;
+        color: #F5F5EF;
     }
 `;
 
@@ -103,7 +107,8 @@ export const ImgBtnLink = styled(Link)`
     margin-top: -85px;
     &:hover {
         transition: all 0.2s ease-in-out;
-        background: #F5F5EF;
+        background: #64471D;
+        color: #F5F5EF;
     }
     @media screen and (max-width: 768px) {
         margin-top: -60px;
