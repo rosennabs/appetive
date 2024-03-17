@@ -22,9 +22,9 @@ function RecipeForm() {
         initialValues={{
           ingredients: [emptyIngredient],
           cuisine: "African",
-          diet: "",
+          diet: NULL,
           meal_type: "main course",
-          intolerances: "",
+          intolerances: NULL,
           user_id: localStorage.getItem("token"),
           title: "",
           image: "",
@@ -106,7 +106,7 @@ function RecipeForm() {
                 onChange={handleChange}
                 className="border"
               >
-                <option value="NULL">None</option>
+                <option value={NULL}>None</option>
                 <option value="Gluten Free">Gluten Free</option>
                 <option value="Ketogenic">Ketogenic</option>
                 <option value="Vegetarian">Vegetarian</option>
@@ -129,7 +129,7 @@ function RecipeForm() {
                 onChange={handleChange}
                 className="border"
               >
-                <option value="NULL">None</option>
+                <option value={NULL}>None</option>
                 <option value="Dairy">Dairy</option>
                 <option value="Egg">Egg</option>
                 <option value="Gluten">Gluten</option>
