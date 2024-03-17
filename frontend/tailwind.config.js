@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 const colors = require("tailwindcss/colors");
 
 module.exports = {
@@ -33,6 +34,14 @@ module.exports = {
       borderRadius: {
         "4xl": "2rem",
       },
+      colors: {
+        yellow: '#EBB22F',
+        brown: '#503106',
+        'darker-white': '#F5F5EF',
+      },
+      fontFamily: {
+        
+      }
     },
   },
   plugins: [],
