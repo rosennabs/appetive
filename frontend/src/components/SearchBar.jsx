@@ -42,6 +42,7 @@ export default function SearchBar() {
       }
     } else {
       setSuggestions([]); // Clear suggestions if query is empty
+      window.location.reload();
     }
   }
 
@@ -54,7 +55,6 @@ export default function SearchBar() {
     try {
       const recipeInfo = await fetchRecipeInfo(recipeId);
       setRecipes([recipeInfo]);
-
 
     } catch (error) {
     console.error("Error fetching recipe information: ", error);

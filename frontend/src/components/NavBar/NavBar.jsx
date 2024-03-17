@@ -105,7 +105,7 @@ function NavBar({ toggleSearchBar, showSearchBar }) {
 
            {/* Search bar */}
         
-          <div onClick={()=> toggleSearchBar()}>
+          <div>
             {showSearchBar && <SearchBar />}
           </div>
       
