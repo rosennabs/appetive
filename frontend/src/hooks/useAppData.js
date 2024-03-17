@@ -117,9 +117,10 @@ const useAppData = () => {
     fetchRecipes();
   }, []);
 
-  // Function to handle search form submission and make API call
+  // Function to handle search form submission
+
   const handleSearchSubmission = async (values) => {
-    // Store selected options for each category. Convert minCalories and maxCalories to arrays with a single element
+    // Store user's selected options 
 
     const selectedOptions = {
       cuisine: values.cuisine,
@@ -135,11 +136,10 @@ const useAppData = () => {
       Object.entries(selectedOptions).filter(([key, value]) => value !== "")
     );
 
-    console.log("filtered options: ", filteredOptions);
-
+    //Fetch data from api
     const options = {
       method: "GET",
-      url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?number=2",
+      url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch",
       params: filteredOptions,
       headers: {
         "X-RapidAPI-Key": apiKey,
@@ -149,13 +149,9 @@ const useAppData = () => {
     try {
       const response = await axios.request(options);
 
-      // console.log("search response: ", response.data);
-      // const filteredRecipes = await Promise.all(
-      //   response.data.results.map((recipe) => fetchRecipeInfo(recipe.id))
-      // );
-
-      // // console.log("Filtered Results: ", filteredRecipes);
-      // setRecipes(filteredRecipes);
+      const apiSearchResponse = response.data.results;
+      setRecipes(apiSearchResponse);
+   
     } catch (error) {
       console.error("Error fetching filtered recipes: ", error);
     }
