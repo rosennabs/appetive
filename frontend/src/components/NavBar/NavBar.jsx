@@ -8,6 +8,7 @@ import {
   NavBtn,
   Bars,
   NavBtnLink,
+  ImgBtnLink,
 } from "./NavBarElements";
 import axios from "axios";
 import Login from "./pages/Login";
@@ -53,8 +54,6 @@ function NavBar() {
       const response = await axios.get("http://localhost:8080/auth/is-verify", {
         headers,
       });
-      // console.log(response.data); //true
-
       response.data === true
         ? setIsAuthenticated(true)
         : setIsAuthenticated(false);
@@ -108,18 +107,13 @@ function NavBar() {
         </NavBtn>
       </Nav>
 
-      <div className="relative">
-        <img
-          src={require("../../Images/header.png")}
-          alt="Header Image"
-          className="h-auto max-w-full"
-        />
-        <div className="absolute top-96 left-12">
-          <Link to="/add-recipe" className="bg-yellow rounded-xl py-2.5 px-7 hover:text-darker-white">
-            MAKE YOUR RECIPE
-          </Link>
-        </div>
-      </div>
+      <img
+        src={require("../../Images/header.png")}
+        alt="Header Image"
+        className="h-auto max-w-full"
+      />
+
+      <ImgBtnLink to="/add-recipe">MAKE YOUR RECIPE</ImgBtnLink>
 
       {/* Search bar */}
       {showSearchBar && (
