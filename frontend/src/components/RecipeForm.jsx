@@ -26,7 +26,6 @@ function RecipeForm() {
         Craft Your Culinary Masterpiece with Us
       </h1>
 
-      <h6 className="text-xs italic text-gray-500">* Required</h6>
       <Formik
         initialValues={{
           ingredients: [emptyIngredient],
@@ -52,7 +51,8 @@ function RecipeForm() {
         }}
       >
         {({ values, handleChange }) => (
-          <Form>
+          <Form className="border border-amber-700 rounded-md px-5 py-5">
+            <span className="text-xs italic text-gray-500">* Required</span>
             <div className="my-5">
             <label className="block font-bold text-amber-700 text-lg" htmlFor="title">Recipe Title*</label>
             <Field
