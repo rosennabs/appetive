@@ -18,10 +18,21 @@ export default function SearchBar() {
     setQuery(userInput);
    
     if (userInput.trim() !== '') {
+
+    const options = {
+    method: 'GET',
+    url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete',
+    params: {
+      query: userInput,
+      number: '25'
+    },
+    headers: {
+      'X-RapidAPI-Key': apiKey,
+      'X-RapidAPI-Host': host
+    }
+};
       try {
-        const response = await axios.get(
-          `https://api.spoonacular.com/recipes/autocomplete?apiKey=${apiKey}&number=25&query=${userInput}`
-        );
+        const response = await axios.request(options);
         
         setSuggestions(response.data);
         
