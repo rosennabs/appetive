@@ -106,6 +106,7 @@
 import React from "react";
 
 
+
 const renderInstructions = (instructions) => {
   const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions)/g;
   const filteredInstructions = instructions.replace(regex, "");
@@ -116,8 +117,12 @@ const renderInstructions = (instructions) => {
 };
 
 
-const RecipeDetails = function ({ recipe }) {
- 
+const RecipeDetails = function ({ recipe, setSelected}) {
+  
+  const handleGoBack = () => {
+    setSelected(null); // Go back to the previous page
+  };
+  
   return (
   <>
     {recipe && (
@@ -140,14 +145,18 @@ const RecipeDetails = function ({ recipe }) {
           </p>
           <p className="mt-3 text-xl">
             Preparation time: {recipe.readyInMinutes} minutes
-          </p>
+            </p>
+            
           <div className="mt-3 text-xl">
             {recipe.nutrients.map((nutrient) => (
               <p key={nutrient.name}>
                 {nutrient.name}: {nutrient.amount}{nutrient.unit}
               </p>
             ))}
-          </div>
+            </div>
+            
+              <button type="button" onClick={handleGoBack} className="hover:bg-amber-200 border-2 border-amber-700 text-black font-bold py-1 px-10 rounded-full float-right">Back</button>
+              
         </div>
       </div>
     )}

@@ -19,7 +19,7 @@ function App() {
 
         
          {selectedRecipe ? (
-          <RecipeDetails recipe={selectedRecipe} />
+          <RecipeDetails recipe={selectedRecipe} setSelected={setSelected} />
         ) : (
           <div>
             <SearchForm />
