@@ -22,9 +22,9 @@ function RecipeForm() {
         initialValues={{
           ingredients: [emptyIngredient],
           cuisine: "African",
-          diet: NULL,
+          diet: "NULL",
           meal_type: "main course",
-          intolerances: NULL,
+          intolerances: "NULL",
           user_id: localStorage.getItem("token"),
           title: "",
           image: "",
@@ -106,7 +106,7 @@ function RecipeForm() {
                 onChange={handleChange}
                 className="border"
               >
-                <option value={NULL}>None</option>
+                <option value="NULL">None</option>
                 <option value="Gluten Free">Gluten Free</option>
                 <option value="Ketogenic">Ketogenic</option>
                 <option value="Vegetarian">Vegetarian</option>
@@ -129,7 +129,7 @@ function RecipeForm() {
                 onChange={handleChange}
                 className="border"
               >
-                <option value={NULL}>None</option>
+                <option value="NULL">None</option>
                 <option value="Dairy">Dairy</option>
                 <option value="Egg">Egg</option>
                 <option value="Gluten">Gluten</option>
@@ -220,18 +220,11 @@ function RecipeForm() {
                           onChange={handleChange}
                           className="border"
                         />
-                        <button
-                          type="button"
-                          onClick={() => push(emptyIngredient)}
-                          className="mx-1 px-2 bg-gray-200"
-                        >
-                          Add
-                        </button>
                         {index > 0 && (
                           <button
-                            type="button"
-                            onClick={() => remove(index)}
-                            className="mx-1 px-2 bg-gray-200"
+                          type="button"
+                          onClick={() => remove(index)}
+                          className="mx-1 px-2 bg-gray-200"
                           >
                             Remove
                           </button>
@@ -239,6 +232,13 @@ function RecipeForm() {
                       </div>
                     );
                   })}
+                <button
+                  type="button"
+                  onClick={() => push(emptyIngredient)}
+                  className="mx-1 px-2 bg-gray-200"
+                >
+                  Add Ingredient
+                </button>
                 </>
               )}
             </FieldArray>
