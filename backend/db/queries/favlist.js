@@ -64,16 +64,30 @@ const checkIfFav = async function (userID, recipeID) {
 const toggleIsFav = async function (userID, recipeID) {
   try {
     const is_fav = await checkIfFav(userID, recipeID);
-    const queryString = `
+    const updateQueryString = `
       UPDATE users_recipes
       SET is_fav = $1
       WHERE user_id = $2 AND recipe_id = $3
       RETURNING is_fav;
     `;
-    const queryParams = [`${!is_fav}, ${userID}, ${recipeID}`];
+    const updateQueryParams = [`${!is_fav}, ${userID}, ${recipeID}`];
 
-    const result = await db.query(queryString, queryParams);
-    return result.rows[0].is_fav; // will return boolean that has been set
+    const updateResult = await db.query(updateQueryString, updateQueryParams);
+
+    if (updateResult.rows.length > 0) {
+      return updateResult.rows[0].is_fav;
+    } else {
+    // if relationship does not exist, create and set to TRUE
+      const insertQueryString = `
+        INSERT INTO users_recipes (user_id, recipe_id, is_fav)
+        VALUES ($1, $2, TRUE)
+        RETURNING is_fav;
+      `;
+      const insertQueryParams= [userID, recipeID];
+
+      const insertResult = await db.query(insertQueryString, insertQueryParams);
+      return insertResult.rows[0].is_fav;
+    };
   } catch {
     console.error("Error in toggleIsFav:", error.message);
     throw error;
