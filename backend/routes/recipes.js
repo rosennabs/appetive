@@ -133,6 +133,7 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/search", async (req, res) => {
+  console.log(req.query);
   try {
     const {
       title,
@@ -143,6 +144,21 @@ router.post("/search", async (req, res) => {
       minCalories,
       maxCalories,
     } = req.query;
+
+    //Getting results from external api
+    const options = {
+      method: "GET",
+      url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch",
+      params: req.query,
+      headers: {
+        "X-RapidAPI-Key": process.env.API_KEY,
+        "X-RapidAPI-Host": process.env.API_HOST,
+      },
+    };
+
+    const response = await axios.request(options);
+    const apiSearchResponse = response.data.results;
+    console.log("apiSearchResponse", apiSearchResponse);
 
     const recipes = await getRecipesBySearchQuery(
       title,
