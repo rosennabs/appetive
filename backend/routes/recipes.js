@@ -15,7 +15,7 @@ const axios = require("axios");
 
 router.get("/", async (_req, res) => {
   try {
-    //Getting data from external api
+    //Getting recipes from external api
     const apiOptions = {
       method: "GET",
       url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch",
@@ -30,10 +30,14 @@ router.get("/", async (_req, res) => {
 
     const apiResponse = await axios.request(apiOptions);
     const apiRecipes = apiResponse.data.results;
-    console.log(apiRecipes);
 
+    //Getting recipes from db
     const dbRecipes = await getRecipes();
-    console.log(dbRecipes);
+
+    //merging results of db and external api
+    const allRecipes = [...apiRecipes, ...dbRecipes];
+    console.log(allRecipes);
+
     if ("message" in dbRecipes) {
       // No recipes found
       console.log("No recipes found in the database");
