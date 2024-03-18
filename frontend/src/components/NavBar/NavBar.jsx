@@ -74,7 +74,7 @@ function NavBar({ toggleSearchBar, showSearchBar }) {
             <FaCaretDown className="ml-1" />
           </NavLink>
           <NavLink to="/my-profile">
-            MY PROFLE
+            MY PROFILE
             <FaCaretDown className="ml-1" />
           </NavLink>
         </NavMenu>
