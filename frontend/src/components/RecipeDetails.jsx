@@ -1,59 +1,92 @@
 import React from "react";
 
-
 const renderInstructions = (instructions) => {
   const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions)/g;
   const filteredInstructions = instructions.replace(regex, "");
-  
+
   return filteredInstructions
     .split(".")
     .map((instruction) => <li className="mb-3">{instruction}</li>);
 };
 
-
 const RecipeDetails = function ({ recipe, setSelected }) {
   console.log(recipe);
-  
-  return (
-  <>
-    {recipe && (
-      // <div className="flex justify-center items-center mt-16">
-        //   <div className="max-w-3xl p-4">
-        <div className="flex justify-center items-center">
-        <div className="flex justify-center items-center mt-16 w-5/6 bg-black  text-white">
-          <div className="w-full flex-col justify-center p-8 items-center">
-            <h2 className="text-4xl font-extrabold mb-10">
-              {recipe.title}
-              </h2>
-              
-            <div className="flex flex-row">
-                <section className="pr-8 flex flex-col items-center">
-                  <p className="text-4xl font-extrabold text-yellow">30g</p>
-                  <p className="text-lg">Carbs</p>
-                </section>
-                <section className="border-x px-8 flex flex-col items-center">
-                  <p className="text-4xl font-extrabold text-yellow">10g</p>
-                  <p className="text-lg">Protein</p>
-                </section>
-                <section className="px-8 flex flex-col items-center">
-                  <p className="text-4xl font-extrabold text-yellow">7g</p>
-                  <p className="text-lg">Fats</p>
-                </section>
-                <section className="border-x px-8 flex flex-col items-center">
-                  <p className="text-4xl font-extrabold text-yellow">350</p>
-                  <p className="text-lg">Calories</p>
-                </section>
-            </div> 
 
+  return (
+    <>
+      {recipe && (
+        <div className="">
+          <div className="flex flex-col justify-center items-center">
+            <div className="flex justify-center items-center mt-16 w-5/6 bg-black  text-white">
+              <div className="w-full flex-col justify-center p-8 items-center">
+                <h2 className="text-4xl font-extrabold mb-10">
+                  {recipe.title}
+                </h2>
+
+                <div className="flex flex-row">
+                  <section className="pr-8 flex flex-col items-center">
+                    <p className="text-4xl font-extrabold text-yellow">30g</p>
+                    <p className="text-lg">Carbs</p>
+                  </section>
+                  <section className="border-x px-8 flex flex-col items-center">
+                    <p className="text-4xl font-extrabold text-yellow">10g</p>
+                    <p className="text-lg">Protein</p>
+                  </section>
+                  <section className="px-8 flex flex-col items-center">
+                    <p className="text-4xl font-extrabold text-yellow">7g</p>
+                    <p className="text-lg">Fats</p>
+                  </section>
+                  <section className="border-x px-8 flex flex-col items-center">
+                    <p className="text-4xl font-extrabold text-yellow">350</p>
+                    <p className="text-lg">Calories</p>
+                  </section>
+                </div>
+
+                <div className="flex flex-col text-lg mt-8">
+                  <section className="flex flex-row">
+                    <span className="pr-14">🍴Yield :</span>
+                    <span className="text-lg">4 servings</span>
+                  </section>
+
+                  <section className="flex flex-row">
+                    <span className="pr-10">🕓 Ready :</span>
+                    <span className="text-lg">30 minutes</span>
+                  </section>
+
+                  <section className="flex flex-row">
+                    <span className="pr-10">🥗 Diet(s) :</span>
+                    <span className="text-lg">
+                      ketogenic, vegan, vegetarian
+                    </span>
+                  </section>
+
+                  <section className="flex flex-row">
+                    <span className="pr-8">🥣 Type(s) :</span>
+                    <span className="text-lg">
+                      main course, side dish, breakfast
+                    </span>
+                  </section>
+
+                  <section className="flex flex-row">
+                    <span className="pr-3">🏙️ Cuisine(s) :</span>
+                    <span className="text-lg">African, Chinese, European</span>
+                  </section>
+                </div>
+              </div>
+
+              <img className="mb-10 w-1/2 h-80 p-8" src={recipe.image} alt="" />
+
+              
+            </div>
+            <div className="bg-white p-8 w-5/6 border border-black">
+                <section>
+                  <p className="text-3xl font-extrabold mb-10">Ingredients</p>
+                </section>
+              </div>
           </div>
-          
-          <img className="mb-10 w-1/2 h-80 p-8" src={recipe.image} alt="" />
-          
-          </div>
-          </div>
-        
-          
-          /* <div className="max-w-lg">
+        </div>
+
+        /* <div className="max-w-lg">
             <p className="text-2xl font-extrabold dark:text-white mb-5">
               Instructions:
             </p>
@@ -80,20 +113,12 @@ const RecipeDetails = function ({ recipe, setSelected }) {
               
         </div>
       </div> */
-    )}
-  </>
-);
-
+      )}
+    </>
+  );
 };
 
 export default RecipeDetails;
-
-
-
-
-
-
-
 
 // import axios from "axios";
 // import { useEffect, useState } from "react";
@@ -197,6 +222,3 @@ export default RecipeDetails;
 // };
 
 // export default RecipeDetails;
-
-
-
