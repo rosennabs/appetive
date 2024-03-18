@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Formik, Form } from 'formik';
 import { AppDataContext } from '../contexts/AppDataContext';
 import axios from "axios";
-import apiKey from "../config";
+import { apiKey, host } from "../config";
 
 export default function SearchBar() {
 
@@ -18,10 +18,21 @@ export default function SearchBar() {
     setQuery(userInput);
    
     if (userInput.trim() !== '') {
+
+    const options = {
+    method: 'GET',
+    url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete',
+    params: {
+      query: userInput,
+      number: '25'
+    },
+    headers: {
+      'X-RapidAPI-Key': apiKey,
+      'X-RapidAPI-Host': host
+    }
+};
       try {
-        const response = await axios.get(
-          `https://api.spoonacular.com/recipes/autocomplete?apiKey=${apiKey}&number=25&query=${userInput}`
-        );
+        const response = await axios.request(options);
         
         setSuggestions(response.data);
         
@@ -31,6 +42,7 @@ export default function SearchBar() {
       }
     } else {
       setSuggestions([]); // Clear suggestions if query is empty
+      window.location.reload();
     }
   }
 
@@ -43,7 +55,6 @@ export default function SearchBar() {
     try {
       const recipeInfo = await fetchRecipeInfo(recipeId);
       setRecipes([recipeInfo]);
-
 
     } catch (error) {
     console.error("Error fetching recipe information: ", error);

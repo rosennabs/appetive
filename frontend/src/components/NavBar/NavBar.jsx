@@ -17,7 +17,7 @@ import About from "./pages/About";
 import { FaCaretDown, FaSearch, FaHome } from "react-icons/fa";
 import RecipeForm from "../RecipeForm";
 
-function NavBar() {
+function NavBar({ toggleSearchBar, showSearchBar }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const setAuth = (boolean) => {
@@ -28,13 +28,6 @@ function NavBar() {
     e.preventDefault();
     localStorage.clear();
     setAuth(false);
-  };
-
-  //Define state to manage search bar
-  const [showSearchBar, setShowSearchBar] = useState(false);
-
-  const toggleSearchBar = () => {
-    setShowSearchBar(!showSearchBar);
   };
 
   // Keep user login status and set 'setAuth' to 'true' upon page refresh
@@ -113,14 +106,13 @@ function NavBar() {
         className="h-auto max-w-full"
       />
 
+           {/* Search bar */}
+        
+          <div>
+            {showSearchBar && <SearchBar />}
+          </div>
+      
       <ImgBtnLink to="/add-recipe">MAKE YOUR RECIPE</ImgBtnLink>
-
-      {/* Search bar */}
-      {showSearchBar && (
-        <div>
-          <SearchBar />
-        </div>
-      )}
 
       <Routes>
         <Route path="/login" element={<Login setAuth={setAuth} />} />
