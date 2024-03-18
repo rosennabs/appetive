@@ -54,7 +54,6 @@ const checkIfFav = async function (userID, recipeID) {
     }
 
     return true;
-
   } catch {
     console.error("Error in checkIfFav:", error.message);
     throw error;
@@ -63,15 +62,20 @@ const checkIfFav = async function (userID, recipeID) {
 
 // update user marking a recipe as fav from TRUE to FALSE or FALSE to TRUE
 const toggleIsFav = async function (userID, recipeID) {
-  const is_fav = await checkIfFav(userID, recipeID);
-  const queryString = `
-    UPDATE users_recipes
-    SET is_fav = $1
-    WHERE user_id = $2 AND recipe_id = $3
-    RETURNING is_fav;
-  `;
-  const queryParams = [`${!is_fav}, ${userID}, ${recipeID}`];
+  try {
+    const is_fav = await checkIfFav(userID, recipeID);
+    const queryString = `
+      UPDATE users_recipes
+      SET is_fav = $1
+      WHERE user_id = $2 AND recipe_id = $3
+      RETURNING is_fav;
+    `;
+    const queryParams = [`${!is_fav}, ${userID}, ${recipeID}`];
 
-  const result = await db.query(queryString, queryParams);
-  return result.rows[0].is_fav; // will return boolean that has been set
+    const result = await db.query(queryString, queryParams);
+    return result.rows[0].is_fav; // will return boolean that has been set
+  } catch {
+    console.error("Error in toggleIsFav:", error.message);
+    throw error;
+  }
 }
