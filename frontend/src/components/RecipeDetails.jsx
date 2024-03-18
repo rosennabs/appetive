@@ -1,7 +1,6 @@
 import React from "react";
 
 
-
 const renderInstructions = (instructions) => {
   const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions)/g;
   const filteredInstructions = instructions.replace(regex, "");
