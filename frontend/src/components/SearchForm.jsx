@@ -92,7 +92,7 @@ export default function SearchForm() {
           </div>
           </div>
         <div className="flex justify-center mt-16 mb-16">
-          {showBackButton && <button type="button" onClick={handlePrevQuestion} className="hover:bg-amber-200 border-2 border-yellow text-black font-bold py-1 px-10 rounded-full mr-4">Back</button>}
+          {showBackButton && <button type="button" onClick={handlePrevQuestion} className="hover:bg-yellow border-2 border-yellow text-black font-bold py-1 px-10 rounded-full mr-4">Back</button>}
           {question < 5 && <button type="button" onClick={handleNextQuestion} className="bg-yellow hover:bg-yellow text-black font-bold py-1 px-10 rounded-full mr-4">Next</button>}
           {question === 5 && <button type="submit" className="bg-yellow hover:bg-yellow text-black font-bold py-1 px-10 rounded-full mr-4">Search</button>}
         </div>
