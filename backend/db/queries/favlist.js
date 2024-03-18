@@ -8,7 +8,7 @@ const getUserFavs = async function (userID) {
       SELECT recipe_id FROM users_recipes
       WHERE user_id = $1 AND is_fav = TRUE;
     `;
-    const queryParams = [`${userID}`];
+    const queryParams = [userID];
     const results = await db.query(queryString, queryParams);
 
     if (results.rows.length === 0) {
@@ -46,7 +46,7 @@ const checkIfFav = async function (userID, recipeID) {
       SELECT is_fav FROM users_recipes
       WHERE user_id = $1 AND recipe_id = $2;
     `;
-    const queryParams = [`${userID}, ${recipeID}`];
+    const queryParams = [userID, recipeID];
     const result = await db.query(queryString, queryParams);
 
     if (result.rows.length === 0 || !result.rows[0].is_fav) {
@@ -70,7 +70,7 @@ const toggleIsFav = async function (userID, recipeID) {
       WHERE user_id = $2 AND recipe_id = $3
       RETURNING is_fav;
     `;
-    const updateQueryParams = [`${!is_fav}, ${userID}, ${recipeID}`];
+    const updateQueryParams = [!is_fav, userID, recipeID];
 
     const updateResult = await db.query(updateQueryString, updateQueryParams);
 
