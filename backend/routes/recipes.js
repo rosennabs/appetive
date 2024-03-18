@@ -36,14 +36,14 @@ router.get("/", async (_req, res) => {
 
     //merging results of db and external api
     const allRecipes = [...apiRecipes, ...dbRecipes];
-    console.log(allRecipes);
+    // console.log(allRecipes);
 
-    if ("message" in dbRecipes) {
+    if (allRecipes.length === 0) {
       // No recipes found
-      console.log("No recipes found in the database");
+      res.status(404).json({ message: "No recipes found", allRecipes });
     } else {
       // Recipes found, return the array
-      res.status(200).json(dbRecipes);
+      res.status(200).json(allRecipes);
     }
   } catch (error) {
     console.error("Error in api/recipes route:", error.message);
