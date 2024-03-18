@@ -158,9 +158,9 @@ router.post("/search", async (req, res) => {
 
     const response = await axios.request(options);
     const apiSearchResponse = response.data.results;
-    console.log("apiSearchResponse", apiSearchResponse);
 
-    const recipes = await getRecipesBySearchQuery(
+    //Getting results from db
+    const dbSearchResponse = await getRecipesBySearchQuery(
       title,
       diet,
       cuisine,
@@ -170,12 +170,15 @@ router.post("/search", async (req, res) => {
       maxCalories
     );
 
-    if ("message" in recipes) {
-      // No recipes found against the search
-      res.status(404).json(recipes);
+    //merging results of db and external api
+    const allRecipes = [...apiSearchResponse, ...dbSearchResponse];
+
+    if (allRecipes.length === 0) {
+      // No recipes found
+      res.status(404).json({ message: "No recipes found", allRecipes });
     } else {
-      // Recipes found, return the recipes
-      res.status(200).json(recipes);
+      // Recipes found, return the array
+      res.status(200).json(allRecipes);
     }
   } catch (error) {
     console.error(error.message);
