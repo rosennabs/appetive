@@ -6,8 +6,7 @@ const getUserFavs = async function (userID) {
   try {
     const queryString = `
       SELECT recipe_id FROM users_recipes
-      WHERE user_id = $1 AND is_fav = TRUE
-      ;
+      WHERE user_id = $1 AND is_fav = TRUE;
     `;
     const queryParams = [`${userID}`];
     const results = await db.query(queryString, queryParams);
@@ -45,7 +44,7 @@ const checkIfFav = async function (userID, recipeID) {
   try {
     const queryString = `
       SELECT is_fav FROM users_recipes
-      WHERE user_id = $1 AND recipe_id = $2
+      WHERE user_id = $1 AND recipe_id = $2;
     `;
     const queryParams = [`${userID}, ${recipeID}`];
     const result = await db.query(queryString, queryParams);
@@ -63,3 +62,16 @@ const checkIfFav = async function (userID, recipeID) {
 };
 
 // update user marking a recipe as fav from TRUE to FALSE or FALSE to TRUE
+const toggleIsFav = async function (userID, recipeID) {
+  const is_fav = await checkIfFav(userID, recipeID);
+  const queryString = `
+    UPDATE users_recipes
+    SET is_fav = $1
+    WHERE user_id = $2 AND recipe_id = $3
+    RETURNING is_fav;
+  `;
+  const queryParams = [`${!is_fav}, ${userID}, ${recipeID}`];
+
+  const result = await db.query(queryString, queryParams);
+  return result.rows[0].is_fav; // will return boolean that has been set
+}
