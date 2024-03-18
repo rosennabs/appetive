@@ -107,7 +107,7 @@ const useAppData = () => {
         const dbRecipes = dbResponse.data;
 
         // Merge API and database recipes
-        const allRecipes = [...dbRecipes, ...apiRecipes];
+        const allRecipes = [...apiRecipes, ...dbRecipes];
 
         setRecipes(allRecipes);
       } catch (error) {
@@ -118,9 +118,11 @@ const useAppData = () => {
   }, []);
 
   // Function to handle search form submission
+  const [searchClicked, setSearchClicked] = useState(false);
 
   const handleSearchSubmission = async (values) => {
     // Store user's selected options 
+    setSearchClicked(true);
 
     const selectedOptions = {
       cuisine: values.cuisine,
@@ -169,6 +171,7 @@ const useAppData = () => {
     handleSearchSubmission,
     fetchRecipeInfo,
     setRecipes,
+    searchClicked
   };
 };
 

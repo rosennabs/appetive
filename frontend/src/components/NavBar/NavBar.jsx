@@ -63,7 +63,7 @@ function NavBar({ toggleSearchBar, showSearchBar }) {
     <>
       <Bars />
 
-      <Nav>
+      <Nav className="fixed top-0">
         <NavMenu>
           <NavLink to="/">
             <FaHome className="size-7" />
@@ -103,7 +103,7 @@ function NavBar({ toggleSearchBar, showSearchBar }) {
       <img
         src={require("../../Images/header.png")}
         alt="Header Image"
-        className="h-auto max-w-full"
+        className="h-auto max-w-full mt-16"
       />
 
            {/* Search bar */}

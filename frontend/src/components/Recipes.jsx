@@ -5,7 +5,7 @@ import { AppDataContext } from '../contexts/AppDataContext';
 export default function Recipe({setSelected}) {
 
   //Access recipes from state
-  const { state, fetchRecipeInfo } = useContext(AppDataContext);
+  const { state, fetchRecipeInfo, searchClicked } = useContext(AppDataContext);
   const { recipes } = state;
   
 
@@ -22,9 +22,10 @@ export default function Recipe({setSelected}) {
       <div className="flex items-center justify-between">
         <h1 className='text-l mb-4 mt-32 ml-16 uppercase font-serif text-gray-500'> Make Yourself A Treat</h1>
 
-        <button type="button" onClick={()=> window.location.reload()}className="hover:bg-yellow border-2 border-black text-black opacity-25 text-underline py-1 px-10 mb-4 mt-32 ml-16 mr-16 rounded-full">Reset</button>
+        {searchClicked && <button type="button" onClick={() => window.location.reload()} className="hover:bg-yellow border-2 border-black text-black opacity-25 text-underline py-1 px-10 mb-4 mt-32 ml-16 mr-16 rounded-full">Reset</button>}
       </div>
-      {recipes.length === 0 ? (
+      
+      {recipes.length === 0 && searchClicked? (
         <h1 className="font-bold text-3xl mb-8  text-yellow text-center"> No results found! </h1>
       ) : (  
 
