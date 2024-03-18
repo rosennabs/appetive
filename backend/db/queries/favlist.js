@@ -1,6 +1,7 @@
 const db = require("../connection");
+const { getRecipeById } = require("./recipes");
 
-// GET all favs for user from users_recipes table
+// Get list of fav recipe IDs for user from users_recipes table
 const getUserFavs = async function (userID) {
   try {
     const queryString = `
@@ -15,15 +16,29 @@ const getUserFavs = async function (userID) {
       return { message: "User has no favs" };
     }
 
-    return results.rows[0];
-    
+    return results.rows; // returns array of objects each with recipe_id key and value
   } catch (error) {
     console.error("Error in getUserFavs:", error.message);
     throw error;
   }
 };
 
-// and get information for each recipe
+// Get information for each recipe in recipe IDs array
+const displayUserFavs = function (favIDs) {
+  const results = {};
+
+  favIDs.forEach(async (fav) => {
+    const recipe = await getRecipeById(fav.recipe_id);
+    const recipe_obj = {};
+    recipe_obj["id"] = recipe.id;
+    recipe_obj["title"] = recipe.title;
+    recipe_obj["image"] = recipe.image;
+
+    results.push(recipe_obj);
+  });
+
+  return results;
+};
 
 // query if a logged in user has marked a recipe as fav. if TRUE return TRUE; if FALSE return FALSE
 
