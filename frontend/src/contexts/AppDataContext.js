@@ -13,6 +13,7 @@ export const AppDataProvider = ({ children }) => {
     handleSearchSubmission,
     fetchRecipeInfo,
     setRecipes,
+    searchClicked,
   } = useAppData();
   
 
@@ -23,6 +24,7 @@ export const AppDataProvider = ({ children }) => {
         handleSearchSubmission,
         fetchRecipeInfo,
         setRecipes,
+        searchClicked,
       }}
     >
       {children}

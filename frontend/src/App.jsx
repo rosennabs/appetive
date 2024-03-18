@@ -31,7 +31,9 @@ function App() {
         ) : (
           <div>
             {!showSearchBar && <SearchForm />}
-            <Recipes setSelected={setSelected} />
+              <Recipes
+                setSelected={setSelected}
+                showSearchBar={showSearchBar} />
           </div>
         )}
         
