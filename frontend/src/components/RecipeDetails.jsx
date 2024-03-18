@@ -11,7 +11,8 @@ const renderInstructions = (instructions) => {
 };
 
 
-const RecipeDetails = function ({ recipe, setSelected}) {
+const RecipeDetails = function ({ recipe, setSelected }) {
+  console.log(recipe);
   
   return (
   <>
@@ -19,12 +20,32 @@ const RecipeDetails = function ({ recipe, setSelected}) {
       // <div className="flex justify-center items-center mt-16">
         //   <div className="max-w-3xl p-4">
         <div className="flex justify-center items-center">
-        <div className="flex justify-center items-center mt-16 w-5/6 bg-black">
-          <div className="w-full flex justify-center items-center">
-          <h2 className="text-4xl font-extrabold text-white mb-10 p-8">
-            {recipe.title}
-          </h2>
-        </div>
+        <div className="flex justify-center items-center mt-16 w-5/6 bg-black  text-white">
+          <div className="w-full flex-col justify-center p-8 items-center">
+            <h2 className="text-4xl font-extrabold mb-10">
+              {recipe.title}
+              </h2>
+              
+            <div className="flex flex-row">
+                <section className="pr-8 flex flex-col items-center">
+                  <p className="text-4xl font-extrabold text-yellow">30g</p>
+                  <p className="text-lg">Carbs</p>
+                </section>
+                <section className="border-x px-8 flex flex-col items-center">
+                  <p className="text-4xl font-extrabold text-yellow">10g</p>
+                  <p className="text-lg">Protein</p>
+                </section>
+                <section className="px-8 flex flex-col items-center">
+                  <p className="text-4xl font-extrabold text-yellow">7g</p>
+                  <p className="text-lg">Fats</p>
+                </section>
+                <section className="border-x px-8 flex flex-col items-center">
+                  <p className="text-4xl font-extrabold text-yellow">350</p>
+                  <p className="text-lg">Calories</p>
+                </section>
+            </div> 
+
+          </div>
           
           <img className="mb-10 w-1/2 h-80 p-8" src={recipe.image} alt="" />
           
