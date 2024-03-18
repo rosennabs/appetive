@@ -1,3 +1,4 @@
+require("dotenv").config();
 const router = require("express").Router();
 const db = require("../db/connection");
 const {
@@ -6,13 +7,31 @@ const {
   getReviewsByRecipeId,
   addRecipe,
   getRecipesBySearchQuery,
-  addReview
+  addReview,
 } = require("../db/queries/recipes");
 
 const jwtDecoder = require("../utils/jwtDecoder");
+const axios = require("axios");
 
 router.get("/", async (_req, res) => {
   try {
+    //Getting data from external api
+    const apiOptions = {
+      method: "GET",
+      url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch",
+      params: {
+        number: "100",
+      },
+      headers: {
+        "X-RapidAPI-Key": process.env.API_KEY,
+        "X-RapidAPI-Host": process.env.API_HOST,
+      },
+    };
+
+    const apiResponse = await axios.request(apiOptions);
+    const apiRecipes = apiResponse.data.results;
+    console.log(apiRecipes);
+
     const allRecipes = await getRecipes();
     if ("message" in allRecipes) {
       // No recipes found
@@ -70,16 +89,20 @@ router.get("/:id/reviews", async (req, res) => {
   }
 });
 
-router.post("/:id/reviews", async (req,res) => {
+router.post("/:id/reviews", async (req, res) => {
   const recipeId = req.params.id;
   const newReview = req.body;
   const { user } = await jwtDecoder(newReview.user_id);
   newReview.user_id = user;
   try {
-    const result = await addReview(recipeId, newReview.rating, newReview.review, newReview.user_id);
+    const result = await addReview(
+      recipeId,
+      newReview.rating,
+      newReview.review,
+      newReview.user_id
+    );
     console.log("Review added", result.rows);
     res.status(201).send(newReview);
-    
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error");
