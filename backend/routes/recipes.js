@@ -32,13 +32,14 @@ router.get("/", async (_req, res) => {
     const apiRecipes = apiResponse.data.results;
     console.log(apiRecipes);
 
-    const allRecipes = await getRecipes();
-    if ("message" in allRecipes) {
+    const dbRecipes = await getRecipes();
+    console.log(dbRecipes);
+    if ("message" in dbRecipes) {
       // No recipes found
-      res.status(404).json(allRecipes);
+      console.log("No recipes found in the database");
     } else {
       // Recipes found, return the array
-      res.status(200).json(allRecipes);
+      res.status(200).json(dbRecipes);
     }
   } catch (error) {
     console.error("Error in api/recipes route:", error.message);
