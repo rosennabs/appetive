@@ -16,13 +16,23 @@ const RecipeDetails = function ({ recipe, setSelected}) {
   return (
   <>
     {recipe && (
-      <div className="flex justify-center items-center mt-16">
-        <div className="max-w-3xl p-4">
-          <h2 className="text-4xl font-extrabold dark:text-white mb-10">
+      // <div className="flex justify-center items-center mt-16">
+        //   <div className="max-w-3xl p-4">
+        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center mt-16 w-5/6 bg-black">
+          <div className="w-full flex justify-center items-center">
+          <h2 className="text-4xl font-extrabold text-white mb-10 p-8">
             {recipe.title}
           </h2>
-          <img className="mb-10" src={recipe.image} alt="" />
-          <div className="max-w-lg">
+        </div>
+          
+          <img className="mb-10 w-1/2 h-80 p-8" src={recipe.image} alt="" />
+          
+          </div>
+          </div>
+        
+          
+          /* <div className="max-w-lg">
             <p className="text-2xl font-extrabold dark:text-white mb-5">
               Instructions:
             </p>
@@ -48,7 +58,7 @@ const RecipeDetails = function ({ recipe, setSelected}) {
               <button type="button" onClick={()=> setSelected(null)} className="hover:bg-amber-200 border-2 border-amber-700 text-black font-bold py-1 px-10 rounded-full float-right">Back</button>
               
         </div>
-      </div>
+      </div> */
     )}
   </>
 );
