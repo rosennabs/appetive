@@ -65,7 +65,7 @@ router.get("/:id", async (req, res) => {
       res.status(404).json(recipe);
     } else {
       // Recipe found
-      res.status(200).json(recipe[0]);
+      res.status(200).json(recipe);
     }
   } catch (error) {
     console.error(error.message);
