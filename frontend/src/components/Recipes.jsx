@@ -25,7 +25,7 @@ export default function Recipe({setSelected}) {
         <button type="button" onClick={()=> window.location.reload()}className="hover:bg-amber-200 border-2 border-gray-300 text-gray-300 text-underline py-1 px-10 mb-4 mt-32 ml-16 mr-16 rounded-full">Reset</button>
       </div>
       {recipes.length === 0 ? (
-        <h1 className="font-bold text-3xl mb-8  text-amber-700 text-center"> No results found! </h1>
+        <h1 className="font-bold text-3xl mb-8  text-yellow text-center"> No results found! </h1>
       ) : (  
 
       <section className="md:container max-w-screen-xl mx-auto flex flex-wrap">
