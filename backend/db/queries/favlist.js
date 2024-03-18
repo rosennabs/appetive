@@ -41,5 +41,25 @@ const displayUserFavs = function (favIDs) {
 };
 
 // query if a logged in user has marked a recipe as fav. if TRUE return TRUE; if FALSE return FALSE
+const checkIfFav = async function (userID, recipeID) {
+  try {
+    const queryString = `
+      SELECT is_fav FROM users_recipes
+      WHERE user_id = $1 AND recipe_id = $2
+    `;
+    const queryParams = [`${userID}, ${recipeID}`];
+    const result = await db.query(queryString, queryParams);
+
+    if (result.rows.length === 0 || !result.rows[0].is_fav) {
+      return false;
+    }
+
+    return true;
+
+  } catch {
+    console.error("Error in checkIfFav:", error.message);
+    throw error;
+  }
+};
 
 // update user marking a recipe as fav from TRUE to FALSE or FALSE to TRUE
