@@ -93,3 +93,10 @@ const toggleIsFav = async function (userID, recipeID) {
     throw error;
   }
 }
+
+module.exports = {
+  getUserFavs,
+  displayUserFavs,
+  checkIfFav,
+  toggleIsFav
+};
