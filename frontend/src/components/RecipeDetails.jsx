@@ -34,7 +34,7 @@ const RecipeDetails = function ({ recipe, setSelected }) {
     <>
       {recipe && (
         <div className="flex flex-col justify-center items-center">
-          <div className="flex justify-center items-center mt-16 w-5/6 bg-black  text-white">
+          <div className="flex justify-center items-center mt-16 w-5/6 bg-amber-900  text-white">
             <div className="w-full flex-col justify-center p-8 items-center">
               <h2 className="text-4xl font-extrabold mb-10 mt-4">
                 {recipe.title}
@@ -79,33 +79,37 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                 })}
                  </div >
                 
-
+               
               <div className="flex flex-col text-lg mt-8">
+                {recipe.servings && 
                 <section className="flex flex-row items-center">
                   <ImSpoonKnife />
-                  <span className=" pl-2 pr-14">Yield :</span>
-                  <span className="text-lg">{recipe.servings} servings</span>
-                </section>
+                  <span className=" pl-2 pr-2">Yield :</span>
+                  <span className="text-lg">{recipe.servings} serving(s)</span>
+                </section>}
 
-                <section className="flex flex-row items-center">
-                  <ImClock />
-                  <span className="pl-2 pr-10">Ready :</span>
-                  <span className="text-lg">{recipe.readyInMinutes} minutes</span>
-                </section>
+                {recipe.readyInMinutes &&
+                  <section className="flex flex-row items-center">
+                    <ImClock />
+                    <span className="pl-2 pr-2">Ready :</span>
+                    <span className="text-lg">{recipe.readyInMinutes} minutes</span>
+                  </section>}
 
-                <section className="flex flex-row items-center">
-                  <GiCookingPot />
-                  <span className="pl-2 pr-10">Diet(s) :</span>
-                  <span className="text-lg">{recipe.diets.join(", ")}</span>
-                </section>
+                {recipe.diets.length > 0 &&
+                  <section className="flex flex-row items-center">
+                    <GiCookingPot />
+                    <span className="pl-2 pr-2">Diet(s) :</span>
+                    <span className="text-lg flex-wrap">{recipe.diets.join(", ")}</span>
+                  </section>}
 
-                <section className="flex flex-row items-center">
-                  <FaPlateWheat />
-                  <span className="pl-2 pr-8">Type(s) :</span>
-                  <span className="text-lg">
-                    {recipe.type.join(", ")}
-                  </span>
-                </section>
+                {recipe.type.length > 0 &&
+                  <section className="flex flex-row items-center">
+                    <FaPlateWheat />
+                    <span className="pl-2 pr-2">Type(s) :</span>
+                    <span className="text-lg">
+                      {recipe.type.join(", ")}
+                    </span>
+                  </section>}
 
                 {recipe.cuisines.length > 0 && 
                 <section className="flex flex-row items-center">
