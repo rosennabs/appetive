@@ -34,7 +34,7 @@ const RecipeDetails = function ({ recipe, setSelected }) {
     <>
       {recipe && (
         <div className="flex flex-col justify-center items-center">
-          <div className="flex justify-center items-center mt-16 w-5/6 bg-amber-900  text-white">
+          <div className="flex justify-center items-center mt-16 w-5/6 bg-red-900  text-white">
             <div className="w-full flex-col justify-center p-8 items-center">
               <h2 className="text-4xl font-extrabold mb-10 mt-4">
                 {recipe.title}
