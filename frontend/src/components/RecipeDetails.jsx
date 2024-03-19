@@ -12,12 +12,15 @@ import { GiCook, GiCookingPot } from "react-icons/gi";
 
 
 const renderInstructions = (instructions) => {
-  const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions)/g;
+  const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions|\d+\.|^\s+|\s+$)/g;
   const filteredInstructions = instructions.replace(regex, "");
 
-  return filteredInstructions
-    .split(".")
-    .map((instruction) => <li className="mb-3">{instruction}</li>);
+  // Split instructions by dot and filter out empty strings
+  const instructionsArray = filteredInstructions.split(".").filter(instruction => instruction.trim() !== "");
+
+  return instructionsArray.map((instruction, index) => (
+    <li key={index} className="mb-3">{instruction}</li>
+  ));
 };
 
 const RecipeDetails = function ({ recipe, setSelected }) {
