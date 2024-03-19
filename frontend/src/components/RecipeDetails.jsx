@@ -1,4 +1,5 @@
 import React from "react";
+import { FaShareSquare, FaPrint, FaHeart, FaStar } from "react-icons/fa";
 
 const renderInstructions = (instructions) => {
   const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions)/g;
@@ -15,11 +16,15 @@ const RecipeDetails = function ({ recipe, setSelected }) {
   return (
     <>
       {recipe && (
-        <div className="">
+        <div className="p-4 h-full">
+          
           <div className="flex flex-col justify-center items-center">
+
             <div className="flex justify-center items-center mt-16 w-5/6 bg-black  text-white">
+
+              
               <div className="w-full flex-col justify-center p-8 items-center">
-                <h2 className="text-4xl font-extrabold mb-10">
+                <h2 className="text-4xl font-extrabold mb-10 mt-4">
                   {recipe.title}
                 </h2>
 
@@ -75,14 +80,57 @@ const RecipeDetails = function ({ recipe, setSelected }) {
               </div>
 
               <img className="mb-10 w-1/2 h-80 p-8" src={recipe.image} alt="" />
-
-              
             </div>
             <div className="bg-white p-8 w-5/6 border border-black">
-                <section>
-                  <p className="text-3xl font-extrabold mb-10">Ingredients</p>
+              <div className="flex flex-row justify-between">
+                <section className="flex border border-black h-10 px-10 items-center">
+                  <p className="flex items-center">
+                    <FaShareSquare />
+                    <button className="ml-2">Share Recipe</button>
+                  </p>
+                </section>
+                <section className="flex border border-black h-10 px-10 items-center">
+                  <p className="flex items-center">
+                    <FaPrint />
+                    <button className="ml-2">Print Recipe</button>
+                  </p>
+                </section>
+                <section className="flex border border-black h-10 px-8 items-center">
+                  <p className="flex items-center">
+                    <FaHeart />
+                    <button className="ml-2">Add to Favourite</button>
+                  </p>
+                </section>
+                <section className="flex border border-black h-10 px-8 items-center">
+                  <p className="flex items-center">
+                    <FaStar />
+                    <button className="ml-2">Leave a Review</button>
+                  </p>
                 </section>
               </div>
+
+              <section>
+                <p className="text-3xl font-extrabold mt-12 mb-8">
+                  Ingredients
+                </p>
+
+                <div>
+                  {recipe.ingredients.map((ingredient) => (
+                    <li key={ingredient.id}>{ingredient.original}</li>
+                  ))}
+                </div>
+
+                <p className="text-3xl font-extrabold mt-12 mb-8">
+                  Instructions
+                </p>
+
+                <div className="">
+                  <ol className="list-decimal px-4">
+                    {renderInstructions(recipe.instructions)}
+                  </ol>
+                </div>
+              </section>
+            </div>
           </div>
         </div>
 
@@ -109,7 +157,7 @@ const RecipeDetails = function ({ recipe, setSelected }) {
             ))}
             </div>
             
-              <button type="button" onClick={()=> setSelected(null)} className="hover:bg-amber-200 border-2 border-amber-700 text-black font-bold py-1 px-10 rounded-full float-right">Back</button>
+              
               
         </div>
       </div> */
