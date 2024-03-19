@@ -107,7 +107,8 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                     <FaPlateWheat />
                     <span className="pl-2 pr-2">Type(s) :</span>
                     <span className="text-lg">
-                      {recipe.type.join(", ")}
+                      {recipe.type.slice(0, 6).join(", ")}
+                      {recipe.type.length > 6 && ", ..."}
                     </span>
                   </section>}
 
