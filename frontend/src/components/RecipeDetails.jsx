@@ -156,6 +156,31 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                   <a href={recipe.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline cursor-pointer">Please visit the recipe owner's website for the complete cooking steps.</a>
                 </ol>
               </div>
+
+              <p className="text-3xl font-extrabold mt-12 mb-8">Nutritional Facts</p>
+
+              <div class="overflow-x-auto">
+  <table class="min-w-full border-collapse border border-gray-200">
+    
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="px-4 py-2 text-left">Nutrient</th>
+                      <th class="px-4 py-2 text-left">Amount per serving</th>
+                      <th class="px-4 py-2 text-left">% Daily Value</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200">
+       {recipe.nutrients.map((nutrient) => (
+        <tr key={nutrient.name}>
+          <td class="px-4 py-2">{nutrient.name}</td>
+          <td class="px-4 py-2">{nutrient.amount} {nutrient.unit}</td>
+          <td class="px-4 py-2">{nutrient.percentOfDailyNeeds}%</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
             </section>
           </div>
         </div>
