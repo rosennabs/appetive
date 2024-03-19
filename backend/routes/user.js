@@ -21,5 +21,19 @@ router.get("/:id", async (req, res) => {
 });
 
 // UPDATE - POST - toggle fav
+router.post("/:id", async (req, res) => {
+  try {
+    // req should contain token from localStorage AND recipe id
+    const { user } = await jwtDecoder(req.body.token);
+    const recipe_id = req.body.recipe_id;
+    const toggle = await toggleIsFav(user, recipe_id);
+
+    res.status(204).send(toggle);
+
+  } catch (error) {
+    console.error("Error in api/user/:id route:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 module.exports = router;
