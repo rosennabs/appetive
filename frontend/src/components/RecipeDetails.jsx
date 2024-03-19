@@ -84,34 +84,35 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                 <section className="flex flex-row items-center">
                   <ImSpoonKnife />
                   <span className=" pl-2 pr-14">Yield :</span>
-                  <span className="text-lg">4 servings</span>
+                  <span className="text-lg">{recipe.servings} servings</span>
                 </section>
 
                 <section className="flex flex-row items-center">
                   <ImClock />
                   <span className="pl-2 pr-10">Ready :</span>
-                  <span className="text-lg">30 minutes</span>
+                  <span className="text-lg">{recipe.readyInMinutes} minutes</span>
                 </section>
 
                 <section className="flex flex-row items-center">
                   <GiCookingPot />
                   <span className="pl-2 pr-10">Diet(s) :</span>
-                  <span className="text-lg">ketogenic, vegan, vegetarian</span>
+                  <span className="text-lg">{recipe.diets.join(", ")}</span>
                 </section>
 
                 <section className="flex flex-row items-center">
                   <FaPlateWheat />
                   <span className="pl-2 pr-8">Type(s) :</span>
                   <span className="text-lg">
-                    main course, side dish, breakfast
+                    {recipe.type.join(", ")}
                   </span>
                 </section>
 
+                {recipe.cuisines.length > 0 && 
                 <section className="flex flex-row items-center">
                   <GiCook />
                   <span className="pl-2 pr-3">Cuisine(s) :</span>
-                  <span className="text-lg">African, Chinese, European</span>
-                </section>
+                  <span className="text-lg">{recipe.cuisines.join(", ")}</span>
+                </section>}
               </div>
                 
             </div>
