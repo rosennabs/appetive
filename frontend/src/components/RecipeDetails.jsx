@@ -140,7 +140,7 @@ const RecipeDetails = function ({ recipe, setSelected }) {
             <section>
               <p className="text-3xl font-extrabold mt-12 mb-8">Ingredients</p>
 
-              <div>
+              <div className="text-lg">
                 {recipe.ingredients.map((ingredient) => (
                   <li key={ingredient.id}>{ingredient.original}</li>
                 ))}
@@ -148,9 +148,12 @@ const RecipeDetails = function ({ recipe, setSelected }) {
 
               <p className="text-3xl font-extrabold mt-12 mb-8">Instructions</p>
 
-              <div className="">
+              <div className="text-lg">
                 <ol className="list-decimal px-4">
-                  {renderInstructions(recipe.instructions)}
+                  {recipe.instructions ?
+                    renderInstructions(recipe.instructions) : <p className="text-lg">Unfortunately, we are missing the instructions for this recipe on our app. </p>}
+                  
+                  <a href={recipe.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline cursor-pointer">Please visit the recipe owner's website for the complete cooking steps.</a>
                 </ol>
               </div>
             </section>
