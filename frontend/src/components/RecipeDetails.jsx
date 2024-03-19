@@ -17,7 +17,7 @@ const renderInstructions = (instructions) => {
 
   // Split instructions by dot and filter out empty strings
   const instructionsArray = filteredInstructions
-    .split(".")
+    .split(/(?=[A-Z])/)
     .filter((instruction) => instruction.trim() !== "");
 
   return instructionsArray.map((instruction, index) => (
@@ -67,7 +67,7 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                       </section>)}
                   
                     {nutrient.name === "Calories" && (
-                      <section className="px-8 flex flex-col items-center">
+                      <section className="pr-8 flex flex-col items-center">
                         <p className="text-4xl font-extrabold text-yellow">{Math.round(nutrient.amount)}</p>
                         <p className="text-lg">Calories</p>
                       </section>)}
