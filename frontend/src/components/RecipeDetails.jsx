@@ -40,24 +40,45 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                 {recipe.title}
               </h2>
 
+              
+              
               <div className="flex flex-row">
-                <section className="pr-8 flex flex-col items-center">
-                  <p className="text-4xl font-extrabold text-yellow">30g</p>
-                  <p className="text-lg">Carbs</p>
-                </section>
-                <section className="border-x px-8 flex flex-col items-center">
-                  <p className="text-4xl font-extrabold text-yellow">10g</p>
-                  <p className="text-lg">Protein</p>
-                </section>
-                <section className="px-8 flex flex-col items-center">
-                  <p className="text-4xl font-extrabold text-yellow">7g</p>
-                  <p className="text-lg">Fats</p>
-                </section>
-                <section className="border-x px-8 flex flex-col items-center">
-                  <p className="text-4xl font-extrabold text-yellow">350</p>
-                  <p className="text-lg">Calories</p>
-                </section>
-              </div>
+                {recipe.nutrients.map((nutrient) => {
+                  return (
+                <React.Fragment>
+                    {nutrient.name === "Carbohydrates" && (
+                      <section className="px-8 flex flex-col items-center">
+                        <p className="text-4xl font-extrabold text-yellow">
+                          {Math.round(nutrient.amount)}{nutrient.unit}
+                        </p>
+                        <p className="text-lg">Carbs</p>
+                      </section>)}
+                  
+                    {nutrient.name === "Protein" && (
+                      <section className="border-x px-8 flex flex-col items-center">
+                        <p className="text-4xl font-extrabold text-yellow">{Math.round(nutrient.amount)}{nutrient.unit}</p>
+                        <p className="text-lg">Protein</p>
+                      </section>)}
+                  
+                    {nutrient.name === "Fat" && (
+                      <section className="border-x px-8 flex flex-col items-center">
+                        <p className="text-4xl font-extrabold text-yellow">{Math.round(nutrient.amount)}{nutrient.unit}</p>
+                        <p className="text-lg">Fats</p>
+                      </section>)}
+                  
+                    {nutrient.name === "Calories" && (
+                      <section className="px-8 flex flex-col items-center">
+                        <p className="text-4xl font-extrabold text-yellow">{Math.round(nutrient.amount)}</p>
+                        <p className="text-lg">Calories</p>
+                      </section>)}
+                    
+                    </React.Fragment>
+                );
+               
+              
+                })}
+                 </div >
+                
 
               <div className="flex flex-col text-lg mt-8">
                 <section className="flex flex-row items-center">
@@ -92,7 +113,9 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                   <span className="text-lg">African, Chinese, European</span>
                 </section>
               </div>
+                
             </div>
+            
 
             <div className="flex flex-col w-1/2">
               <div className="flex justify-end">
