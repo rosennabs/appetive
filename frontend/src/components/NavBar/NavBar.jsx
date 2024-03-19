@@ -115,6 +115,7 @@ function NavBar({ toggleSearchBar, showSearchBar }) {
       <ImgBtnLink to="/add-recipe">MAKE YOUR RECIPE</ImgBtnLink>
 
       <Routes>
+        <Route path="/my-profile" element={<FavList />} />
         <Route path="/login" element={<Login setAuth={setAuth} />} />
         <Route path="/register" element={<Register setAuth={setAuth} />} />
         <Route path="/about" element={<About />} />
