@@ -42,7 +42,6 @@ const getRecipes = async function () {
 
 const getRecipeById = async function (recipe_id) {
   try {
-
     const queryString = `SELECT * FROM recipes WHERE id = $1;`;
     const queryParams = [recipe_id];
     const recipe = await db.query(queryString, queryParams);
@@ -222,7 +221,6 @@ const addReview = async function (recipe_id, rating, review, user_id) {
   }
 };
 
-
 const addRecipe = async function (recipe) {
   const queryParams = [];
   const keys = Object.keys(recipe);
@@ -310,7 +308,8 @@ const getRecipesBySearchQuery = async function (
       const recipes = await db.query(queryString, queryParams);
 
       if (recipes.rows.length === 0) {
-        return { message: "No recipes found" };
+        console.log("No recipes found in database");
+        return results;
       }
 
       //get title and image for recipe and put it inside an object
@@ -397,11 +396,13 @@ const getRecipesBySearchQuery = async function (
       queryString += ` AND calories <= $${queryParams.length + 1}`;
       queryParams.push(maxCalories);
     }
-    console.log(queryString);
+    console.log("queryString", queryString);
+    console.log("queryParams", queryParams);
     const recipes = await db.query(queryString, queryParams);
 
     if (recipes.rows.length === 0) {
-      return { message: "No recipes found" };
+      console.log("No recipes found in database");
+      return results;
     }
 
     //get title and image for recipe and put it inside an object
@@ -426,5 +427,5 @@ module.exports = {
   getReviewsByRecipeId,
   addRecipe,
   getRecipesBySearchQuery,
-  addReview
+  addReview,
 };

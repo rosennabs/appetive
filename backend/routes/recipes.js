@@ -1,3 +1,4 @@
+require("dotenv").config();
 const router = require("express").Router();
 const db = require("../db/connection");
 const {
@@ -6,17 +7,40 @@ const {
   getReviewsByRecipeId,
   addRecipe,
   getRecipesBySearchQuery,
-  addReview
+  addReview,
 } = require("../db/queries/recipes");
 
 const jwtDecoder = require("../utils/jwtDecoder");
+const axios = require("axios");
 
 router.get("/", async (_req, res) => {
   try {
-    const allRecipes = await getRecipes();
-    if ("message" in allRecipes) {
+    //Getting recipes from external api
+    const apiOptions = {
+      method: "GET",
+      url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch",
+      params: {
+        number: "100",
+      },
+      headers: {
+        "X-RapidAPI-Key": process.env.API_KEY,
+        "X-RapidAPI-Host": process.env.API_HOST,
+      },
+    };
+
+    const apiResponse = await axios.request(apiOptions);
+    const apiRecipes = apiResponse.data.results;
+
+    //Getting recipes from db
+    const dbRecipes = await getRecipes();
+
+    //merging results of db and external api
+    const allRecipes = [...apiRecipes, ...dbRecipes];
+    // console.log(allRecipes);
+
+    if (allRecipes.length === 0) {
       // No recipes found
-      res.status(404).json(allRecipes);
+      res.status(404).json({ message: "No recipes found", allRecipes });
     } else {
       // Recipes found, return the array
       res.status(200).json(allRecipes);
@@ -41,7 +65,7 @@ router.get("/:id", async (req, res) => {
       res.status(404).json(recipe);
     } else {
       // Recipe found
-      res.status(200).json(recipe[0]);
+      res.status(200).json(recipe);
     }
   } catch (error) {
     console.error(error.message);
@@ -70,16 +94,20 @@ router.get("/:id/reviews", async (req, res) => {
   }
 });
 
-router.post("/:id/reviews", async (req,res) => {
+router.post("/:id/reviews", async (req, res) => {
   const recipeId = req.params.id;
   const newReview = req.body;
   const { user } = await jwtDecoder(newReview.user_id);
   newReview.user_id = user;
   try {
-    const result = await addReview(recipeId, newReview.rating, newReview.review, newReview.user_id);
+    const result = await addReview(
+      recipeId,
+      newReview.rating,
+      newReview.review,
+      newReview.user_id
+    );
     console.log("Review added", result.rows);
     res.status(201).send(newReview);
-    
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error");
@@ -105,33 +133,55 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/search", async (req, res) => {
+  console.log(req.query);
   try {
     const {
       title,
       diet,
       cuisine,
-      mealType,
-      intolerance,
+      type,
+      intolerances,
       minCalories,
       maxCalories,
     } = req.query;
 
-    const recipes = await getRecipesBySearchQuery(
+    //Getting results from external api
+    const options = {
+      method: "GET",
+      url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch",
+      params: req.query,
+      headers: {
+        "X-RapidAPI-Key": process.env.API_KEY,
+        "X-RapidAPI-Host": process.env.API_HOST,
+      },
+    };
+
+    const response = await axios.request(options);
+    const apiSearchResponse = response.data.results;
+    // console.log("apiSearchResponse", apiSearchResponse);
+
+    //Getting results from db
+    const dbSearchResponse = await getRecipesBySearchQuery(
       title,
       diet,
       cuisine,
-      mealType,
-      intolerance,
+      type,
+      intolerances,
       minCalories,
       maxCalories
     );
+    // console.log("dbSearchResponse", dbSearchResponse);
 
-    if ("message" in recipes) {
-      // No recipes found against the search
-      res.status(404).json(recipes);
+    //merging results of db and external api
+    const allRecipes = [...apiSearchResponse, ...dbSearchResponse];
+    console.log("allRecipes", allRecipes);
+
+    if (allRecipes.length === 0) {
+      // No recipes found
+      res.status(404).json({ message: "No recipes found", allRecipes });
     } else {
-      // Recipes found, return the recipes
-      res.status(200).json(recipes);
+      // Recipes found, return the array
+      res.status(200).json(allRecipes);
     }
   } catch (error) {
     console.error(error.message);
