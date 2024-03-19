@@ -139,8 +139,8 @@ router.post("/search", async (req, res) => {
       title,
       diet,
       cuisine,
-      mealType,
-      intolerance,
+      type,
+      intolerances,
       minCalories,
       maxCalories,
     } = req.query;
@@ -158,20 +158,23 @@ router.post("/search", async (req, res) => {
 
     const response = await axios.request(options);
     const apiSearchResponse = response.data.results;
+    // console.log("apiSearchResponse", apiSearchResponse);
 
     //Getting results from db
     const dbSearchResponse = await getRecipesBySearchQuery(
       title,
       diet,
       cuisine,
-      mealType,
-      intolerance,
+      type,
+      intolerances,
       minCalories,
       maxCalories
     );
+    // console.log("dbSearchResponse", dbSearchResponse);
 
     //merging results of db and external api
     const allRecipes = [...apiSearchResponse, ...dbSearchResponse];
+    console.log("allRecipes", allRecipes);
 
     if (allRecipes.length === 0) {
       // No recipes found
