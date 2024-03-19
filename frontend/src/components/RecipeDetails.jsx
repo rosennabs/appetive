@@ -1,58 +1,252 @@
 import React from "react";
+import {
+  FaShareSquare,
+  FaPrint,
+  FaHeart,
+  FaStar,
+  FaRegWindowClose,
+} from "react-icons/fa";
+import { FaPlateWheat } from "react-icons/fa6";
+import { ImSpoonKnife, ImClock } from "react-icons/im";
+import { GiCook, GiCookingPot } from "react-icons/gi";
+import ReviewForm from "./ReviewForm";
 
 const renderInstructions = (instructions) => {
-  const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions)/g;
+  const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions|\d+\.|^\s+|\s+$)/g;
   const filteredInstructions = instructions.replace(regex, "");
 
-  return filteredInstructions
-    .split(".")
-    .map(
-      (instruction) =>
-        instruction.trim() !== "" && <li className="mb-3">{instruction}</li>
-    );
+  // Split instructions by dot and filter out empty strings
+  const instructionsArray = filteredInstructions
+    .split(/(?=[A-Z])/)
+    .filter((instruction) => instruction.trim() !== "");
+
+  return instructionsArray.map((instruction, index) => (
+    <li key={index} className="mb-3">
+      {instruction}
+    </li>
+  ));
 };
 
 const RecipeDetails = function ({ recipe, setSelected }) {
+  console.log(recipe);
+
   return (
     <>
       {recipe && (
-        <div className="flex justify-center items-center mt-16">
-          <div className="max-w-3xl p-4">
-            <h2 className="text-4xl font-extrabold dark:text-white mb-10">
-              {recipe.title}
-            </h2>
-            <img className="mb-10" src={recipe.image} alt="" />
-            <div className="max-w-lg">
-              <p className="text-2xl font-extrabold dark:text-white mb-5">
-                Instructions:
-              </p>
-              <ol className="list-decimal">
-                {renderInstructions(recipe.instructions)}
-              </ol>
-            </div>
-            <p className="mt-10 text-xl">No. of servings: {recipe.servings}</p>
-            <p className="mt-3 text-xl">
-              Preparation time: {recipe.readyInMinutes} minutes
-            </p>
+        <div className="flex flex-col justify-center items-center">
+          <div className="flex justify-center items-center mt-16 w-5/6 bg-red-900  text-white">
+            <div className="w-full flex-col justify-center p-8 items-center">
+              <h2 className="text-4xl font-extrabold mb-10 mt-4">
+                {recipe.title}
+              </h2>
 
-            <div className="mt-3 text-xl">
-              {recipe.nutrients.map((nutrient) => (
-                <p key={nutrient.name}>
-                  {nutrient.name}: {nutrient.amount}
-                  {nutrient.unit}
+              
+              
+              <div className="flex flex-row">
+                {recipe.nutrients.map((nutrient) => {
+                  return (
+                <React.Fragment>
+                    {nutrient.name === "Carbohydrates" && (
+                      <section className="px-8 flex flex-col items-center">
+                        <p className="text-4xl font-extrabold text-yellow">
+                          {Math.round(nutrient.amount)}{nutrient.unit}
+                        </p>
+                        <p className="text-lg">Carbs</p>
+                      </section>)}
+                  
+                    {nutrient.name === "Protein" && (
+                      <section className="border-x px-8 flex flex-col items-center">
+                        <p className="text-4xl font-extrabold text-yellow">{Math.round(nutrient.amount)}{nutrient.unit}</p>
+                        <p className="text-lg">Protein</p>
+                      </section>)}
+                  
+                    {nutrient.name === "Fat" && (
+                      <section className="border-x px-8 flex flex-col items-center">
+                        <p className="text-4xl font-extrabold text-yellow">{Math.round(nutrient.amount)}{nutrient.unit}</p>
+                        <p className="text-lg">Fats</p>
+                      </section>)}
+                  
+                    {nutrient.name === "Calories" && (
+                      <section className="pr-8 flex flex-col items-center">
+                        <p className="text-4xl font-extrabold text-yellow">{Math.round(nutrient.amount)}</p>
+                        <p className="text-lg">Calories</p>
+                      </section>)}
+                    
+                    </React.Fragment>
+                );
+               
+              
+                })}
+                 </div >
+                
+               
+              <div className="flex flex-col text-lg mt-8">
+                {recipe.servings && 
+                <section className="flex flex-row items-center">
+                  <ImSpoonKnife />
+                  <span className=" pl-2 pr-2">Yield :</span>
+                  <span className="text-lg">{recipe.servings} serving(s)</span>
+                </section>}
+
+                {recipe.readyInMinutes &&
+                  <section className="flex flex-row items-center">
+                    <ImClock />
+                    <span className="pl-2 pr-2">Ready :</span>
+                    <span className="text-lg">{recipe.readyInMinutes} minutes</span>
+                  </section>}
+
+                {recipe.diets.length > 0 &&
+                  <section className="flex flex-row items-center">
+                    <GiCookingPot />
+                    <span className="pl-2 pr-2">Diet(s) :</span>
+                    <span className="text-lg flex-wrap">{recipe.diets.join(", ")}</span>
+                  </section>}
+
+                {recipe.type.length > 0 &&
+                  <section className="flex flex-row items-center">
+                    <FaPlateWheat />
+                    <span className="pl-2 pr-2">Type(s) :</span>
+                    <span className="text-lg">
+                      {recipe.type.slice(0, 6).join(", ")}
+                      {recipe.type.length > 6 && ", ..."}
+                    </span>
+                  </section>}
+
+                {recipe.cuisines.length > 0 && 
+                <section className="flex flex-row items-center">
+                  <GiCook />
+                  <span className="pl-2 pr-3">Cuisine(s) :</span>
+                  <span className="text-lg">{recipe.cuisines.join(", ")}</span>
+                </section>}
+              </div>
+                
+            </div>
+            
+
+            <div className="flex flex-col w-1/2">
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => setSelected(null)}
+                  className="text-5xl text-yellow pr-8 mt-4"
+                >
+                  {" "}
+                  <FaRegWindowClose />
+                </button>
+              </div>
+
+              <img
+                className="mb-10 w-full h-80 mt-8 p-8"
+                src={recipe.image}
+                alt=""
+              />
+            </div>
+          </div>
+          <div className="bg-white p-8 w-5/6 border border-black">
+            <div className="flex flex-row justify-between">
+              <section className="flex border border-black h-10 px-10 items-center">
+                <p className="flex items-center">
+                  <FaShareSquare />
+                  <button className="ml-2">Share Recipe</button>
                 </p>
-              ))}
+              </section>
+              <section className="flex border border-black h-10 px-10 items-center">
+                <p className="flex items-center">
+                  <FaPrint />
+                  <button className="ml-2">Print Recipe</button>
+                </p>
+              </section>
+              <section className="flex border border-black h-10 px-8 items-center">
+                <p className="flex items-center">
+                  <FaHeart />
+                  <button className="ml-2">Add to Favourite</button>
+                </p>
+              </section>
+              <section className="flex border border-black h-10 px-8 items-center">
+                <p className="flex items-center">
+                  <FaStar />
+                  <button className="ml-2">Leave a Review</button>
+                </p>
+              </section>
             </div>
 
-            <button
-              type="button"
-              onClick={() => setSelected(null)}
-              className="hover:bg-amber-200 border-2 border-amber-700 text-black font-bold py-1 px-10 rounded-full float-right"
-            >
-              Back
-            </button>
+            <section>
+              <p className="text-3xl font-extrabold mt-12 mb-8">Ingredients</p>
+
+              <div className="text-lg">
+                {recipe.ingredients.map((ingredient) => (
+                  <li key={ingredient.id}>{ingredient.original}</li>
+                ))}
+              </div>
+
+              <p className="text-3xl font-extrabold mt-12 mb-8">Instructions</p>
+
+              <div className="text-lg">
+                <ol className="list-decimal px-4">
+                  {recipe.instructions ? (
+                    renderInstructions(recipe.instructions)
+                  ) : (
+                    <div>
+                      <p className="text-lg">
+                        Unfortunately, we are missing the instructions for this
+                        recipe on our app.{" "}
+                      </p>
+                      <a
+                        href={recipe.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 hover:underline cursor-pointer"
+                      >
+                        Please visit the recipe owner's website for the complete
+                        cooking steps.
+                      </a>
+                    </div>
+                  )}
+                </ol>
+              </div>
+
+              <p className="text-3xl font-extrabold mt-12 mb-8">
+                Nutritional Facts
+              </p>
+
+              <div class="overflow-x-auto">
+                <table class="min-w-full border-collapse border border-gray-200">
+                  <thead class="bg-gray-100">
+                    <tr>
+                      <th class="px-4 py-2 text-left">Nutrient</th>
+                      <th class="px-4 py-2 text-left">Amount per serving</th>
+                      {recipe.nutrients[0].percentOfDailyNeeds && (
+                        <th class="px-4 py-2 text-left">% Daily Value</th>
+                      )}
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-200">
+                    {recipe.nutrients.map((nutrient) => (
+                      <tr key={nutrient.name}>
+                        <td class="px-4 py-2">{nutrient.name}</td>
+                        <td class="px-4 py-2">
+                          {nutrient.amount} {nutrient.unit}
+                        </td>
+                        {nutrient.percentOfDailyNeeds && (
+                          <td class="px-4 py-2">
+                            {nutrient.percentOfDailyNeeds.toFixed(2)}%
+                          </td>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              
+              <div className="bg-gray-100 w-full">
+              <p className="text-3xl font-extrabold mt-12 mb-4">Leave A Reply</p>
+                <p className="text-xl mb-8">Made this recipe? Please leave a review</p>
+                <ReviewForm />
+                </div>
+            </section>
           </div>
         </div>
+
       )}
     </>
   );
