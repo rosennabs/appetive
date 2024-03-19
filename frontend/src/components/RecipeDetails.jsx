@@ -9,17 +9,21 @@ import {
 import { FaPlateWheat } from "react-icons/fa6";
 import { ImSpoonKnife, ImClock } from "react-icons/im";
 import { GiCook, GiCookingPot } from "react-icons/gi";
-
+import ReviewForm from "./ReviewForm";
 
 const renderInstructions = (instructions) => {
   const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions|\d+\.|^\s+|\s+$)/g;
   const filteredInstructions = instructions.replace(regex, "");
 
   // Split instructions by dot and filter out empty strings
-  const instructionsArray = filteredInstructions.split(".").filter(instruction => instruction.trim() !== "");
+  const instructionsArray = filteredInstructions
+    .split(".")
+    .filter((instruction) => instruction.trim() !== "");
 
   return instructionsArray.map((instruction, index) => (
-    <li key={index} className="mb-3">{instruction}</li>
+    <li key={index} className="mb-3">
+      {instruction}
+    </li>
   ));
 };
 
@@ -150,68 +154,70 @@ const RecipeDetails = function ({ recipe, setSelected }) {
 
               <div className="text-lg">
                 <ol className="list-decimal px-4">
-                  {recipe.instructions ?
-                    renderInstructions(recipe.instructions) : <p className="text-lg">Unfortunately, we are missing the instructions for this recipe on our app. </p>}
-                  
-                  <a href={recipe.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline cursor-pointer">Please visit the recipe owner's website for the complete cooking steps.</a>
+                  {recipe.instructions ? (
+                    renderInstructions(recipe.instructions)
+                  ) : (
+                    <div>
+                      <p className="text-lg">
+                        Unfortunately, we are missing the instructions for this
+                        recipe on our app.{" "}
+                      </p>
+                      <a
+                        href={recipe.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 hover:underline cursor-pointer"
+                      >
+                        Please visit the recipe owner's website for the complete
+                        cooking steps.
+                      </a>
+                    </div>
+                  )}
                 </ol>
               </div>
 
-              <p className="text-3xl font-extrabold mt-12 mb-8">Nutritional Facts</p>
+              <p className="text-3xl font-extrabold mt-12 mb-8">
+                Nutritional Facts
+              </p>
 
               <div class="overflow-x-auto">
-  <table class="min-w-full border-collapse border border-gray-200">
-    
-    <thead class="bg-gray-100">
-      <tr>
-        <th class="px-4 py-2 text-left">Nutrient</th>
+                <table class="min-w-full border-collapse border border-gray-200">
+                  <thead class="bg-gray-100">
+                    <tr>
+                      <th class="px-4 py-2 text-left">Nutrient</th>
                       <th class="px-4 py-2 text-left">Amount per serving</th>
-                      <th class="px-4 py-2 text-left">% Daily Value</th>
-      </tr>
-    </thead>
-    <tbody class="divide-y divide-gray-200">
-       {recipe.nutrients.map((nutrient) => (
-        <tr key={nutrient.name}>
-          <td class="px-4 py-2">{nutrient.name}</td>
-          <td class="px-4 py-2">{nutrient.amount} {nutrient.unit}</td>
-          <td class="px-4 py-2">{nutrient.percentOfDailyNeeds}%</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
-
+                      {recipe.nutrients[0].percentOfDailyNeeds && (
+                        <th class="px-4 py-2 text-left">% Daily Value</th>
+                      )}
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-200">
+                    {recipe.nutrients.map((nutrient) => (
+                      <tr key={nutrient.name}>
+                        <td class="px-4 py-2">{nutrient.name}</td>
+                        <td class="px-4 py-2">
+                          {nutrient.amount} {nutrient.unit}
+                        </td>
+                        {nutrient.percentOfDailyNeeds && (
+                          <td class="px-4 py-2">
+                            {nutrient.percentOfDailyNeeds.toFixed(2)}%
+                          </td>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              
+              <div className="bg-gray-100 w-full">
+              <p className="text-3xl font-extrabold mt-12 mb-4">Leave A Reply</p>
+                <p className="text-xl mb-8">Made this recipe? Please leave a review</p>
+                <ReviewForm />
+                </div>
             </section>
           </div>
         </div>
 
-        /* <div className="max-w-lg">
-            <p className="text-2xl font-extrabold dark:text-white mb-5">
-              Instructions:
-            </p>
-            <ol className="list-decimal">
-              {renderInstructions(recipe.instructions)}
-            </ol>
-          </div>
-          <p className="mt-10 text-xl">
-            No. of servings: {recipe.servings}
-          </p>
-          <p className="mt-3 text-xl">
-            Preparation time: {recipe.readyInMinutes} minutes
-            </p>
-            
-          <div className="mt-3 text-xl">
-            {recipe.nutrients.map((nutrient) => (
-              <p key={nutrient.name}>
-                {nutrient.name}: {nutrient.amount}{nutrient.unit}
-              </p>
-            ))}
-            </div>
-            
-              
-              
-        </div>
-      </div> */
       )}
     </>
   );
