@@ -35,7 +35,6 @@ const displayUserFavs = async function (favIDs) {
   });
 
   const results = await Promise.all(promises);
-  console.log(results);
   return results;
 } catch (error) {
   console.error("Error in displayUserFavs:", error.message);
