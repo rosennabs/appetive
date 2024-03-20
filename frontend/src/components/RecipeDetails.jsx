@@ -99,7 +99,10 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                   <section className="flex flex-row items-center">
                     <GiCookingPot />
                     <span className="pl-2 pr-2">Diet(s) :</span>
-                    <span className="text-lg flex-wrap">{recipe.diets.join(", ")}</span>
+                    <span className="text-lg flex-wrap">
+                      {recipe.diets.slice(0, 5).join(", ")}
+                      {recipe.diets.length > 5 && ", ..."}
+                    </span>
                   </section>}
 
                 {recipe.type.length > 0 &&
@@ -175,8 +178,17 @@ const RecipeDetails = function ({ recipe, setSelected }) {
 
               <div className="text-lg">
                 {recipe.ingredients.map((ingredient) => (
-                  <li key={ingredient.id}>{ingredient.original}</li>
-                ))}
+                  <li key={ingredient.id}>
+                    {ingredient.id.length > 1 ? (
+                      ingredient.original
+                    )
+                      : (
+                        `${ingredient.name}, ${ingredient.amount}${ingredient.unit}`
+
+                      )}
+                    </li>
+                  ))}
+                    
               </div>
 
               <p className="text-3xl font-extrabold mt-12 mb-8">Instructions</p>
@@ -209,26 +221,26 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                 Nutritional Facts
               </p>
 
-              <div class="overflow-x-auto">
-                <table class="min-w-full border-collapse border border-gray-200">
-                  <thead class="bg-gray-100">
+              <div className="overflow-x-auto">
+                <table className="min-w-full border-collapse border border-gray-200">
+                  <thead className="bg-gray-100">
                     <tr>
-                      <th class="px-4 py-2 text-left">Nutrient</th>
-                      <th class="px-4 py-2 text-left">Amount per serving</th>
+                      <th className="px-4 py-2 text-left">Nutrient</th>
+                      <th className="px-4 py-2 text-left">Amount per serving</th>
                       {recipe.nutrients[0].percentOfDailyNeeds && (
-                        <th class="px-4 py-2 text-left">% Daily Value</th>
+                        <th className="px-4 py-2 text-left">% Daily Value</th>
                       )}
                     </tr>
                   </thead>
-                  <tbody class="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-gray-200">
                     {recipe.nutrients.map((nutrient) => (
                       <tr key={nutrient.name}>
-                        <td class="px-4 py-2">{nutrient.name}</td>
-                        <td class="px-4 py-2">
+                        <td className="px-4 py-2">{nutrient.name}</td>
+                        <td className="px-4 py-2">
                           {nutrient.amount} {nutrient.unit}
                         </td>
                         {nutrient.percentOfDailyNeeds && (
-                          <td class="px-4 py-2">
+                          <td className="px-4 py-2">
                             {nutrient.percentOfDailyNeeds.toFixed(2)}%
                           </td>
                         )}
