@@ -36,6 +36,7 @@ function App() {
                 showSearchBar={showSearchBar} />
           </div>
         )}
+        <Footer />
         
       </Fragment>
     </>
