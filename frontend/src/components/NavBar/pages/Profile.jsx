@@ -25,11 +25,11 @@ export default function Profile () {
     <div className="my-5">
     { loggedIn ? (
       <div>
-      <h1 className="text-center">{username}'s Profile</h1>
+      <h1 className="text-4xl pt-10 font-bold mx-auto text-center">{username}'s Favourite Recipes</h1>
       <FavList />
     </div>
     ) : (
-      <p className="text-center text-xl">
+      <p className="text-center text-xl my-10">
         You must <Link to="/login" className="font-bold text-brown-light hover:underline">log in</Link> to see this content.
       </p>
     )}
