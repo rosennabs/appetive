@@ -145,7 +145,7 @@ const getCuisineNameById = async function (id) {
 
     return cuisine_name.rows[0].name;
   } catch (error) {
-    console.error("Error in getUsernameById:", error.message);
+    console.error("Error in getCuisineNameById:", error.message);
     throw error;
   }
 };
