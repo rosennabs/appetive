@@ -17,7 +17,7 @@ import About from "./pages/About";
 import { FaCaretDown, FaSearch, FaHome } from "react-icons/fa";
 import RecipeForm from "../RecipeForm";
 
-function NavBar({ toggleSearchBar, showSearchBar }) {
+function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const setAuth = (boolean) => {
@@ -112,7 +112,7 @@ function NavBar({ toggleSearchBar, showSearchBar }) {
             {showSearchBar && <SearchBar />}
           </div>
       
-      <ImgBtnLink to="/add-recipe">MAKE YOUR RECIPE</ImgBtnLink>
+      <ImgBtnLink to="/add-recipe" onClick={() => setSelected(null)}>MAKE YOUR RECIPE</ImgBtnLink>
 
       <Routes>
         <Route path="/login" element={<Login setAuth={setAuth} />} />

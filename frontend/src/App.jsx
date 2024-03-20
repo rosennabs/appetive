@@ -22,7 +22,8 @@ function App() {
         <Router>
           <NavBar
             toggleSearchBar={toggleSearchBar}
-            showSearchBar={showSearchBar} />  
+            showSearchBar={showSearchBar}
+            setSelected={setSelected}/>  
         </Router>
 
         
