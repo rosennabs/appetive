@@ -44,6 +44,10 @@ const RecipeDetails = function ({
     };
   }, []);
 
+  const printRecipe = () => {
+    window.print();
+  };
+
   return (
     <>
       {recipe && (
@@ -185,7 +189,7 @@ const RecipeDetails = function ({
                   <FaShareSquare />
                   <button
                     className="ml-2"
-                    onClick={() => generateShareLink(recipe.id)}
+                    onClick={() => generateShareLink(recipe.title)}
                   >
                     Share Recipe
                   </button>
@@ -195,7 +199,7 @@ const RecipeDetails = function ({
               <section className="flex border border-black h-10 px-10 items-center">
                 <p className="flex items-center">
                   <FaPrint />
-                  <button className="ml-2">Print Recipe</button>
+                  <button className="ml-2" onClick={() => printRecipe()}>Print Recipe</button>
                 </p>
               </section>
               <section className="flex border border-black h-10 px-8 items-center">
