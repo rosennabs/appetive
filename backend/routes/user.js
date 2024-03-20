@@ -44,7 +44,7 @@ router.post("/recipe/:id/fav", async (req, res) => {
     res.status(204).send(toggle);
 
   } catch (error) {
-    console.error("Error in api/user/:id/fav route:", error.message);
+    console.error("Error in api/user/recipe/:id/fav route:", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
