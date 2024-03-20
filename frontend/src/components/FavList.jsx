@@ -1,8 +1,24 @@
-import React, { useState } from "react";
-import RecipesList from "./RecipesList";
+import React, { useState, useEffect } from "react";
+import Fav from "./Favs";
+import axios from "axios";
 
 export default function FavList () {
+  
   const [ favs, setFavs ] = useState([]);
+  
+  useEffect(() => {
+    const fetchFavs = async (user_id) => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/user/${user_id}/fav`);
+        const allFavs = response.data;
+
+        setFavs(allFavs);
+      } catch (error) {
+        console.error("Error fetching favs:", error);
+      }
+    };
+    fetchFavs('3b1ef871-6c1e-4a0e-9e17-6d1be6e37259');
+  }, []);
 
   return (
     <div>
@@ -13,7 +29,7 @@ export default function FavList () {
         </div>
       ) : (
         <div>
-          <h1>Here be favs</h1>
+          <Fav favs={favs} />
         </div>
       )}
     </div>

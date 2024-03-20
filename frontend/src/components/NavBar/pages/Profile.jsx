@@ -10,7 +10,7 @@ export default function Profile () {
     <div className="my-5">
     { loggedIn ? (
       <div>
-      <h1 className="text-center">User Profile for {loggedIn}</h1>
+      <h1 className="text-center">User Profile</h1>
       <FavList />
     </div>
     ) : (
