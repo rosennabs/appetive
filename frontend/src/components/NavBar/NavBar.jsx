@@ -14,6 +14,7 @@ import axios from "axios";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
+import Profile from "./pages/Profile";
 import { FaCaretDown, FaSearch, FaHome } from "react-icons/fa";
 import RecipeForm from "../RecipeForm";
 
@@ -115,7 +116,7 @@ function NavBar({ toggleSearchBar, showSearchBar }) {
       <ImgBtnLink to="/add-recipe">MAKE YOUR RECIPE</ImgBtnLink>
 
       <Routes>
-        <Route path="/my-profile" element={<FavList />} />
+        <Route path="/my-profile" element={<Profile />} />
         <Route path="/login" element={<Login setAuth={setAuth} />} />
         <Route path="/register" element={<Register setAuth={setAuth} />} />
         <Route path="/about" element={<About />} />
