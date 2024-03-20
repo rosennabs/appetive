@@ -1,3 +1,4 @@
+const { query } = require("express");
 const db = require("../connection");
 const {
   getCuisineByName,
@@ -420,11 +421,46 @@ const getRecipesBySearchQuery = async function (
   }
 };
 
+const toggleHasTried = async function (user_id, recipe_id) {
+  try {
+    queryString=`UPDATE users_recipes SET has_tried = NOT has_tried WHERE user_id = $1 AND recipe_id = $2 RETURNING *;`;
+    queryParams=[user_id, recipe_id];
+    const result = await db.query(queryString, queryParams);
+    return result;
+  } catch (error) {
+    console.log("Error from toggleHasTried: ", error.message);
+    throw error;
+  }
+}
+
+const updateCounter = async function (user_id, recipe_id) {
+  try {    
+    queryString = `
+      UPDATE recipes 
+      SET counter_attempt = CASE
+        WHEN users_recipes.has_tried THEN recipes.counter_attempt + 1
+        ELSE recipes.counter_attempt - 1
+      END
+      FROM users_recipes
+      WHERE recipes.id = users_recipes.recipe_id AND users_recipes.user_id = $1 AND recipes.id = $2
+      RETURNING *
+      ;`
+    queryParams = [user_id, recipe_id]
+    return await db.query(queryString, queryParams);
+    
+  } catch (error) {
+    console.log("Error from updateCounter: ", error.message);
+    throw error;
+  }
+}
+
 module.exports = {
   getRecipes,
   getRecipeById,
   getReviewsByRecipeId,
   addRecipe,
   getRecipesBySearchQuery,
-  addReview
+  addReview,
+  toggleHasTried,
+  updateCounter,
 };
