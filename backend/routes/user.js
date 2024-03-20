@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// READ - GET - display all user favs
+// Return list of all user favs using token
 router.post("/fav", async (req, res) => {
   try {
     const { user } = await jwtDecoder(req.body.token); // req should contain token from localStorage
@@ -34,7 +34,7 @@ router.post("/fav", async (req, res) => {
 });
 
 // UPDATE - POST - toggle fav
-router.post("/:id/fav", async (req, res) => {
+router.post("/recipe/:id/fav", async (req, res) => {
   try {
     // req should contain token from localStorage AND recipe id
     const { user } = await jwtDecoder(req.body.token);
