@@ -5,12 +5,14 @@ import RecipeDetails from "./components/RecipeDetails";
 import React, { Fragment } from "react";
 import { useSelectedRecipe } from "./hooks/useSelectedRecipe";
 import { useSearchBar } from "./hooks/useSearchBar";
+import useShareLink from "./hooks/useShareLink";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Footer from "./components/Footer";
 
 function App() {
   const { selectedRecipe, setSelected } = useSelectedRecipe();
   const { showSearchBar, toggleSearchBar } = useSearchBar();
+  const { shareLink, generateShareLink, copySuccess, setCopySuccess } = useShareLink();
   
 
   return (
@@ -27,7 +29,11 @@ function App() {
          {selectedRecipe ? (
           <RecipeDetails
             recipe={selectedRecipe}
-            setSelected={setSelected} />
+            setSelected={setSelected}
+            shareLink={shareLink}
+            generateShareLink={generateShareLink}
+            copySuccess={copySuccess}
+            setCopySuccess={setCopySuccess}/>
         ) : (
           <div>
             {!showSearchBar && <SearchForm />}

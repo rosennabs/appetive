@@ -10,6 +10,7 @@ import { FaPlateWheat } from "react-icons/fa6";
 import { ImSpoonKnife, ImClock } from "react-icons/im";
 import { GiCook, GiCookingPot } from "react-icons/gi";
 import ReviewForm from "./ReviewForm";
+import { useEffect } from "react";
 
 const renderInstructions = (instructions) => {
   const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions|\d+\.|^\s+|\s+$)/g;
@@ -27,8 +28,21 @@ const renderInstructions = (instructions) => {
   ));
 };
 
-const RecipeDetails = function ({ recipe, setSelected }) {
-  console.log(recipe);
+const RecipeDetails = function ({
+  recipe,
+  setSelected,
+  shareLink,
+  generateShareLink,
+  copySuccess,
+  setCopySuccess
+}) {
+ 
+  // Reset the link copied to clipboard message when component unmounts
+  useEffect(() => {
+    return () => {
+      setCopySuccess(false);
+    };
+  }, []);
 
   return (
     <>
@@ -40,62 +54,75 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                 {recipe.title}
               </h2>
 
-              
-              
               <div className="flex flex-row">
                 {recipe.nutrients.map((nutrient) => {
                   return (
-                <React.Fragment>
-                    {nutrient.name === "Carbohydrates" && (
-                      <section className="px-8 flex flex-col items-center">
-                        <p className="text-4xl font-extrabold text-yellow">
-                          {Math.round(nutrient.amount)}{nutrient.unit}
-                        </p>
-                        <p className="text-lg">Carbs</p>
-                      </section>)}
-                  
-                    {nutrient.name === "Protein" && (
-                      <section className="border-x px-8 flex flex-col items-center">
-                        <p className="text-4xl font-extrabold text-yellow">{Math.round(nutrient.amount)}{nutrient.unit}</p>
-                        <p className="text-lg">Protein</p>
-                      </section>)}
-                  
-                    {nutrient.name === "Fat" && (
-                      <section className="border-x px-8 flex flex-col items-center">
-                        <p className="text-4xl font-extrabold text-yellow">{Math.round(nutrient.amount)}{nutrient.unit}</p>
-                        <p className="text-lg">Fats</p>
-                      </section>)}
-                  
-                    {nutrient.name === "Calories" && (
-                      <section className="pr-8 flex flex-col items-center">
-                        <p className="text-4xl font-extrabold text-yellow">{Math.round(nutrient.amount)}</p>
-                        <p className="text-lg">Calories</p>
-                      </section>)}
-                    
-                    </React.Fragment>
-                );
-               
-              
-                })}
-                 </div >
-                
-               
-              <div className="flex flex-col text-lg mt-8">
-                {recipe.servings && 
-                <section className="flex flex-row items-center">
-                  <ImSpoonKnife />
-                  <span className=" pl-2 pr-2">Yield :</span>
-                  <span className="text-lg">{recipe.servings} serving(s)</span>
-                </section>}
+                    <React.Fragment>
+                      {nutrient.name === "Carbohydrates" && (
+                        <section className="px-8 flex flex-col items-center">
+                          <p className="text-4xl font-extrabold text-yellow">
+                            {Math.round(nutrient.amount)}
+                            {nutrient.unit}
+                          </p>
+                          <p className="text-lg">Carbs</p>
+                        </section>
+                      )}
 
-                {recipe.readyInMinutes &&
+                      {nutrient.name === "Protein" && (
+                        <section className="border-x px-8 flex flex-col items-center">
+                          <p className="text-4xl font-extrabold text-yellow">
+                            {Math.round(nutrient.amount)}
+                            {nutrient.unit}
+                          </p>
+                          <p className="text-lg">Protein</p>
+                        </section>
+                      )}
+
+                      {nutrient.name === "Fat" && (
+                        <section className="border-x px-8 flex flex-col items-center">
+                          <p className="text-4xl font-extrabold text-yellow">
+                            {Math.round(nutrient.amount)}
+                            {nutrient.unit}
+                          </p>
+                          <p className="text-lg">Fats</p>
+                        </section>
+                      )}
+
+                      {nutrient.name === "Calories" && (
+                        <section className="pr-8 flex flex-col items-center">
+                          <p className="text-4xl font-extrabold text-yellow">
+                            {Math.round(nutrient.amount)}
+                          </p>
+                          <p className="text-lg">Calories</p>
+                        </section>
+                      )}
+                    </React.Fragment>
+                  );
+                })}
+              </div>
+
+              <div className="flex flex-col text-lg mt-8">
+                {recipe.servings && (
+                  <section className="flex flex-row items-center">
+                    <ImSpoonKnife />
+                    <span className=" pl-2 pr-2">Yield :</span>
+                    <span className="text-lg">
+                      {recipe.servings} serving(s)
+                    </span>
+                  </section>
+                )}
+
+                {recipe.readyInMinutes && (
                   <section className="flex flex-row items-center">
                     <ImClock />
                     <span className="pl-2 pr-2">Ready :</span>
-                    <span className="text-lg">{recipe.readyInMinutes} minutes</span>
-                  </section>}
+                    <span className="text-lg">
+                      {recipe.readyInMinutes} minutes
+                    </span>
+                  </section>
+                )}
 
-                {recipe.diets.length > 0 &&
+                {recipe.diets.length > 0 && (
                   <section className="flex flex-row items-center">
                     <GiCookingPot />
                     <span className="pl-2 pr-2">Diet(s) :</span>
@@ -103,9 +130,10 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                       {recipe.diets.slice(0, 5).join(", ")}
                       {recipe.diets.length > 5 && ", ..."}
                     </span>
-                  </section>}
+                  </section>
+                )}
 
-                {recipe.type.length > 0 &&
+                {recipe.type.length > 0 && (
                   <section className="flex flex-row items-center">
                     <FaPlateWheat />
                     <span className="pl-2 pr-2">Type(s) :</span>
@@ -113,18 +141,20 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                       {recipe.type.slice(0, 6).join(", ")}
                       {recipe.type.length > 6 && ", ..."}
                     </span>
-                  </section>}
+                  </section>
+                )}
 
-                {recipe.cuisines.length > 0 && 
-                <section className="flex flex-row items-center">
-                  <GiCook />
-                  <span className="pl-2 pr-3">Cuisine(s) :</span>
-                  <span className="text-lg">{recipe.cuisines.join(", ")}</span>
-                </section>}
+                {recipe.cuisines.length > 0 && (
+                  <section className="flex flex-row items-center">
+                    <GiCook />
+                    <span className="pl-2 pr-3">Cuisine(s) :</span>
+                    <span className="text-lg">
+                      {recipe.cuisines.join(", ")}
+                    </span>
+                  </section>
+                )}
               </div>
-                
             </div>
-            
 
             <div className="flex flex-col w-1/2">
               <div className="flex justify-end">
@@ -146,13 +176,22 @@ const RecipeDetails = function ({ recipe, setSelected }) {
             </div>
           </div>
           <div className="bg-white p-8 w-5/6 border border-black">
+            {copySuccess && (
+              <span className="text-amber-700">Link copied to clipboard!</span>
+            )}
             <div className="flex flex-row justify-between">
               <section className="flex border border-black h-10 px-10 items-center">
-                <p className="flex items-center">
+                <div className="flex items-center">
                   <FaShareSquare />
-                  <button className="ml-2">Share Recipe</button>
-                </p>
+                  <button
+                    className="ml-2"
+                    onClick={() => generateShareLink(recipe.id)}
+                  >
+                    Share Recipe
+                  </button>
+                </div>
               </section>
+
               <section className="flex border border-black h-10 px-10 items-center">
                 <p className="flex items-center">
                   <FaPrint />
@@ -179,16 +218,11 @@ const RecipeDetails = function ({ recipe, setSelected }) {
               <div className="text-lg">
                 {recipe.ingredients.map((ingredient) => (
                   <li key={ingredient.id}>
-                    {ingredient.id.length > 1 ? (
-                      ingredient.original
-                    )
-                      : (
-                        `${ingredient.name}, ${ingredient.amount}${ingredient.unit}`
-
-                      )}
-                    </li>
-                  ))}
-                    
+                    {ingredient.id.length > 1
+                      ? ingredient.original
+                      : `${ingredient.name}, ${ingredient.amount}${ingredient.unit}`}
+                  </li>
+                ))}
               </div>
 
               <p className="text-3xl font-extrabold mt-12 mb-8">Instructions</p>
@@ -226,7 +260,9 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                   <thead className="bg-gray-100">
                     <tr>
                       <th className="px-4 py-2 text-left">Nutrient</th>
-                      <th className="px-4 py-2 text-left">Amount per serving</th>
+                      <th className="px-4 py-2 text-left">
+                        Amount per serving
+                      </th>
                       {recipe.nutrients[0].percentOfDailyNeeds && (
                         <th className="px-4 py-2 text-left">% Daily Value</th>
                       )}
@@ -249,16 +285,19 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                   </tbody>
                 </table>
               </div>
-              
+
               <div className="bg-gray-100 w-full">
-              <p className="text-3xl font-extrabold mt-12 mb-4">Leave A Reply</p>
-                <p className="text-xl mb-8">Made this recipe? Please leave a review</p>
+                <p className="text-3xl font-extrabold mt-12 mb-4">
+                  Leave A Reply
+                </p>
+                <p className="text-xl mb-8">
+                  Made this recipe? Please leave a review
+                </p>
                 <ReviewForm />
-                </div>
+              </div>
             </section>
           </div>
         </div>
-
       )}
     </>
   );
