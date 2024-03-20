@@ -8,27 +8,27 @@ const {
 const { getUserNameById } = require("../db/queries/recipes_helpers");
 const jwtDecoder = require("../utils/jwtDecoder");
 
-// GET - get username
-router.get(":/id", async (req, res) => {
+// Get username
+router.post("/", async (req, res) => {
   try {
-    const { user } = await jwtDecoder(req.body);
-    const username = getUserNameById(user);
+    const { user } = await jwtDecoder(req.body.token);
+    const username = await getUserNameById(user);
     res.status(200).json(username);
   } catch (error) {
-    console.error("Error in api/user/:id route:", error.message);
+    console.error("Error in api/user/ route:", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
 // READ - GET - display all user favs
-router.get("/:id/fav", async (req, res) => {
+router.post("/fav", async (req, res) => {
   try {
-    const { user } = await jwtDecoder(req.body); // req should contain token from localStorage
+    const { user } = await jwtDecoder(req.body.token); // req should contain token from localStorage
     const userFavs = await getUserFavs(user);
     const displayFavs = await displayUserFavs(userFavs);
     res.status(200).json(displayFavs);
   } catch (error) {
-    console.error("Error in api/user/:id/fav route:", error.message);
+    console.error("Error in api/user/fav route:", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

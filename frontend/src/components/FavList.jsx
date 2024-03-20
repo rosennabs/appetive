@@ -5,11 +5,12 @@ import axios from "axios";
 export default function FavList () {
   
   const [ favs, setFavs ] = useState([]);
+  const myToken = localStorage.token;
   
   useEffect(() => {
-    const fetchFavs = async (user_id) => {
+    const fetchFavs = async (token) => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/user/${user_id}/fav`);
+        const response = await axios.post(`http://localhost:8080/api/user/fav`, { token });
         const allFavs = response.data;
 
         setFavs(allFavs);
@@ -17,7 +18,7 @@ export default function FavList () {
         console.error("Error fetching favs:", error);
       }
     };
-    fetchFavs('3b1ef871-6c1e-4a0e-9e17-6d1be6e37259');
+    fetchFavs(myToken);
   }, []);
 
   return (
