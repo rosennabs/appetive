@@ -23,20 +23,23 @@ const getUserFavs = async function (userID) {
 };
 
 // Get information for each recipe in recipe IDs array
-const displayUserFavs = function (favIDs) {
-  const results = {};
-
-  favIDs.forEach(async (fav) => {
+const displayUserFavs = async function (favIDs) {
+  try {
+  const promises = favIDs.map(async (fav) => {
     const recipe = await getRecipeById(fav.recipe_id);
-    const recipe_obj = {};
-    recipe_obj["id"] = recipe.id;
-    recipe_obj["title"] = recipe.title;
-    recipe_obj["image"] = recipe.image;
-
-    results.push(recipe_obj);
+    return {
+      id: recipe.id,
+      title: recipe.title,
+      image: recipe.image
+    };
   });
 
+  const results = await Promise.all(promises);
+  console.log(results);
   return results;
+} catch (error) {
+  console.error("Error in displayUserFavs:", error.message);
+}
 };
 
 // query if a logged in user has marked a recipe as fav. if TRUE return TRUE; if FALSE return FALSE
