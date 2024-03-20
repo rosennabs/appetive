@@ -8,7 +8,7 @@ const {
 const jwtDecoder = require("../utils/jwtDecoder");
 
 // READ - GET - display all user favs
-router.get("/:id", async (req, res) => {
+router.get("/:id/favs", async (req, res) => {
   try {
     const { user } = await jwtDecoder(req.body); // req should contain token from localStorage
     const userFavs = await getUserFavs(user);
@@ -21,7 +21,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // UPDATE - POST - toggle fav
-router.post("/:id", async (req, res) => {
+router.post("/:id/favs", async (req, res) => {
   try {
     // req should contain token from localStorage AND recipe id
     const { user } = await jwtDecoder(req.body.token);
