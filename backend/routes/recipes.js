@@ -6,7 +6,9 @@ const {
   getReviewsByRecipeId,
   addRecipe,
   getRecipesBySearchQuery,
-  addReview
+  addReview,
+  toggleHasTried,
+  updateCounter
 } = require("../db/queries/recipes");
 
 const jwtDecoder = require("../utils/jwtDecoder");
@@ -138,5 +140,23 @@ router.post("/search", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
+//Toggle has_tried button & update counter_attempt 
+router.post("/:id", async (req,res) => {
+  const recipeId = req.params.id;
+  let { user_id } = req.body;
+  const { user } = await jwtDecoder(user_id);
+  user_id = user;
+
+  try {
+    const toggleTrigger = await toggleHasTried(user_id, recipeId)
+    const counterTrigger = await updateCounter(user_id,recipeId)
+    const result = { toggleTrigger, counterTrigger };
+    res.json({ success: true, message: 'Toggle successful', data: result });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server error from has_tried button");
+  }
+})
 
 module.exports = router;
