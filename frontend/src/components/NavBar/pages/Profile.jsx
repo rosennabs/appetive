@@ -11,7 +11,7 @@ export default function Profile () {
   useEffect(() => {
     const getUsername = async (token) => {
       try {
-        const response = await axios.post(`http://localhost:8080/api/user/`, token);
+        const response = await axios.post(`http://localhost:8080/api/user/`, { token });
         console.log(response);
         setUsername(response.data);
       } catch (error) {
