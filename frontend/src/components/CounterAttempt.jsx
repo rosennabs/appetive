@@ -11,7 +11,6 @@ function CounterAttempt({ recipeId }) {
         const response = await axios.get(`http://localhost:8080/api/recipes/userRecipeData/${recipeId}`, {
           headers: {'token': jwtToken }
         });
-        console.log("Response: ", response.data);
         const userRecipeData = response.data;
         if (userRecipeData && userRecipeData.has_tried) {
           setToggled(userRecipeData.has_tried); // Set initial value based on fetched data
@@ -26,13 +25,11 @@ function CounterAttempt({ recipeId }) {
 
 
 const handleToggleButton = async () => {
-    console.log("Toggled: ", recipeId)
     try {
       const res = await axios.post(`http://localhost:8080/api/recipes/${recipeId}`, null, {
         headers: {'token': jwtToken }
       });
       const results = res.data;
-      console.log("Response from toggle button: ", results);
       setToggled(prev => !prev)
       return res.data;
     } catch (error) {
