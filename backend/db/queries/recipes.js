@@ -455,6 +455,24 @@ const updateCounter = async function (user_id, recipe_id) {
   }
 }
 
+const getUserRecipeData = async function(user_id, recipe_id) {
+  try {
+    queryString=`
+    SELECT * 
+    FROM recipes 
+    JOIN users_recipes 
+    ON recipes.id = users_recipes.recipe_id
+    WHERE users_recipes.user_id = $1 AND recipes.id = $2
+    ;`;
+    queryParams=[user_id, recipe_id];
+    return await db.query(queryString, queryParams);
+    
+  } catch (error) {
+    console.log("Error from getUserRecipeData: ", error.message);
+    throw error;
+  }
+}
+
 module.exports = {
   getRecipes,
   getRecipeById,
@@ -464,4 +482,5 @@ module.exports = {
   addReview,
   toggleHasTried,
   updateCounter,
+  getUserRecipeData
 };
