@@ -200,11 +200,9 @@ router.get("/userRecipeData/:recipe_id", async(req,res) => {
   const { user } = await jwtDecoder(token);
   user_id = user;
 
-  console.log("UserId: ",user_id);
   try {
     const userRecipeData = await getUserRecipeData(user_id, recipe_id)
-    console.log(userRecipeData.rows[0]);
-    return res.status(200).send(userRecipeData.rows[0]);
+    return res.status(200).send(userRecipeData);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error from userRecipeData route");
@@ -216,12 +214,13 @@ router.post("/:id", async (req,res) => {
   const recipeId = req.params.id;
   const token = req.headers['token'];
   const { user } = await jwtDecoder(token);
-  user_id = user;;
+  user_id = user;
 
   try {
     const toggleTrigger = await toggleHasTried(user_id, recipeId)
     const counterTrigger = await updateCounter(user_id,recipeId)
     const result = { toggleTrigger, counterTrigger };
+    console.log("Data from has_tried toggle: ", result);
     res.status(200).send(result);
   } catch (error) {
     console.error(error.message);
