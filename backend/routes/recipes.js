@@ -1,4 +1,5 @@
 require("dotenv").config();
+const authorization = require("../middleware/authorization")
 const router = require("express").Router();
 const db = require("../db/connection");
 const {
@@ -9,7 +10,8 @@ const {
   getRecipesBySearchQuery,
   addReview,
   toggleHasTried,
-  updateCounter
+  updateCounter,
+  getUserRecipeData
 } = require("../db/queries/recipes");
 
 const jwtDecoder = require("../utils/jwtDecoder");
@@ -191,18 +193,35 @@ router.post("/search", async (req, res) => {
   }
 });
 
+router.get("/userRecipeData/:recipe_id", async(req,res) => {
+  const { recipe_id } = req.params;
+  const token = req.headers['token'];
+  const { user } = await jwtDecoder(token);
+  user_id = user;
+
+  console.log("UserId: ",user_id);
+  try {
+    const userRecipeData = await getUserRecipeData(user_id, recipe_id)
+    console.log(userRecipeData.rows[0]);
+    return res.status(200).send(userRecipeData.rows[0]);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server error from userRecipeData route");
+  }
+});
+
 //Toggle has_tried button & update counter_attempt 
 router.post("/:id", async (req,res) => {
   const recipeId = req.params.id;
-  let { user_id } = req.body;
-  const { user } = await jwtDecoder(user_id);
-  user_id = user;
+  const token = req.headers['token'];
+  const { user } = await jwtDecoder(token);
+  user_id = user;;
 
   try {
     const toggleTrigger = await toggleHasTried(user_id, recipeId)
     const counterTrigger = await updateCounter(user_id,recipeId)
     const result = { toggleTrigger, counterTrigger };
-    res.json({ success: true, message: 'Toggle successful', data: result });
+    res.status(200).send(result);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error from has_tried button");
