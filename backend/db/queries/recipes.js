@@ -424,10 +424,16 @@ const getRecipesBySearchQuery = async function (
 
 const toggleHasTried = async function (user_id, recipe_id) {
   try {
-    queryString=`UPDATE users_recipes SET has_tried = NOT has_tried WHERE user_id = $1 AND recipe_id = $2 RETURNING *;`;
-    queryParams=[user_id, recipe_id];
+    const queryString=`
+      UPDATE users_recipes 
+      SET has_tried = NOT has_tried 
+      WHERE user_id = $1 AND recipe_id = $2 
+      RETURNING has_tried
+    ;`;
+    const queryParams=[user_id, recipe_id];
     const result = await db.query(queryString, queryParams);
-    return result;
+    return result.rows[0];
+    
   } catch (error) {
     console.log("Error from toggleHasTried: ", error.message);
     throw error;
@@ -436,7 +442,7 @@ const toggleHasTried = async function (user_id, recipe_id) {
 
 const updateCounter = async function (user_id, recipe_id) {
   try {    
-    queryString = `
+    const queryString = `
       UPDATE recipes 
       SET counter_attempt = CASE
         WHEN users_recipes.has_tried THEN recipes.counter_attempt + 1
@@ -444,11 +450,11 @@ const updateCounter = async function (user_id, recipe_id) {
       END
       FROM users_recipes
       WHERE recipes.id = users_recipes.recipe_id AND users_recipes.user_id = $1 AND recipes.id = $2
-      RETURNING *
-      ;`
-    queryParams = [user_id, recipe_id]
-    return await db.query(queryString, queryParams);
-    
+      RETURNING users_recipes.has_tried, recipes.counter_attempt
+    ;`;
+    const queryParams = [user_id, recipe_id]
+    const result = await db.query(queryString, queryParams);
+    return result.rows;
   } catch (error) {
     console.log("Error from updateCounter: ", error.message);
     throw error;
@@ -457,16 +463,30 @@ const updateCounter = async function (user_id, recipe_id) {
 
 const getUserRecipeData = async function(user_id, recipe_id) {
   try {
-    queryString=`
-    SELECT * 
-    FROM recipes 
-    JOIN users_recipes 
-    ON recipes.id = users_recipes.recipe_id
-    WHERE users_recipes.user_id = $1 AND recipes.id = $2
+    const queryString=`
+      SELECT users_recipes.has_tried, recipes.counter_attempt
+      FROM recipes 
+      JOIN users_recipes 
+      ON recipes.id = users_recipes.recipe_id
+      WHERE users_recipes.user_id = $1 AND recipes.id = $2
     ;`;
-    queryParams=[user_id, recipe_id];
-    return await db.query(queryString, queryParams);
-    
+    const queryParams=[user_id, recipe_id];
+    const getDataResult =  await db.query(queryString, queryParams);
+    if (getDataResult.rows.length > 0) {
+      console.log("getDataResult:", getDataResult.rows);
+      return getDataResult.rows[0];
+    } else {
+      // if relationship does not exist, create and set to FALSE
+      const insertQueryString=`
+          INSERT INTO users_recipes(user_id, recipe_id, has_tried)
+          VALUES ($1, $2, FALSE)
+          RETURNING *
+        ;`;
+        const insertQueryParams=[user_id, recipe_id];
+        const insertResult = await db.query(insertQueryString, insertQueryParams);
+        console.log("Insert user_recipe data: ", insertResult.rows[0]);
+        return insertResult.rows[0];
+    };
   } catch (error) {
     console.log("Error from getUserRecipeData: ", error.message);
     throw error;
