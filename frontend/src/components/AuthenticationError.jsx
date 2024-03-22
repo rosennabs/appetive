@@ -17,7 +17,7 @@ const AuthenticationError = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="flex items-center my-5 border-2 border-red-400 rounded-xl px-6 py-2">
+      <div className="flex items-center mt-10 border-2 border-red-400 rounded-xl px-6 py-2">
         <FaExclamationTriangle className="text-red-500 text-3xl mr-4" />
         <p className="text-red-500 text-lg">You must login or sign up first.</p>
       </div>
