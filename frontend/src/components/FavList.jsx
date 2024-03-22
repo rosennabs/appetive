@@ -5,7 +5,7 @@ import axios from "axios";
 export default function FavList () {
   
   const [ favs, setFavs ] = useState([]);
-  const myToken = localStorage.token;
+  const userToken = localStorage.token;
   
   useEffect(() => {
     const fetchFavs = async (token) => {
@@ -18,7 +18,7 @@ export default function FavList () {
         console.error("Error fetching favs:", error);
       }
     };
-    fetchFavs(myToken);
+    fetchFavs(userToken);
   }, []);
 
   return (
