@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "../SearchBar";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
   Nav,
   NavLink,
@@ -10,55 +10,22 @@ import {
   NavBtnLink,
   ImgBtnLink,
 } from "./NavBarElements";
-import axios from "axios";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
 import Profile from "./pages/Profile";
 import { FaCaretDown, FaSearch, FaHome } from "react-icons/fa";
 import RecipeForm from "../RecipeForm";
+import useAuthentication from "../../hooks/useAuthentication";
 
 function NavBar({ toggleSearchBar, showSearchBar }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const setAuth = (boolean) => {
-    setIsAuthenticated(boolean);
-  };
+  const { isAuthenticated, setAuth } = useAuthentication();
 
   const handleLogout = (e) => {
     e.preventDefault();
     localStorage.clear();
     setAuth(false);
   };
-
-  // Keep user login status and set 'setAuth' to 'true' upon page refresh
-  const isAuth = async () => {
-    try {
-      const token = localStorage.token;
-
-      // Set isAuthenticated to false if token doesn't exist
-      if (!token) {
-        setIsAuthenticated(false);
-        return;
-      }
-
-      const headers = {
-        token: token,
-      };
-      const response = await axios.get("http://localhost:8080/auth/is-verify", {
-        headers,
-      });
-      response.data === true
-        ? setIsAuthenticated(true)
-        : setIsAuthenticated(false);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  useEffect(() => {
-    isAuth();
-  });
 
   return (
     <>
@@ -95,25 +62,26 @@ function NavBar({ toggleSearchBar, showSearchBar }) {
           ) : (
             <>
               <p>Logged In</p>
-              <NavBtnLink onClick={(e) => handleLogout(e)}>LOGOUT</NavBtnLink>
+              <NavBtnLink to="/logout" onClick={(e) => handleLogout(e)}>
+                LOGOUT
+              </NavBtnLink>
             </>
           )}
         </NavBtn>
       </Nav>
 
-      <img
-        src={require("../../Images/header.png")}
-        alt="Header Image"
-        className="h-auto max-w-full mt-16"
-      />
+      <div>
+        <img
+          src={require("../../Images/header.png")}
+          alt="Header Image"
+          className="h-auto max-w-full mt-16"
+        />
+        <ImgBtnLink to="/add-recipe">MAKE YOUR RECIPE</ImgBtnLink>
+      </div>
 
-           {/* Search bar */}
-        
-          <div>
-            {showSearchBar && <SearchBar />}
-          </div>
-      
-      <ImgBtnLink to="/add-recipe">MAKE YOUR RECIPE</ImgBtnLink>
+      {/* Search bar */}
+
+      <div>{showSearchBar && <SearchBar />}</div>
 
       <Routes>
         <Route path="/my-profile" element={<Profile />} />
