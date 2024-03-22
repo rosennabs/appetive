@@ -1,115 +1,54 @@
 import React, { useState, useContext } from 'react';
 import { Formik, Form } from 'formik';
 import { AppDataContext } from '../contexts/AppDataContext';
-import axios from "axios";
-import { apiKey, host } from "../config";
+import { FaSearch } from "react-icons/fa";
 
 export default function SearchBar() {
 
   //Access recipes from state
-  const { state, fetchRecipeInfo, setRecipes } = useContext(AppDataContext);
+  const { state, fetchRecipeInfo, setRecipes, handleSearchSubmission } = useContext(AppDataContext);
   const { recipes } = state;
-
-  const [query, setQuery] = useState(''); //State variable to store user's recipe input
-  const [suggestions, setSuggestions] = useState([]); //To store suggested possible recipe names
- 
-  const handleInputChange = async (event) => {
-    const userInput = event.target.value
-    setQuery(userInput);
-   
-    if (userInput.trim() !== '') {
-
-    const options = {
-    method: 'GET',
-    url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete',
-    params: {
-      query: userInput,
-      number: '25'
-    },
-    headers: {
-      'X-RapidAPI-Key': apiKey,
-      'X-RapidAPI-Host': host
-    }
-};
-      try {
-        const response = await axios.request(options);
-        
-        setSuggestions(response.data);
-        
-
-      } catch (error) {
-        console.error("Error fetching autocomplete recipe names: ", error);
-      }
-    } else {
-      setSuggestions([]); // Clear suggestions if query is empty
-      window.location.reload();
-    }
-  }
-
-
-  //Handle suggestion selection by user
-  const handleSuggestionClick = async(suggestion, recipeId) => {
-    setQuery(suggestion);
-    setSuggestions([]); //Clear suggestions after selection
-
-    try {
-      const recipeInfo = await fetchRecipeInfo(recipeId);
-      setRecipes([recipeInfo]);
-
-    } catch (error) {
-    console.error("Error fetching recipe information: ", error);
-  }
    
     
-  }
+    //window.location.reload();
+    
 
 
   return (
     <Formik
-      initialValues={{query: ""}}
-      onSubmit={(values, actions) => {
-        // Handle form submission
+      initialValues = {
+        { title: '' } 
+      }
 
-         //console.log("values: ", values);
+      onSubmit={(values, actions) => {
+        handleSearchSubmission(values);
+        console.log("values: ", values);
         
         actions.setSubmitting(false);
       }}
       
     >
-      {({ handleSubmit}) => (
+      {({ handleSubmit, handleChange, values}) => (
         <Form onSubmit={handleSubmit}>
           
           <div className="flex justify-center items-center bg-white border border-gray-300 rounded-md shadow-lg p-16">
           
           <input
             type="text"
-            name="query"
-            value={query}
-            onChange={handleInputChange}
+            name="title"
+            value={values.title}
+            onChange={handleChange}
             placeholder="Search recipes"
             autoComplete='off'
-            aria-autocomplete='list'
             className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-500"
             />
+
+            <div className='ml-4' onClick={() => handleSubmit()}>
+            <FaSearch />
+            </div>
+            
            </div>
-          <div>
-          {suggestions.length > 0 && (
-            <ul className="absolute z-10 bg-white border border-gray-300 rounded-md mt-1 w-full max-w-lg left-0 right-0 mx-auto">
-              {suggestions.map((suggestion) => (
-                <li
-                  key={suggestion.id}
-                  onClick={() => handleSuggestionClick(suggestion.title, suggestion.id)}
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                >
-                  {suggestion.title}
-
-                </li>
-              ))}
-
-            </ul>
-              )}
-              </div>
-           
+          
             
           
         </Form>

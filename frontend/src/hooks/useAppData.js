@@ -106,10 +106,11 @@ const useAppData = () => {
     setSearchClicked(true);
 
     const selectedOptions = {
+      title: values.title,
       cuisine: values.cuisine,
       type: values.type,
-      diet: values.diet.join(","),
-      intolerances: values.intolerances.join(","),
+      diet: values.diet ? values.diet.join(",") : "", // Check if values.diet is defined
+      intolerances: values.intolerances ? values.intolerances.join(",") : "", 
       minCalories: values.minCalories,
       maxCalories: values.maxCalories,
     };

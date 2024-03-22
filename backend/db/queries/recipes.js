@@ -304,7 +304,7 @@ const getRecipesBySearchQuery = async function (
     //Add conditions based on query parameters
     if (title) {
       queryString += ` AND title ILIKE $${queryParams.length + 1}`;
-      queryParams.push(`%${title}%`);
+      queryParams.push(`%\\b${title}\\b%`);
       const recipes = await db.query(queryString, queryParams);
 
       if (recipes.rows.length === 0) {
