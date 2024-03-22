@@ -11,34 +11,27 @@ import Footer from "./components/Footer";
 function App() {
   const { selectedRecipe, setSelected } = useSelectedRecipe();
   const { showSearchBar, toggleSearchBar } = useSearchBar();
-  
 
   return (
-    <>
-      <Fragment>
-        
-        <Router>
-          <NavBar
-            toggleSearchBar={toggleSearchBar}
-            showSearchBar={showSearchBar} />  
-        </Router>
+    <Fragment>
+      <Router>
+        <NavBar
+          toggleSearchBar={toggleSearchBar}
+          showSearchBar={showSearchBar}
+        />
+      </Router>
 
-        
-         {selectedRecipe ? (
-          <RecipeDetails
-            recipe={selectedRecipe}
-            setSelected={setSelected} />
-        ) : (
-          <div>
-            {!showSearchBar && <SearchForm />}
-              <Recipes
-                setSelected={setSelected}
-                showSearchBar={showSearchBar} />
-          </div>
-        )}
-        
-      </Fragment>
-    </>
+      {selectedRecipe ? (
+        <RecipeDetails recipe={selectedRecipe} setSelected={setSelected} />
+      ) : (
+        <div>
+          {!showSearchBar && <SearchForm />}
+          <Recipes setSelected={setSelected} showSearchBar={showSearchBar} />
+        </div>
+      )}
+
+      <Footer />
+    </Fragment>
   );
 }
 

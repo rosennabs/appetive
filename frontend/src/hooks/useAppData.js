@@ -74,6 +74,7 @@ const useAppData = () => {
         instructions: recipe.instructions,
         sourceName: recipe.sourceName,
         sourceUrl: recipe.sourceUrl,
+        counter_attempt: recipe.counter_attempt
       };
       // console.log("Extracted Recipe Info: ", extractedRecipeInfo);
       return extractedRecipeInfo;

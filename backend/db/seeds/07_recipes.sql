@@ -14,6 +14,7 @@ INSERT INTO
     carbs,
     number_of_servings,
     calories,
+    counter_attempt,
     created_at,
     updated_at
   )
@@ -33,6 +34,7 @@ VALUES
     '30g',
     2,
     242,
+    5,
     CURRENT_TIMESTAMP,
     CURRENT_TIMESTAMP
   );
@@ -53,6 +55,7 @@ INSERT INTO
     carbs,
     number_of_servings,
     calories,
+    counter_attempt,
     created_at,
     updated_at
   )
@@ -72,6 +75,7 @@ VALUES
     '20g',
     1,
     130,
+    18,
     CURRENT_TIMESTAMP,
     CURRENT_TIMESTAMP
   );

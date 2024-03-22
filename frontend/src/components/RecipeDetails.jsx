@@ -10,6 +10,8 @@ import { FaPlateWheat } from "react-icons/fa6";
 import { ImSpoonKnife, ImClock } from "react-icons/im";
 import { GiCook, GiCookingPot } from "react-icons/gi";
 import ReviewForm from "./ReviewForm";
+import CounterAttempt from "./CounterAttempt";
+
 
 const renderInstructions = (instructions) => {
   const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions|\d+\.|^\s+|\s+$)/g;
@@ -28,7 +30,7 @@ const renderInstructions = (instructions) => {
 };
 
 const RecipeDetails = function ({ recipe, setSelected }) {
-  console.log(recipe);
+  console.log("Recipe:", recipe);
 
   return (
     <>
@@ -39,6 +41,8 @@ const RecipeDetails = function ({ recipe, setSelected }) {
               <h2 className="text-4xl font-extrabold mb-10 mt-4">
                 {recipe.title}
               </h2>
+
+
 
               <div className="flex flex-row">
                 {recipe.nutrients.map((nutrient) => {
@@ -161,6 +165,8 @@ const RecipeDetails = function ({ recipe, setSelected }) {
             </div>
           </div>
           <div className="bg-white p-8 w-5/6 border border-black">
+            <CounterAttempt recipeId={recipe.id} counter_attempt={recipe.counter_attempt}/>
+            
             <div className="flex flex-row justify-between">
               <section className="flex border border-black h-10 px-10 items-center">
                 <p className="flex items-center">
@@ -261,7 +267,7 @@ const RecipeDetails = function ({ recipe, setSelected }) {
           <div className="self-start w-4/5 ml-40 my-32 border border-yellow rounded-md px-5 py-5 flex gap-144">
             <div className="w-1/3">
               <p className="text-3xl font-extrabold mt-12 mb-4">
-                Leave A Reply
+                Leave A Review
               </p>
               <p className="text-xl mb-8">
                 Made this recipe? Please leave a review
