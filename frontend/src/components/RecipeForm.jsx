@@ -2,6 +2,14 @@ import React from "react";
 import { Formik, Form, FieldArray, Field } from "formik";
 import axios from "axios";
 
+const cuisine = ['African', 'Asian', 'American', 'British', 'Cajun', 'Caribbean', 'Chinese', 'Eastern European', 'European', 'French', 'German', 'Greek', 'Indian', 'Irish', 'Italian', 'Japanese', 'Jewish', 'Korean','Latin American', 'Mediterranean', 'Mexican', 'Middle Eastern', 'Nordic', 'Southern', 'Spanish', 'Thai', 'Vietnamese'];
+
+const intolerances = ['Dairy', 'Egg', 'Gluten', 'Grain', 'Peanut', 'Seafood', 'Sesame', 'Shellfish', 'Soy', 'Sulfite', 'Tree Nut', 'Wheat'];
+
+const diet = ['Ketogenic', 'Vegetarian', 'Lacto-Vegetarian', 'Ovo-Vegetarian', 'Vegan', 'Pescetarian', 'Paleo', 'Primal', 'Low FODMAP', 'Whole30'];
+
+const type = ['main course', 'side dish', 'dessert', 'appetizer', 'salad', 'bread', 'breakfast', 'soup', 'beverage', 'sauce', 'marinade', 'fingerfood', 'snack', 'drink'];
+
 function RecipeForm() {
   const emptyIngredient = {
     measurement: "",
@@ -10,7 +18,7 @@ function RecipeForm() {
 
   // All Tailwind classNames are TEMPORARY to make the form easier to look at. All can be altered at styling stage
   return (
-    <>
+    <div className="max-w-screen-md mx-auto">
       <h1 className="text-4xl pt-10 font-bold mx-auto text-center">
         Make Your Own Recipe
       </h1>
@@ -43,297 +51,256 @@ function RecipeForm() {
         }}
       >
         {({ values, handleChange }) => (
-          <Form>
-            <label className="block" htmlFor="title">
-              Recipe Title
-            </label>
+          <Form className="border border-yellow rounded-md px-5 py-5">
+            <span className="text-xs italic text-gray-500">* Required</span>
+            <div className="my-5">
+            <label className="block font-bold text-lg" htmlFor="title">Recipe Title*</label>
             <Field
               id="title"
               name="title"
               type="text"
               value={values.title}
               onChange={handleChange}
-              className="border"
-            />
-            <label className="block" htmlFor="cuisine">
-              Cuisine
-            </label>
-            <Field
-              as="select"
-              id="cuisine"
-              name="cuisine"
-              value={values.cuisine}
-              onChange={handleChange}
-              className="border"
-            >
-              <option value="African">African</option>
-              <option value="Asian">Asian</option>
-              <option value="American">American</option>
-              <option value="British">British</option>
-              <option value="Cajun">Cajun</option>
-              <option value="Caribbean">Caribbean</option>
-              <option value="Chinese">Chinese</option>
-              <option value="Eastern European">Eastern European</option>
-              <option value="European">European</option>
-              <option value="French">French</option>
-              <option value="German">German</option>
-              <option value="Greek">Greek</option>
-              <option value="Indian">Indian</option>
-              <option value="Irish">Irish</option>
-              <option value="Italian">Italian</option>
-              <option value="Japanese">Japanese</option>
-              <option value="Jewish">Jewish</option>
-              <option value="Korean">Korean</option>
-              <option value="Latin American">Latin American</option>
-              <option value="Mediterranean">Mediterranean</option>
-              <option value="Mexican">Mexican</option>
-              <option value="Middle Eastern">Middle Eastern</option>
-              <option value="Nordic">Nordic</option>
-              <option value="Southern">Southern</option>
-              <option value="Spanish">Spanish</option>
-              <option value="Thai">Thai</option>
-              <option value="Vietnamese">Vietnamese</option>
-            </Field>
-            <fieldset>
-              <legend>Dietary Restrictions</legend>
-
-              <label htmlFor="diet">Diet</label>
-              <Field
-                as="select"
-                id="diet"
-                name="diet"
-                value={values.diet}
-                onChange={handleChange}
-                className="border"
-              >
-                <option value="NULL">None</option>
-                <option value="Gluten Free">Gluten Free</option>
-                <option value="Ketogenic">Ketogenic</option>
-                <option value="Vegetarian">Vegetarian</option>
-                <option value="Lacto-Vegetarian">Lacto-Vegetarian</option>
-                <option value="Ovo-Vegetarian">Ovo-Vegetarian</option>
-                <option value="Vegan">Vegan</option>
-                <option value="Pescetarian">Pescetarian</option>
-                <option value="Paleo">Paleo</option>
-                <option value="Primal">Primal</option>
-                <option value="Low FODMAP">Low FODMAP</option>
-                <option value="Whole30">Whole30</option>
-              </Field>
-
-              <label htmlFor="intolerances">Intolerances</label>
-              <Field
-                as="select"
-                id="intolerances"
-                name="intolerances"
-                value={values.intolerances}
-                onChange={handleChange}
-                className="border"
-              >
-                <option value="NULL">None</option>
-                <option value="Dairy">Dairy</option>
-                <option value="Egg">Egg</option>
-                <option value="Gluten">Gluten</option>
-                <option value="Grain">Grain</option>
-                <option value="Peanut">Peanut</option>
-                <option value="Seafood">Seafood</option>
-                <option value="Sesame">Sesame</option>
-                <option value="Shellfish">Shellfish</option>
-                <option value="Soy">Soy</option>
-                <option value="Sulfite">Sulfite</option>
-                <option value="Tree Nut">Tree Nut</option>
-                <option value="Wheat">Wheat</option>
-              </Field>
-            </fieldset>
-            <label className="block" htmlFor="meal_type">
-              Meal Type
-            </label>
-            <Field
-              as="select"
-              id="meal_type"
-              name="meal_type"
-              value={values.meal_type}
-              onChange={handleChange}
-              className="border"
-            >
-              <option value="main course">main course</option>
-              <option value="side dish">side dish</option>
-              <option value="dessert">dessert</option>
-              <option value="appetizer">appetizer</option>
-              <option value="salad">salad</option>
-              <option value="bread">bread</option>
-              <option value="breakfast">breakfast</option>
-              <option value="soup">soup</option>
-              <option value="beverage">beverage</option>
-              <option value="sauce">sauce</option>
-              <option value="marinade">marinade</option>
-              <option value="fingerfood">fingerfood</option>
-              <option value="snack">snack</option>
-              <option value="drink">drink</option>
-            </Field>
-            <label className="block" htmlFor="prep_time">
-              Prep Time
-            </label>
-            <Field
-              id="prep_time"
-              name="prep_time"
-              type="number"
-              value={values.prep_time}
-              onChange={handleChange}
-              className="border"
-            />{" "}
-            minutes
-            <label className="block" htmlFor="number_of_servings">
-              Number of Servings
-            </label>
-            <Field
-              id="number_of_servings"
-              name="number_of_servings"
-              type="number"
-              value={values.number_of_servings}
-              onChange={handleChange}
-              className="border"
-            />
-            <label className="block" htmlFor="ingredients">
-              Ingredients
-            </label>
-            <FieldArray name="ingredients">
-              {({ push, remove }) => (
-                <>
-                  {values.ingredients.map((ingredient, index) => {
-                    const startName = `ingredients[${index.toString()}]`;
-
-                    return (
-                      <div key={`ingredient-${index.toString()}`}>
-                        <Field
-                          name={`${startName}.measurement`}
-                          type="text"
-                          placeholder="50g"
-                          value={values.ingredients[index].measurement}
-                          onChange={handleChange}
-                          className="border"
-                        />
-                        <Field
-                          name={`${startName}.name`}
-                          type="text"
-                          placeholder="carrots"
-                          value={values.ingredients[index].name}
-                          onChange={handleChange}
-                          className="border"
-                        />
-                        {index > 0 && (
-                          <button
-                          type="button"
-                          onClick={() => remove(index)}
-                          className="mx-1 px-2 bg-gray-200"
-                          >
-                            Remove
-                          </button>
-                        )}
-                      </div>
-                    );
-                  })}
-                <button
-                  type="button"
-                  onClick={() => push(emptyIngredient)}
-                  className="mx-1 px-2 bg-gray-200"
+              className="w-full px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light my-1"
+              />
+            </div>
+            <div className="flex justify-between my-5">
+              <div className="basis-1/2 space-x-1">
+                <label className="block font-bold text-lg" htmlFor="cuisine">Cuisine*</label>
+                <Field
+                  as="select"
+                  id="cuisine"
+                  name="cuisine"
+                  value={values.cuisine}
+                  onChange={handleChange}
+                  className="w-48 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                  >
+                  {cuisine.map((cuisineName, index) => <option key={`cuisine-${index}`} value={cuisineName}>{cuisineName}</option>)}
+                </Field>
+              </div>
+              <div className="basis-1/2 space-x-1">
+                <label className="block font-bold text-lg" htmlFor="meal_type">Meal Type*</label>
+                <Field
+                  as="select"
+                  id="meal_type"
+                  name="meal_type"
+                  value={values.meal_type}
+                  onChange={handleChange}
+                  className="w-48 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
                 >
-                  Add Ingredient
-                </button>
-                </>
-              )}
-            </FieldArray>
-            <label className="block" htmlFor="instructions">
-              Instructions
-            </label>
-            <Field
-              as="textarea"
-              id="instructions"
-              name="instructions"
-              value={values.instructions}
-              onChange={handleChange}
-              className="border"
-            />
-            <fieldset>
-              <legend>Nutritional Information</legend>
-
-              <label className="inline" htmlFor="proteins">
-                Protein
-              </label>
-              <Field
-                id="proteins"
-                name="proteins"
-                type="text"
-                value={values.proteins}
-                onChange={handleChange}
-                className="border"
-              />
-              <label className="inline" htmlFor="fats">
-                Fats
-              </label>
-              <Field
-                id="fats"
-                name="fats"
-                type="text"
-                value={values.fats}
-                onChange={handleChange}
-                className="border"
-              />
-              <label className="inline" htmlFor="carbs">
-                Carbs
-              </label>
-              <Field
-                id="carbs"
-                name="carbs"
-                type="text"
-                value={values.carbs}
-                onChange={handleChange}
-                className="border"
-              />
-
-              <br />
-
-              <label className="inline" htmlFor="calories">
-                Calories
-              </label>
-              <Field
-                id="calories"
-                name="calories"
-                type="number"
-                value={values.calories}
-                onChange={handleChange}
-                className="border"
-              />
+                  {type.map((typeName, index) => <option key={`type-${index}`} value={typeName}>{typeName}</option>)}
+                </Field>
+              </div>
+            </div>
+            <fieldset className="my-5">
+              <legend className="font-bold text-lg">Dietary Restrictions</legend>
+              <div className="flex justify-between my-1">
+                <div className="basis-1/2 space-x-1">
+                  <label className="block" htmlFor="diet">Diet</label>
+                  <Field
+                    as="select"
+                    id="diet"
+                    name="diet"
+                    value={values.diet}
+                    onChange={handleChange}
+                    className="w-48 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                    >
+                    <option value="">None</option>
+                    {diet.map((dietName, index) => <option key={`diet-${index}`} value={dietName}>{dietName}</option>)}
+                  </Field>
+                </div>
+                <div className="basis-1/2 space-x-1">
+                  <label className="block" htmlFor="intolerances">Intolerances</label>
+                  <Field
+                    as="select"
+                    id="intolerances"
+                    name="intolerances"
+                    value={values.intolerances}
+                    onChange={handleChange}
+                    className="w-48 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                    >
+                    <option value="">None</option>
+                    {intolerances.map((intoleranceName, index) => <option key={`intolerance-${index}`} value={intoleranceName}>{intoleranceName}</option>)}
+                  </Field>
+                </div>
+              </div>
             </fieldset>
-            <label className="block" htmlFor="image">
-              Image URL
-            </label>
-            {/* <input
-        id="image"
-        name="image"
-        type="file"
-        value={values.image}
-        onChange={(event) => {
-          setFieldValue("file", event.currentTarget.files[0]);
-        }}
-        className="border"
-        /> */}
-            <Field
-              id="image"
-              name="image"
-              type="text"
-              value={values.image}
-              onChange={handleChange}
-              className="border"
-            />
-            <div>
-              <button type="submit" className="px-2 bg-gray-200">
+            <div className="flex justify-between my-5">
+              <div className="basis-1/2 space-x-1">
+                <label className="block font-bold text-lg" htmlFor="prep_time">Prep Time*</label>
+                <Field
+                  id="prep_time"
+                  name="prep_time"
+                  type="number"
+                  value={values.prep_time}
+                  onChange={handleChange}
+                  className="w-48 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                  />{" "}
+                minutes
+              </div>
+              <div className="basis-1/2 space-x-1">
+                <label className="block font-bold text-lg" htmlFor="number_of_servings">Number of Servings*</label>
+                <Field
+                  id="number_of_servings"
+                  name="number_of_servings"
+                  type="number"
+                  value={values.number_of_servings}
+                  onChange={handleChange}
+                  className="w-48 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                  />
+              </div>
+            </div>
+            <fieldset className="my-5">
+              <label className="block font-bold text-lg" htmlFor="ingredients">Ingredients*</label>
+              <FieldArray name="ingredients">
+                {({ push, remove }) => (
+                  <div>
+                    {values.ingredients.map((ingredient, index) => {
+                      const startName = `ingredients[${index.toString()}]`;
+                      
+                      return (
+                        <div className="flex space-x-1 my-1" key={`ingredient-${index.toString()}`}>
+                          <Field
+                            name={`${startName}.measurement`}
+                            type="text"
+                            placeholder="50g"
+                            value={values.ingredients[index].measurement}
+                            onChange={handleChange}
+                            className="w-1/6 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                            />
+                          <Field
+                            name={`${startName}.name`}
+                            type="text"
+                            placeholder="carrots"
+                            value={values.ingredients[index].name}
+                            onChange={handleChange}
+                            className="w-4/6 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                            />
+                          {index > 0 ? (
+                            <button
+                            type="button"
+                            onClick={() => remove(index)}
+                            className="w-1/6 bg-yellow text-black font-bold py-1 px-5 rounded-full"
+                            >
+                              Remove
+                            </button>
+                          ) : (
+                            <div className="w-1/6"></div>
+                            )}
+                        </div>
+                      );
+                    })}
+                    <button
+                      type="button"
+                      onClick={() => push(emptyIngredient)}
+                      className="bg-yellow text-black font-bold my-2 py-1 px-5 rounded-full"
+                      >
+                      Add More Ingredients
+                    </button>
+                  </div>
+                )}
+              </FieldArray>
+            </fieldset>
+            <div className="my-5">
+              <label className="block font-bold text-lg" htmlFor="instructions">Instructions*</label>
+              <Field
+                as="textarea"
+                id="instructions"
+                name="instructions"
+                value={values.instructions}
+                onChange={handleChange}
+                className="w-full h-[100px] px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light resize-none"
+                />
+            </div>
+            <fieldset className="my-5">
+              <legend className="font-bold text-lg">Nutritional Information</legend>
+
+              <div className="flex justify-between">
+                <div className="basis-1/4">
+                <label className="block" htmlFor="proteins">
+                  Protein
+                </label>
+                <Field
+                  id="proteins"
+                  name="proteins"
+                  type="text"
+                  value={values.proteins}
+                  onChange={handleChange}
+                  className="w-40 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                  />
+                </div>
+                <div className="basis-1/4">
+                <label className="block" htmlFor="fats">
+                  Fats
+                </label>
+                <Field
+                  id="fats"
+                  name="fats"
+                  type="text"
+                  value={values.fats}
+                  onChange={handleChange}
+                  className="w-40 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                  />
+                  </div>
+                  <div className="basis-1/4">
+                <label className="block" htmlFor="carbs">
+                  Carbs
+                </label>
+                <Field
+                  id="carbs"
+                  name="carbs"
+                  type="text"
+                  value={values.carbs}
+                  onChange={handleChange}
+                  className="w-40 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                  />
+                  </div>
+                  <div className="basis-1/4">
+                <label className="block" htmlFor="calories">
+                  Calories
+                </label>
+                <Field
+                  id="calories"
+                  name="calories"
+                  type="number"
+                  value={values.calories}
+                  onChange={handleChange}
+                  className="w-40 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                  />
+                  </div>
+                </div>
+            </fieldset>
+            <div className="my-5">
+              <label className="block font-bold text-lg" htmlFor="image">Image URL*</label>
+              {/* <input
+                id="image"
+                name="image"
+                type="file"
+                value={values.image}
+                onChange={(event) => {
+                  setFieldValue("file", event.currentTarget.files[0]);
+                }}
+                className="px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+              /> */}
+              <Field
+                id="image"
+                name="image"
+                type="text"
+                placeholder="http://"
+                value={values.image}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                />
+            </div>
+            <div className="flex justify-center">
+              <button type="submit" className="bg-yellow text-black font-bold py-1 px-5 rounded-full">
                 Submit Recipe
               </button>
             </div>
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   );
 }
 

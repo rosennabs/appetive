@@ -1,3 +1,4 @@
+const { query } = require("express");
 const db = require("../connection");
 const {
   getCuisineByName,
@@ -42,8 +43,6 @@ const getRecipes = async function () {
 
 const getRecipeById = async function (recipe_id) {
   try {
-    const results = [];
-
     const queryString = `SELECT * FROM recipes WHERE id = $1;`;
     const queryParams = [recipe_id];
     const recipe = await db.query(queryString, queryParams);
@@ -56,6 +55,9 @@ const getRecipeById = async function (recipe_id) {
 
     //add recipe id into recipe object
     recipe_obj["id"] = recipe.rows[0].id;
+
+    //add recipe counter_attempt into recipe object
+    recipe_obj["counter_attempt"] = recipe.rows[0].counter_attempt;
 
     //add title into recipe object
     recipe_obj["title"] = recipe.rows[0].title;
@@ -110,7 +112,7 @@ const getRecipeById = async function (recipe_id) {
     const nutrients = [];
     const calories = {
       name: "Calories",
-      amount: recipe.calories,
+      amount: recipe.rows[0].calories,
       unit: "kcal",
     };
 
@@ -172,13 +174,10 @@ const getRecipeById = async function (recipe_id) {
     recipe_obj["extendedIngredients"] = ingredients;
 
     //add empty reviews and comments
-    recipe_obj["reviews"] = "";
-    recipe_obj["comments"] = "";
+    // recipe_obj["reviews"] = [];
+    // recipe_obj["comments"] = [];
 
-    //push final recipe object into results array
-    results.push(recipe_obj);
-
-    return results;
+    return recipe_obj;
   } catch (error) {
     console.error("Error in getRecipeById:", error.message);
     throw error;
@@ -225,7 +224,6 @@ const addReview = async function (recipe_id, rating, review, user_id) {
     throw error;
   }
 };
-
 
 const addRecipe = async function (recipe) {
   const queryParams = [];
@@ -314,7 +312,8 @@ const getRecipesBySearchQuery = async function (
       const recipes = await db.query(queryString, queryParams);
 
       if (recipes.rows.length === 0) {
-        return { message: "No recipes found" };
+        console.log("No recipes found in database");
+        return results;
       }
 
       //get title and image for recipe and put it inside an object
@@ -401,11 +400,13 @@ const getRecipesBySearchQuery = async function (
       queryString += ` AND calories <= $${queryParams.length + 1}`;
       queryParams.push(maxCalories);
     }
-    console.log(queryString);
+    console.log("queryString", queryString);
+    console.log("queryParams", queryParams);
     const recipes = await db.query(queryString, queryParams);
 
     if (recipes.rows.length === 0) {
-      return { message: "No recipes found" };
+      console.log("No recipes found in database");
+      return results;
     }
 
     //get title and image for recipe and put it inside an object
@@ -424,11 +425,89 @@ const getRecipesBySearchQuery = async function (
   }
 };
 
+const toggleHasTried = async function (user_id, recipe_id) {
+  try {
+    const queryString=`
+      UPDATE users_recipes 
+      SET has_tried = NOT has_tried 
+      WHERE user_id = $1 AND recipe_id = $2 
+      RETURNING has_tried
+    ;`;
+    const queryParams=[user_id, recipe_id];
+    const result = await db.query(queryString, queryParams);
+    return result.rows[0];
+    
+  } catch (error) {
+    console.log("Error from toggleHasTried: ", error.message);
+    throw error;
+  }
+}
+
+const updateCounter = async function (user_id, recipe_id) {
+  try {    
+    const queryString = `
+      UPDATE recipes 
+      SET counter_attempt = CASE
+        WHEN users_recipes.has_tried THEN recipes.counter_attempt + 1
+        ELSE recipes.counter_attempt - 1
+      END
+      FROM users_recipes
+      WHERE recipes.id = users_recipes.recipe_id AND users_recipes.user_id = $1 AND recipes.id = $2
+      RETURNING users_recipes.has_tried, recipes.counter_attempt
+    ;`;
+    const queryParams = [user_id, recipe_id]
+    const result = await db.query(queryString, queryParams);
+    return result.rows;
+  } catch (error) {
+    console.log("Error from updateCounter: ", error.message);
+    throw error;
+  }
+}
+
+const getUserRecipeData = async function(user_id, recipe_id) {
+  try {
+    const queryString=`
+      SELECT users_recipes.has_tried, recipes.counter_attempt
+      FROM recipes 
+      JOIN users_recipes 
+      ON recipes.id = users_recipes.recipe_id
+      WHERE users_recipes.user_id = $1 AND recipes.id = $2
+    ;`;
+    const queryParams=[user_id, recipe_id];
+    const getDataResult =  await db.query(queryString, queryParams);
+    if (getDataResult.rows.length > 0) {
+      console.log("getDataResult:", getDataResult.rows);
+      return getDataResult.rows[0];
+    } else {
+      // if relationship does not exist, create and set to FALSE
+      const insertQueryString=`
+          INSERT INTO users_recipes(user_id, recipe_id, has_tried)
+          VALUES ($1, $2, FALSE)
+          RETURNING *
+        ;`;
+        const insertQueryParams=[user_id, recipe_id];
+        const insertResult = await db.query(insertQueryString, insertQueryParams);
+        console.log("Insert user_recipe data: ", insertResult.rows[0]);
+        
+        // Fetch the data again after inserting the new record
+        const updatedData = await db.query(queryString, queryParams);
+        console.log("Updated user_recipe data: ", updatedData.rows[0]);
+        return updatedData.rows[0];
+    };
+  } catch (error) {
+    console.log("Error from getUserRecipeData: ", error.message);
+    throw error;
+  }
+}
+
 module.exports = {
   getRecipes,
   getRecipeById,
   getReviewsByRecipeId,
   addRecipe,
   getRecipesBySearchQuery,
-  addReview
+  addReview,
+  toggleHasTried,
+  updateCounter,
+  getUserRecipeData
 };

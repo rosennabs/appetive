@@ -1,6 +1,6 @@
 import { useEffect, useState, useReducer } from "react";
 import axios from "axios";
-import apiKey from "../config";
+import { apiKey, host } from "../config";
 
 // Define action types as constants
 const SET_RECIPES = "SET_RECIPES";
@@ -34,79 +34,64 @@ const useAppData = () => {
 
   const fetchRecipeInfo = async (recipeId) => {
     try {
-      const response = await axios.get(
-        `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}&instructionsRequired=true&includeNutrition=true&includeInstructions=true`
-      );
-    
-      const recipeInfo = response.data;
+      let response;
 
-      // Extract only necessary information from each recipe
-      const extractedRecipeInfo = {
-        id: recipeInfo.id,
-        title: recipeInfo.title,
-        image: recipeInfo.image,
-        cuisines: recipeInfo.cuisines,
-        diets: recipeInfo.diets,
-        type: recipeInfo.dishTypes,
-        servings: recipeInfo.servings,
-        readyInMinutes: recipeInfo.readyInMinutes,
-        ingredients: recipeInfo.extendedIngredients,
-        nutrients: recipeInfo.nutrition.nutrients,
-        instructions: recipeInfo.instructions,
-        sourceName: recipeInfo.sourceName,
-        reviews: "",
-        comments: "",
+      const options = {
+        method: "GET",
+        url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${recipeId}/information`,
+        params: {
+          includeNutrition: "true",
+        },
+        headers: {
+          "X-RapidAPI-Key": apiKey,
+          "X-RapidAPI-Host": host,
+        },
       };
+
+      // Make the API request
+      if (recipeId >= 5) {
+        response = await axios.request(options);
+      } else {
+        response = await axios.get(
+          `http://localhost:8080/api/recipes/${recipeId}`
+        );
+      }
+
+      const recipe = response.data;
+      // Extract only necessary information from each recipe
+
+      const extractedRecipeInfo = {
+        id: recipe.id,
+        title: recipe.title,
+        image: recipe.image,
+        cuisines: recipe.cuisines,
+        diets: recipe.diets,
+        type: recipe.dishTypes,
+        servings: recipe.servings,
+        readyInMinutes: recipe.readyInMinutes,
+        ingredients: recipe.extendedIngredients,
+        nutrients: recipe.nutrition.nutrients,
+        instructions: recipe.instructions,
+        sourceName: recipe.sourceName,
+        sourceUrl: recipe.sourceUrl,
+        counter_attempt: recipe.counter_attempt
+      };
+      // console.log("Extracted Recipe Info: ", extractedRecipeInfo);
       return extractedRecipeInfo;
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Error fetching recipe information: ", error);
     }
-  }
-                  
+  };
 
   //Fetch all recipes from api on initial render
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await axios.get(
-          `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=4`
-        );
+        // Fetch recipes from backend route
+        const response = await axios.get("http://localhost:8080/api/recipes");
+        const allRecipes = response.data;
 
-        // Create an array of promises for fetching recipe information
-
-        const recipeInfoPromises = response.data.results.map(async (recipe) =>
-          fetchRecipeInfo(recipe.id)
-        );
-
-        //Wait for all recipe information promises to resolve
-        const recipes = await Promise.all(recipeInfoPromises);
-
-        setRecipes(recipes);
-
-        //Fetch all user's stored recipes from the database
-        const fetchDatabaseRecipes = async () => {
-          try {
-            const response = await axios.get(
-              "http://localhost:8080/api/recipes"
-            );
-
-            const databaseRecipes = response.data;
-            //console.log("Database recipes: ", databaseRecipes);
-
-            // Set the fetched recipes with information in state
-            // setRecipes((prev) => {
-            //   return [...prev, databaseRecipes];
-            // });
-          } catch (error) {
-            console.error("Error fetching recipes from database: ", error);
-          }
-        };
-        
-        // Await fetching of database recipes before setting state
-        await fetchDatabaseRecipes();
-
-        // console.log("This is all recipe info: ", recipes);
+        setRecipes(allRecipes);
       } catch (error) {
         console.error("Error fetching recipes: ", error);
       }
@@ -114,62 +99,48 @@ const useAppData = () => {
     fetchRecipes();
   }, []);
 
+  // Function to handle search form submission
+  const [searchClicked, setSearchClicked] = useState(false);
 
-  // Function to handle search form submission and make API call
   const handleSearchSubmission = async (values) => {
-
-    // Store selected options for each category. Convert minCalories and maxCalories to arrays with a single element
+    // Store user's selected options
+    setSearchClicked(true);
 
     const selectedOptions = {
       cuisine: values.cuisine,
       type: values.type,
-      diet: values.diet.join("|"),
+      diet: values.diet.join(","),
       intolerances: values.intolerances.join(","),
-      minCalories: values.minCalories !== "" ? [values.minCalories] : [],
-      maxCalories: values.maxCalories !== "" ? [values.maxCalories] : [],
+      minCalories: values.minCalories,
+      maxCalories: values.maxCalories,
     };
 
-    // Remove categories with no selected options from the selectedOptions object
-    Object.keys(selectedOptions).forEach((key) => {
-      if (selectedOptions[key].length === 0) {
-        delete selectedOptions[key];
-      }
-    });
+    // Remove keys with empty values
+    const filteredOptions = Object.fromEntries(
+      Object.entries(selectedOptions).filter(([key, value]) => value !== "")
+    );
 
-    
-      const url =
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&number=4` +
-       
-        // Construct the API call URL dynamically based on selected options
-        Object.entries(selectedOptions)
-          .map(([key, value]) => {
-            // Check if the value contains a space
-            const encodedValue = value.includes(" ")
-              ? encodeURIComponent(value)
-              : value;
-            return `&${key}=${encodedValue}`;
-          })
-          .join("");
-    
-      try {
-        const response = await axios.get(url);
+    try {
+      // Fetch search results from backend route
+      const dbResponse = await axios.post(
+        "http://localhost:8080/api/recipes/search",
+        null,
+        { params: filteredOptions }
+      );
 
-        const filteredRecipes = await Promise.all(
-          response.data.results.map((recipe) => fetchRecipeInfo(recipe.id))
-        );
-
-        // console.log("Filtered Results: ", filteredRecipes);
-        setRecipes(filteredRecipes);
-
-      } catch (error) {
-        console.error("Error fetching filtered recipes: ", error);
-      }
+      const searchResponse = dbResponse.data;
+      console.log("ALL SEARCH RESPONSE", searchResponse);
+      setRecipes(searchResponse);
+    } catch (error) {
+      console.error("Error fetching filtered recipes: ", error);
+    }
   };
   return {
     state,
     handleSearchSubmission,
     fetchRecipeInfo,
-    setRecipes
+    setRecipes,
+    searchClicked,
   };
 };
 
