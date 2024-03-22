@@ -7,7 +7,7 @@ export default function FavButton (props) {
   const userToken = localStorage.token;
   const recipe_id = props.recipe_id;
 
-  useEffect(async () => {
+  useEffect(() => {
     const getFavStatus = async (token, recipe_id) => {
       try {
         const response = await axios.post(`http://localhost:8080/api/user/recipe/${recipe_id}`, {
@@ -21,6 +21,7 @@ export default function FavButton (props) {
         console.error("Error getting fav status:", error);
       }
     }
+    getFavStatus(userToken, recipe_id);
   }, []);
 
   const handleFavClick = async (token, recipe_id) => {
