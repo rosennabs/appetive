@@ -163,8 +163,8 @@ const RecipeDetails = function ({ recipe, setSelected }) {
             </div>
           </div>
           <div className="bg-white p-8 w-5/6 border border-black">
-            <CounterAttempt recipeId={recipe.id}/>
-
+            <CounterAttempt recipeId={recipe.id} counter_attempt={recipe.counter_attempt}/>
+            
             <div className="flex flex-row justify-between">
               <section className="flex border border-black h-10 px-10 items-center">
                 <p className="flex items-center">
