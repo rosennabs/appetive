@@ -15,7 +15,7 @@ export default function FavButton (props) {
           recipe_id
         });
         const favCheck = response.data;
-        
+
         setIsFav(favCheck);
       } catch (error) {
         console.error("Error getting fav status:", error);
@@ -36,25 +36,23 @@ export default function FavButton (props) {
     }
   };
 
-  // useEffect to check if fav on load/on click
-  // function to send if fav on click
-  // state for fav state
   return (
     <div>
-      <section className="flex border border-black h-10 px-8 justify-center bg-yellow w-[200px]" onClick={() => {handleFavClick(userToken, recipe_id)}}>
+    {!isFav ? (
+      <section className="flex border border-black h-10 px-8 justify-center w-[210px]" onClick={() => {handleFavClick(userToken, recipe_id)}}>
+        <p className="flex items-center">
+          <FaHeart />
+          <button className="ml-2">Add to Favourite</button>
+        </p>
+      </section>
+    ) : (
+      <section className="flex border border-black h-10 px-8 justify-center bg-yellow w-[210px]" onClick={() => {handleFavClick(userToken, recipe_id)}}>
         <p className="flex items-center">
           <FaHeart />
           <button className="ml-2">Favourite</button>
         </p>
       </section>
-    {/* {!isFav && ( */}
-      {/* <section className="flex border border-black h-10 px-8 justify-center w-[200px]">
-      <p className="flex items-center">
-        <FaHeart />
-        <button className="ml-2">Add to Favourite</button>
-      </p>
-    </section> */}
-    {/* )} */}
+    )}
     </div>
   )
 };
