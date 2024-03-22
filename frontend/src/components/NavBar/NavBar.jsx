@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SearchBar from "../SearchBar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
@@ -18,9 +18,27 @@ import { FaCaretDown, FaSearch, FaHome } from "react-icons/fa";
 import RecipeForm from "../RecipeForm";
 import useAuthentication from "../../hooks/useAuthentication";
 import AuthenticationError from "../AuthenticationError";
+import axios from "axios";
 
 function NavBar({ toggleSearchBar, showSearchBar }) {
   const { isAuthenticated, setAuth, handleLogout } = useAuthentication();
+  const [username, setUsername] = useState("");
+  const token = localStorage.token;
+
+  useEffect(() => {
+    const getUsername = async (token) => {
+      try {
+        const response = await axios.post(`http://localhost:8080/api/user/`, {
+          token,
+        });
+        console.log(response);
+        setUsername(response.data);
+      } catch (error) {
+        console.error("Error fetching username:", error);
+      }
+    };
+    getUsername(token);
+  }, []);
 
   return (
     <>
@@ -56,7 +74,7 @@ function NavBar({ toggleSearchBar, showSearchBar }) {
             </>
           ) : (
             <>
-              <p>Logged In</p>
+              <p>Welcome {username}!</p>
               <NavBtnLink to="/logout" onClick={(e) => handleLogout(e)}>
                 LOGOUT
               </NavBtnLink>
@@ -78,7 +96,7 @@ function NavBar({ toggleSearchBar, showSearchBar }) {
       <div>{showSearchBar && <SearchBar />}</div>
 
       <Routes>
-        <Route path="/my-profile" element={<Profile />} />
+        <Route path="/my-profile" element={<Profile username={username} />} />
         <Route path="/login" element={<Login setAuth={setAuth} />} />
         <Route path="/register" element={<Register setAuth={setAuth} />} />
         <Route path="/about" element={<About />} />
