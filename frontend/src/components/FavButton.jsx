@@ -40,14 +40,14 @@ export default function FavButton (props) {
   return (
     <div>
     {!isFav ? (
-      <section className="flex border border-black h-10 px-8 justify-center w-[210px]" onClick={() => {handleFavClick(userToken, recipe_id)}}>
+      <section className="flex border border-black h-10 px-8 justify-center w-[220px]" onClick={() => {handleFavClick(userToken, recipe_id)}}>
         <p className="flex items-center">
           <FaHeart />
           <button className="ml-2">Add to Favourites</button>
         </p>
       </section>
     ) : (
-      <section className="flex border border-black h-10 px-8 justify-center bg-yellow w-[210px]" onClick={() => {handleFavClick(userToken, recipe_id)}}>
+      <section className="flex border border-black h-10 px-8 justify-center bg-yellow w-[220px]" onClick={() => {handleFavClick(userToken, recipe_id)}}>
         <p className="flex items-center">
           <FaHeart />
           <button className="ml-2">Favourite</button>
