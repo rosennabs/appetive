@@ -43,7 +43,7 @@ export default function FavButton (props) {
       <section className="flex border border-black h-10 px-8 justify-center w-[210px]" onClick={() => {handleFavClick(userToken, recipe_id)}}>
         <p className="flex items-center">
           <FaHeart />
-          <button className="ml-2">Add to Favourite</button>
+          <button className="ml-2">Add to Favourites</button>
         </p>
       </section>
     ) : (
