@@ -7,6 +7,22 @@ export default function FavButton (props) {
   const userToken = localStorage.token;
   const recipe_id = props.recipe_id;
 
+  useEffect(() => {
+    const getFavOnLoad = async (token, recipe_id) => {
+      try {
+        const response = await axios.post(`http://localhost:8080/api/user/recipe/${recipe_id}/fav`, {
+          token,
+          recipe_id
+        });
+        
+        setIsFav(response.data);
+      } catch (error) {
+        console.error("Error fetching favs:", error);
+      }
+    };
+    getFavOnLoad(userToken, recipe_id);
+  }, []);
+
   const handleFavClick = async (token, recipe_id) => {
     try {
       const response = await axios.post(`http://localhost:8080/api/user/recipe/${recipe_id}/fav`, {
