@@ -20,13 +20,7 @@ import useAuthentication from "../../hooks/useAuthentication";
 import AuthenticationError from "../AuthenticationError";
 
 function NavBar({ toggleSearchBar, showSearchBar }) {
-  const { isAuthenticated, setAuth } = useAuthentication();
-
-  const handleLogout = (e) => {
-    e.preventDefault();
-    localStorage.clear();
-    setAuth(false);
-  };
+  const { isAuthenticated, setAuth, handleLogout } = useAuthentication();
 
   return (
     <>

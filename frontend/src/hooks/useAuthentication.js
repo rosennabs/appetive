@@ -37,9 +37,17 @@ const useAuthentication = () => {
     checkAuthentication();
   });
 
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.clear();
+    setAuth(false);
+  };
+
+
   return {
     isAuthenticated,
     setAuth,
+    handleLogout,
   };
 };
 
