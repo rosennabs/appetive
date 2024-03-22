@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import SearchBar from "../SearchBar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
@@ -17,6 +17,7 @@ import Profile from "./pages/Profile";
 import { FaCaretDown, FaSearch, FaHome } from "react-icons/fa";
 import RecipeForm from "../RecipeForm";
 import useAuthentication from "../../hooks/useAuthentication";
+import AuthenticationError from "../AuthenticationError";
 
 function NavBar({ toggleSearchBar, showSearchBar }) {
   const { isAuthenticated, setAuth } = useAuthentication();
@@ -80,7 +81,6 @@ function NavBar({ toggleSearchBar, showSearchBar }) {
       </div>
 
       {/* Search bar */}
-
       <div>{showSearchBar && <SearchBar />}</div>
 
       <Routes>
@@ -88,7 +88,16 @@ function NavBar({ toggleSearchBar, showSearchBar }) {
         <Route path="/login" element={<Login setAuth={setAuth} />} />
         <Route path="/register" element={<Register setAuth={setAuth} />} />
         <Route path="/about" element={<About />} />
-        <Route path="/add-recipe" element={<RecipeForm />} />
+        <Route
+          path="/add-recipe"
+          element={
+            isAuthenticated ? (
+              <RecipeForm setAuth={setAuth} />
+            ) : (
+              <AuthenticationError />
+            )
+          }
+        />
       </Routes>
     </>
   );
