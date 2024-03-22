@@ -2,7 +2,6 @@ import React from "react";
 import {
   FaShareSquare,
   FaPrint,
-  FaHeart,
   FaStar,
   FaRegWindowClose,
 } from "react-icons/fa";
