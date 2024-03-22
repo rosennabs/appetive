@@ -42,6 +42,8 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                 {recipe.title}
               </h2>
 
+
+
               <div className="flex flex-row">
                 {recipe.nutrients.map((nutrient) => {
                   return (
@@ -259,18 +261,22 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                   </tbody>
                 </table>
               </div>
-
-              <div className="bg-gray-100 w-full">
-                <p className="text-3xl font-extrabold mt-12 mb-4">
-                  Leave A Reply
-                </p>
-                <p className="text-xl mb-8">
-                  Made this recipe? Please leave a review
-                </p>
-                <ReviewForm />
-
-              </div>
             </section>
+          </div>
+
+          <div className="self-start w-4/5 ml-40 my-32 border border-yellow rounded-md px-5 py-5 flex gap-144">
+            <div className="w-1/3">
+              <p className="text-3xl font-extrabold mt-12 mb-4">
+                Leave A Review
+              </p>
+              <p className="text-xl mb-8">
+                Made this recipe? Please leave a review
+              </p>
+              <ReviewForm />
+            </div>
+            <div>
+              <h2 className="text-3xl font-extrabold mt-12 mb-4">Reviews</h2>
+            </div>
           </div>
         </div>
       )}
