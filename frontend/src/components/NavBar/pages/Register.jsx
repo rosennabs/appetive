@@ -118,7 +118,7 @@ function Register({ setAuth }) {
 
           <p className="mt-3 text-sm text-gray-500">
             Already have an account?
-            <Link to="/register" className="text-brown-light font-bold underline ml-1">
+            <Link to="/login" className="text-brown-light font-bold underline ml-1">
               Log in
             </Link>
           </p>
