@@ -11,6 +11,7 @@ import { ImSpoonKnife, ImClock } from "react-icons/im";
 import { GiCook, GiCookingPot } from "react-icons/gi";
 import ReviewForm from "./ReviewForm";
 import CounterAttempt from "./CounterAttempt";
+import FavButton from "./FavButton";
 
 
 const renderInstructions = (instructions) => {
@@ -180,12 +181,7 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                   <button className="ml-2">Print Recipe</button>
                 </p>
               </section>
-              <section className="flex border border-black h-10 px-8 items-center">
-                <p className="flex items-center">
-                  <FaHeart />
-                  <button className="ml-2">Add to Favourite</button>
-                </p>
-              </section>
+              <FavButton recipe_id={recipe.id} />
               <section className="flex border border-black h-10 px-8 items-center">
                 <p className="flex items-center">
                   <FaStar />
