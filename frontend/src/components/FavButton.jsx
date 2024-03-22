@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import axios from "axios";
+import useAuthentication from "../hooks/useAuthentication";
 
 export default function FavButton (props) {
+  const { isAuthenticated } = useAuthentication();
+
   const [ isFav, setIsFav ] = useState(false);
   const userToken = localStorage.token;
   const recipe_id = props.recipe_id;
@@ -39,14 +42,23 @@ export default function FavButton (props) {
 
   return (
     <div>
-    {!isFav ? (
+    {!isAuthenticated && (
+      <section className="flex border border-black h-10 px-8 justify-center w-[220px] opacity-50 pointer-events-none">
+        <p className="flex items-center">
+          <FaHeart />
+          <button className="ml-2">Add to Favourites</button>
+        </p>
+      </section>
+    )}
+    {isAuthenticated && !isFav && (
       <section className="flex border border-black h-10 px-8 justify-center w-[220px]" onClick={() => {handleFavClick(userToken, recipe_id)}}>
         <p className="flex items-center">
           <FaHeart />
           <button className="ml-2">Add to Favourites</button>
         </p>
       </section>
-    ) : (
+    )}
+    {isAuthenticated && isFav && (
       <section className="flex border border-black h-10 px-8 justify-center bg-yellow w-[220px]" onClick={() => {handleFavClick(userToken, recipe_id)}}>
         <p className="flex items-center">
           <FaHeart />
