@@ -10,7 +10,7 @@ function Profile( {username} ) {
     <div>
       {isAuthenticated ? (
         <div>
-          <h1 className="text-4xl pt-10 font-bold mx-auto text-center">
+          <h1 className="text-4xl pt-10 font-bold mx-auto mb-5 text-center">
             {username}'s Favourite Recipes
           </h1>
           <FavList />
