@@ -189,7 +189,7 @@ const RecipeDetails = function ({
                   <FaShareSquare />
                   <button
                     className="ml-2"
-                    onClick={() => generateShareLink(recipe.title)}
+                    onClick={() => generateShareLink(recipe.id)}
                   >
                     Share Recipe
                   </button>

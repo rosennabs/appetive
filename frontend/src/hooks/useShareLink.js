@@ -4,8 +4,8 @@ export default function useShareLink() {
   const [shareLink, setShareLink] = useState("");
   const [copySuccess, setCopySuccess] = useState(false); // State to track whether link has been copied successfully
 
-  async function generateShareLink(recipeName) {
-    const shareableLink = `https://appetive.ca/recipes/${recipeName}`;
+  async function generateShareLink(recipeId) {
+    const shareableLink = `http://localhost:8080/api/recipes/${recipeId}`;
     setShareLink(shareableLink);
     
 
