@@ -6,7 +6,7 @@ import React, { Fragment } from "react";
 import { useSelectedRecipe } from "./hooks/useSelectedRecipe";
 import { useSearchBar } from "./hooks/useSearchBar";
 import useShareLink from "./hooks/useShareLink";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Footer from "./components/Footer";
 
 function App() {

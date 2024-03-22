@@ -106,7 +106,7 @@ const useAppData = () => {
     setSearchClicked(true);
 
     const selectedOptions = {
-      title: values.title,
+      query: values.title,
       cuisine: values.cuisine,
       type: values.type,
       diet: values.diet ? values.diet.join(",") : "", // Check if values.diet is defined
@@ -119,6 +119,7 @@ const useAppData = () => {
     const filteredOptions = Object.fromEntries(
       Object.entries(selectedOptions).filter(([key, value]) => value !== "")
     );
+    console.log("Filter: ", filteredOptions);
 
     try {
       // Fetch search results from backend route

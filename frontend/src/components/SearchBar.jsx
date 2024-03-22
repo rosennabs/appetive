@@ -1,18 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Formik, Form } from 'formik';
 import { AppDataContext } from '../contexts/AppDataContext';
 import { FaSearch } from "react-icons/fa";
 
 export default function SearchBar() {
 
-  //Access recipes from state
-  const { state, fetchRecipeInfo, setRecipes, handleSearchSubmission } = useContext(AppDataContext);
-  const { recipes } = state;
+  
+  const { handleSearchSubmission } = useContext(AppDataContext);
    
-    
-    //window.location.reload();
-    
-
 
   return (
     <Formik
