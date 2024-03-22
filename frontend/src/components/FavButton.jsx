@@ -22,7 +22,7 @@ export default function FavButton (props) {
       }
     }
     getFavStatus(userToken, recipe_id);
-  }, []);
+  }, [isFav]);
 
   const handleFavClick = async (token, recipe_id) => {
     try {
