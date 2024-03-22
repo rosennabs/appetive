@@ -41,6 +41,10 @@ export const Bars = styled(FaBars)`
         transform: translate(-100%, 75%);
         font-size: 1.8rem;
         cursor: pointer;
+        z-index: 13;
+    }
+    &:hover {
+        color: #F5F5EF;
     }
 `;
 
