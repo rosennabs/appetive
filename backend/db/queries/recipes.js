@@ -56,6 +56,9 @@ const getRecipeById = async function (recipe_id) {
     //add recipe id into recipe object
     recipe_obj["id"] = recipe.rows[0].id;
 
+    //add recipe counter_attempt into recipe object
+    recipe_obj["counter_attempt"] = recipe.rows[0].counter_attempt;
+
     //add title into recipe object
     recipe_obj["title"] = recipe.rows[0].title;
 
@@ -485,7 +488,11 @@ const getUserRecipeData = async function(user_id, recipe_id) {
         const insertQueryParams=[user_id, recipe_id];
         const insertResult = await db.query(insertQueryString, insertQueryParams);
         console.log("Insert user_recipe data: ", insertResult.rows[0]);
-        return insertResult.rows[0];
+        
+        // Fetch the data again after inserting the new record
+        const updatedData = await db.query(queryString, queryParams);
+        console.log("Updated user_recipe data: ", updatedData.rows[0]);
+        return updatedData.rows[0];
     };
   } catch (error) {
     console.log("Error from getUserRecipeData: ", error.message);
