@@ -1,7 +1,9 @@
 import React from "react";
-import FavList from "../FavList";
+import { Link, Route, Routes } from "react-router-dom";
 import AuthenticationError from "../../AuthenticationError";
 import useAuthentication from "../../../hooks/useAuthentication";
+import UserFavs from "./UserFavs";
+import UserRecipes from "./UserRecipes";
 
 function Profile( {username} ) {
   const { isAuthenticated } = useAuthentication();
@@ -11,13 +13,19 @@ function Profile( {username} ) {
       {isAuthenticated ? (
         <div>
           <h1 className="text-4xl pt-10 font-bold mx-auto mb-5 text-center">
-            {username}'s Favourite Recipes
+            {username}'s Recipes
           </h1>
-          <FavList />
+          <Link to="/my-favs">Favourites List</Link>
+          <Link to="/my-recipes">Added By You</Link>
         </div>
       ) : (
         <AuthenticationError />
       )}
+
+      <Routes>
+        <Route path="/my-favs" element={<UserFavs />} />
+        <Route path="/my-recipes" element={<UserRecipes />} />
+      </Routes>
     </div>
   );
 }
