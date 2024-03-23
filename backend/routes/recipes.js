@@ -1,5 +1,5 @@
 require("dotenv").config();
-const authorization = require("../middleware/authorization")
+const authorization = require("../middleware/authorization");
 const router = require("express").Router();
 const db = require("../db/connection");
 const {
@@ -11,7 +11,7 @@ const {
   addReview,
   toggleHasTried,
   updateCounter,
-  getUserRecipeData
+  getUserRecipeData,
 } = require("../db/queries/recipes");
 
 const jwtDecoder = require("../utils/jwtDecoder");
@@ -98,11 +98,10 @@ router.get("/:id/reviews", async (req, res) => {
   }
 });
 
-router.post("/:id/reviews", async (req, res) => {
+router.post("/:id/reviews", authorization, async (req, res) => {
   const recipeId = req.params.id;
   const newReview = req.body;
-  const { user } = await jwtDecoder(newReview.user_id);
-  newReview.user_id = user;
+  newReview.user_id = req.user;
   try {
     const result = await addReview(
       recipeId,
@@ -195,14 +194,11 @@ router.post("/search", async (req, res) => {
 });
 
 // Get user_recipe data
-router.get("/userRecipeData/:recipe_id", async(req,res) => {
+router.get("/userRecipeData/:recipe_id", authorization, async (req, res) => {
   const { recipe_id } = req.params;
-  const token = req.headers['token'];
-  const { user } = await jwtDecoder(token);
-  user_id = user;
-
+  const user_id = req.user;
   try {
-    const userRecipeData = await getUserRecipeData(user_id, recipe_id)
+    const userRecipeData = await getUserRecipeData(user_id, recipe_id);
     return res.status(200).send(userRecipeData);
   } catch (error) {
     console.error(error.message);
@@ -210,16 +206,13 @@ router.get("/userRecipeData/:recipe_id", async(req,res) => {
   }
 });
 
-//Toggle has_tried button & update counter_attempt 
-router.post("/:id", async (req,res) => {
+//Toggle has_tried button & update counter_attempt
+router.post("/:id", authorization, async (req, res) => {
   const recipeId = req.params.id;
-  const token = req.headers['token'];
-  const { user } = await jwtDecoder(token);
-  user_id = user;
-
+  const user_id = req.user;
   try {
-    const toggleTrigger = await toggleHasTried(user_id, recipeId)
-    const counterTrigger = await updateCounter(user_id,recipeId)
+    const toggleTrigger = await toggleHasTried(user_id, recipeId);
+    const counterTrigger = await updateCounter(user_id, recipeId);
     const result = { toggleTrigger, counterTrigger };
     console.log("Data from has_tried toggle: ", result);
     res.status(200).send(result);
@@ -227,6 +220,6 @@ router.post("/:id", async (req,res) => {
     console.error(error.message);
     res.status(500).send("Server error from has_tried button");
   }
-})
+});
 
 module.exports = router;
