@@ -14,6 +14,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
 import Profile from "./pages/Profile";
+import UserFavs from "./pages/UserFavs";
+import UserRecipes from "./pages/UserRecipes";
 import { FaCaretDown, FaSearch, FaHome } from "react-icons/fa";
 import RecipeForm from "../RecipeForm";
 import useAuthentication from "../../hooks/useAuthentication";
@@ -115,6 +117,8 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
             )
           }
         />
+        <Route path="/my-favs" element={<UserFavs username={username} />} />
+        <Route path="/my-recipes" element={<UserRecipes username={username} />} />
       </Routes>
     </>
   );
