@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
 function Login({ setAuth }) {
@@ -39,15 +39,19 @@ function Login({ setAuth }) {
 
   return (
     <Fragment>
-      <h1 className="text-4xl pt-10 font-bold mx-auto text-center">Log into Your Account</h1>
-      <h1 className="text-yellow text-xl pt-3 pb-10 mx-auto text-center">Welcome back to Appetive!</h1>
+      <h1 className="text-4xl pt-10 font-bold mx-auto text-center">
+        Log into Your Account
+      </h1>
+      <h1 className="text-yellow text-xl pt-3 pb-10 mx-auto text-center">
+        Welcome back to Appetive!
+      </h1>
       <form
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto max-w-lg justify-self-center"
         onSubmit={handleOnSubmitForm}
       >
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block text-gray-700 font-bold mb-2"
             htmlFor="email"
           >
             Email Address
@@ -65,7 +69,7 @@ function Login({ setAuth }) {
 
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block text-gray-700 font-bold mb-2"
             htmlFor="password"
           >
             Password
@@ -83,11 +87,18 @@ function Login({ setAuth }) {
 
         <div className="pt-3">
           <button
-            className="bg-yellow rounded-xl py-2 px-6"
+            className="bg-yellow rounded-xl py-2 px-6 hover:bg-brown-light hover:text-darker-white"
             type="submit"
           >
-            Login
+            LOGIN
           </button>
+
+          <p className="mt-3 text-sm text-gray-500">
+            Don't have an account yet?
+            <Link to="/register" className="text-brown-light font-bold underline ml-1">
+              Sign up now
+            </Link>
+          </p>
         </div>
       </form>
     </Fragment>

@@ -20,6 +20,7 @@ CREATE TABLE
     carbs VARCHAR(255),
     number_of_servings INTEGER,
     calories INTEGER,
+    counter_attempt INTEGER,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL
   );

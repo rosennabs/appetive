@@ -1,6 +1,6 @@
 const db = require("../connection");
 
-// lookup cuisine and return ID
+// lookup cuisine and return ID 
 const getCuisineByName = async function (cuisineName) {
   try {
     const queryString = `SELECT id FROM cuisines WHERE name LIKE $1;`;
@@ -145,7 +145,7 @@ const getCuisineNameById = async function (id) {
 
     return cuisine_name.rows[0].name;
   } catch (error) {
-    console.error("Error in getUsernameById:", error.message);
+    console.error("Error in getCuisineNameById:", error.message);
     throw error;
   }
 };

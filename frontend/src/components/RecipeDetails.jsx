@@ -2,7 +2,6 @@ import React from "react";
 import {
   FaShareSquare,
   FaPrint,
-  FaHeart,
   FaStar,
   FaRegWindowClose,
 } from "react-icons/fa";
@@ -11,6 +10,9 @@ import { ImSpoonKnife, ImClock } from "react-icons/im";
 import { GiCook, GiCookingPot } from "react-icons/gi";
 import ReviewForm from "./ReviewForm";
 import { useEffect } from "react";
+import CounterAttempt from "./CounterAttempt";
+import FavButton from "./FavButton";
+
 
 const renderInstructions = (instructions) => {
   const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions|\d+\.|^\s+|\s+$)/g;
@@ -56,6 +58,8 @@ const RecipeDetails = function ({
               <h2 className="text-4xl font-extrabold mb-10 mt-4">
                 {recipe.title}
               </h2>
+
+
 
               <div className="flex flex-row">
                 {recipe.nutrients.map((nutrient) => {
@@ -182,6 +186,8 @@ const RecipeDetails = function ({
             {copySuccess && (
               <span className="text-amber-700">Link copied to clipboard!</span>
             )}
+            <CounterAttempt recipeId={recipe.id} counter_attempt={recipe.counter_attempt}/>
+            
             <div className="flex flex-row justify-between">
               <section className="flex border border-black h-10 px-10 items-center">
                 <div className="flex items-center">
@@ -201,12 +207,7 @@ const RecipeDetails = function ({
                   <button className="ml-2" onClick={() => printRecipe()}>Print Recipe</button>
                 </p>
               </section>
-              <section className="flex border border-black h-10 px-8 items-center">
-                <p className="flex items-center">
-                  <FaHeart />
-                  <button className="ml-2">Add to Favourite</button>
-                </p>
-              </section>
+              <FavButton recipe_id={recipe.id} />
               <section className="flex border border-black h-10 px-8 items-center">
                 <p className="flex items-center">
                   <FaStar />
@@ -288,17 +289,22 @@ const RecipeDetails = function ({
                   </tbody>
                 </table>
               </div>
-
-              <div className="bg-gray-100 w-full">
-                <p className="text-3xl font-extrabold mt-12 mb-4">
-                  Leave A Reply
-                </p>
-                <p className="text-xl mb-8">
-                  Made this recipe? Please leave a review
-                </p>
-                <ReviewForm />
-              </div>
             </section>
+          </div>
+
+          <div className="self-start w-4/5 ml-40 my-32 border border-yellow rounded-md px-5 py-5 flex gap-144">
+            <div className="w-1/3">
+              <p className="text-3xl font-extrabold mt-12 mb-4">
+                Leave A Review
+              </p>
+              <p className="text-xl mb-8">
+                Made this recipe? Please leave a review
+              </p>
+              <ReviewForm />
+            </div>
+            <div>
+              <h2 className="text-3xl font-extrabold mt-12 mb-4">Reviews</h2>
+            </div>
           </div>
         </div>
       )}

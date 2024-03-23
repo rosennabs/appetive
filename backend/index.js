@@ -23,6 +23,9 @@ app.use("/auth", require("./routes/jwtAuth"));
 //Recipes routes
 app.use("/api/recipes", require("./routes/recipes"));
 
+// User data routes
+app.use("/api/user", require("./routes/user"));
+
 app.listen(8080, () => {
   console.log("Server has started on port 8080");
 });
