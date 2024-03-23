@@ -33,6 +33,21 @@ router.post("/fav", async (req, res) => {
   }
 });
 
+// Get fav status
+router.post("/recipe/:id", async (req, res) => {
+  try {
+    const { user } = await jwtDecoder(req.body.token);
+    const recipe_id = req.body.recipe_id;
+    const response = await checkIfFav(user, recipe_id);
+
+    res.status(200).json(response);
+
+  } catch (error) {
+    console.error("Error in api/user/recipe/:id/fav GET route:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 // UPDATE - POST - toggle fav
 router.post("/recipe/:id/fav", async (req, res) => {
   try {

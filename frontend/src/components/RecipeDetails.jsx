@@ -2,7 +2,6 @@ import React from "react";
 import {
   FaShareSquare,
   FaPrint,
-  FaHeart,
   FaStar,
   FaRegWindowClose,
 } from "react-icons/fa";
@@ -10,7 +9,9 @@ import { FaPlateWheat } from "react-icons/fa6";
 import { ImSpoonKnife, ImClock } from "react-icons/im";
 import { GiCook, GiCookingPot } from "react-icons/gi";
 import ReviewForm from "./ReviewForm";
+import { useEffect } from "react";
 import CounterAttempt from "./CounterAttempt";
+import FavButton from "./FavButton";
 
 
 const renderInstructions = (instructions) => {
@@ -29,8 +30,24 @@ const renderInstructions = (instructions) => {
   ));
 };
 
-const RecipeDetails = function ({ recipe, setSelected }) {
-  console.log("Recipe:", recipe);
+const RecipeDetails = function ({
+  recipe,
+  setSelected,
+  generateShareLink,
+  copySuccess,
+  setCopySuccess
+}) {
+ 
+  // Reset the link copied to clipboard message when component unmounts
+  useEffect(() => {
+    return () => {
+      setCopySuccess(false);
+    };
+  }, []);
+
+  const printRecipe = () => {
+    window.print();
+  };
 
   return (
     <>
@@ -117,7 +134,8 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                     <GiCookingPot />
                     <span className="pl-2 pr-2">Diet(s) :</span>
                     <span className="text-lg flex-wrap">
-                      {recipe.diets.join(", ")}
+                      {recipe.diets.slice(0, 5).join(", ")}
+                      {recipe.diets.length > 5 && ", ..."}
                     </span>
                   </section>
                 )}
@@ -165,27 +183,31 @@ const RecipeDetails = function ({ recipe, setSelected }) {
             </div>
           </div>
           <div className="bg-white p-8 w-5/6 border border-black">
+            {copySuccess && (
+              <span className="text-amber-700">Link copied to clipboard!</span>
+            )}
             <CounterAttempt recipeId={recipe.id} counter_attempt={recipe.counter_attempt}/>
             
             <div className="flex flex-row justify-between">
               <section className="flex border border-black h-10 px-10 items-center">
-                <p className="flex items-center">
+                <div className="flex items-center">
                   <FaShareSquare />
-                  <button className="ml-2">Share Recipe</button>
-                </p>
+                  <button
+                    className="ml-2"
+                    onClick={() => generateShareLink(recipe.id)}
+                  >
+                    Share Recipe
+                  </button>
+                </div>
               </section>
+
               <section className="flex border border-black h-10 px-10 items-center">
                 <p className="flex items-center">
                   <FaPrint />
-                  <button className="ml-2">Print Recipe</button>
+                  <button className="ml-2" onClick={() => printRecipe()}>Print Recipe</button>
                 </p>
               </section>
-              <section className="flex border border-black h-10 px-8 items-center">
-                <p className="flex items-center">
-                  <FaHeart />
-                  <button className="ml-2">Add to Favourite</button>
-                </p>
-              </section>
+              <FavButton recipe_id={recipe.id} />
               <section className="flex border border-black h-10 px-8 items-center">
                 <p className="flex items-center">
                   <FaStar />
@@ -199,7 +221,11 @@ const RecipeDetails = function ({ recipe, setSelected }) {
 
               <div className="text-lg">
                 {recipe.ingredients.map((ingredient) => (
-                  <li key={ingredient.id}>{ingredient.original}</li>
+                  <li key={ingredient.id}>
+                    {ingredient.id.length > 1
+                      ? ingredient.original
+                      : `${ingredient.name}, ${ingredient.amount}${ingredient.unit}`}
+                  </li>
                 ))}
               </div>
 
@@ -233,26 +259,28 @@ const RecipeDetails = function ({ recipe, setSelected }) {
                 Nutritional Facts
               </p>
 
-              <div class="overflow-x-auto">
-                <table class="min-w-full border-collapse border border-gray-200">
-                  <thead class="bg-gray-100">
+              <div className="overflow-x-auto">
+                <table className="min-w-full border-collapse border border-gray-200">
+                  <thead className="bg-gray-100">
                     <tr>
-                      <th class="px-4 py-2 text-left">Nutrient</th>
-                      <th class="px-4 py-2 text-left">Amount per serving</th>
+                      <th className="px-4 py-2 text-left">Nutrient</th>
+                      <th className="px-4 py-2 text-left">
+                        Amount per serving
+                      </th>
                       {recipe.nutrients[0].percentOfDailyNeeds && (
-                        <th class="px-4 py-2 text-left">% Daily Value</th>
+                        <th className="px-4 py-2 text-left">% Daily Value</th>
                       )}
                     </tr>
                   </thead>
-                  <tbody class="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-gray-200">
                     {recipe.nutrients.map((nutrient) => (
                       <tr key={nutrient.name}>
-                        <td class="px-4 py-2">{nutrient.name}</td>
-                        <td class="px-4 py-2">
+                        <td className="px-4 py-2">{nutrient.name}</td>
+                        <td className="px-4 py-2">
                           {nutrient.amount} {nutrient.unit}
                         </td>
                         {nutrient.percentOfDailyNeeds && (
-                          <td class="px-4 py-2">
+                          <td className="px-4 py-2">
                             {nutrient.percentOfDailyNeeds.toFixed(2)}%
                           </td>
                         )}
@@ -286,105 +314,3 @@ const RecipeDetails = function ({ recipe, setSelected }) {
 
 export default RecipeDetails;
 
-// import axios from "axios";
-// import { useEffect, useState } from "react";
-// import { useParams } from "react-router";
-
-// const renderInstructions = (instructions) => {
-//   const regex = /(<ol>|<\/ol>|<li>|<\/li>|\\n|Instructions)/g;
-//   const filteredInstructions = instructions.replace(regex, "");
-//   console.log(filteredInstructions.split("."));
-//   return filteredInstructions
-//     .split(".")
-//     .map((instruction) => <li className="mb-3">{instruction}</li>);
-// };
-
-// const RecipeDetails = function () {
-//   const { id } = useParams();
-//   const [recipeDetails, setRecipeDetails] = useState(null);
-//   const [recipeReviews, setRecipeReviews] = useState([]);
-
-//   useEffect(() => {
-//     const fetchRecipeAndReviews = async function () {
-//       try {
-//         // Fetch recipe details
-//         const recipeResponse = await axios.get(
-//           `http://localhost:8080/api/recipes/${id}`
-//         );
-//         console.log(recipeResponse);
-//         const recipeData = recipeResponse.data;
-//         console.log(recipeData);
-
-//         // Check if response is ok
-//         if (recipeResponse.status === 200) {
-//           setRecipeDetails(recipeData);
-//         } else {
-//           console.error("Error fetching recipe:", recipeData);
-//         }
-
-//         // Fetch recipe reviews
-//         const reviewsResponse = await axios.get(
-//           `http://localhost:8080/api/recipes/${id}/reviews`
-//         );
-//         console.log(reviewsResponse);
-//         const reviewsData = reviewsResponse.data;
-//         console.log(reviewsData);
-
-//         // Check if response is ok
-//         if (reviewsResponse.status === 200) {
-//           setRecipeReviews(reviewsData);
-//         } else {
-//           console.error("Error fetching recipe reviews:", recipeData);
-//         }
-//       } catch (error) {
-//         console.error("Error", error.message);
-//       }
-//     };
-
-//     fetchRecipeAndReviews();
-//   }, [id]);
-
-//   return (
-//     <>
-//       {recipeDetails && (
-//         <div>
-//           <h2 className="text-4xl font-extrabold dark:text-white mb-10">
-//             {recipeDetails.title}
-//           </h2>
-//           <img className="mb-10" src={recipeDetails.image} alt="" />
-//           <div className="w-[800px] max-w-[800px]">
-//             <p className="text-2xl font-extrabold dark:text-white mb-5">
-//               Instructions:
-//             </p>
-//             <ol className="list-decimal">
-//               {renderInstructions(recipeDetails.instructions)}
-//             </ol>
-//           </div>
-//           <p className="mt-10 text-xl">
-//             No. of servings: {recipeDetails.number_of_servings}
-//           </p>
-//           <p className="mt-3 text-xl">
-//             Preparation time: {recipeDetails.prep_time} minutes
-//           </p>
-//           <p className="mt-3 text-xl">Proteins: {recipeDetails.proteins}</p>
-//           <p className="mt-3 text-xl">Carbs: {recipeDetails.carbs}</p>
-//           <p className="mt-3 text-xl">Fats: {recipeDetails.fats}</p>
-//         </div>
-//       )}
-
-//       <h3 className="text-3xl mt-20 font-extrabold">Reviews</h3>
-//       {recipeReviews.length !== 0 ? (
-//         recipeReviews.map((review) => (
-//           <div key={review.id} className="mb-5">
-//             <p>Rating: {review.rating}</p>
-//             <p>Comment: {review.review}</p>
-//           </div>
-//         ))
-//       ) : (
-//         <p>There are no reviews yet</p>
-//       )}
-//     </>
-//   );
-// };
-
-// export default RecipeDetails;
