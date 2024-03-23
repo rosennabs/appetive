@@ -30,9 +30,9 @@ function RecipeForm() {
         initialValues={{
           ingredients: [emptyIngredient],
           cuisine: "African",
-          diet: "",
+          diet: "NULL",
           meal_type: "main course",
-          intolerances: "",
+          intolerances: "NULL",
           user_id: localStorage.getItem("token"),
           title: "",
           image: "",
