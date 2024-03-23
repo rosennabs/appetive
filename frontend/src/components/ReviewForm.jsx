@@ -1,8 +1,8 @@
 import React from "react";
-import { Formik, Form, FieldArray, Field, ErrorMessage } from "formik";
+import { Formik, Form, FieldArray, Field} from "formik";
 import Rating from "react-rating";
 
-function ReviewForm({ onSubmit }) {
+function ReviewForm({ handleSubmitReviewForm }) {
   const user = localStorage.getItem("token");
   const initialValues = {
     user_id: user,
@@ -12,13 +12,9 @@ function ReviewForm({ onSubmit }) {
 
   return (
     <>
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      <Formik initialValues={initialValues} onSubmit={handleSubmitReviewForm}>
         {({ values, handleChange, setFieldValue }) => (
           <Form>
-            <div>
-              <Field name="user_id" type="hidden" value={values.user_id} />
-            </div>
-
             <div className="flex gap-4">
               <img
                 src="https://static.vecteezy.com/system/resources/previews/026/434/409/non_2x/default-avatar-profile-icon-social-media-user-photo-vector.jpg"
@@ -32,14 +28,9 @@ function ReviewForm({ onSubmit }) {
                   <Rating
                     initialRating={values.rating}
                     onChange={(value) => setFieldValue("rating", value)}
-                    emptySymbol={<span className="text-gray-400">&#9734;</span>}
-                    fullSymbol={<span className="text-yellow">&#9733;</span>}
+                    emptySymbol={<span className="text-gray-400 text-lg">&#9734;</span>}
+                    fullSymbol={<span className="text-yellow text-lg">&#9733;</span>}
                     className="text-3xl"
-                  />
-                  <ErrorMessage
-                    name="rating"
-                    component="div"
-                    className="error"
                   />
                 </div>
 
@@ -54,16 +45,11 @@ function ReviewForm({ onSubmit }) {
                     value={values.review}
                     onChange={handleChange}
                   />
-                  <ErrorMessage
-                    name="review"
-                    component="div"
-                    className="error"
-                  />
                 </div>
               </div>
             </div>
 
-            <div className="flex justify-end">
+            <div className="mx-80">
               <button
                 type="submit"
                 className="bg-yellow text-black font-bold py-1 px-5 rounded-full"
