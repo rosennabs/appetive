@@ -30,7 +30,7 @@ const ReviewList = ({ recipeId }) => {
     console.log("Values:", values);
     try {
       const res = await axios.post(
-        `http://localhost:8080/api/recipes/${recipeId}/reviews`,
+        `http://localhost:8080/api/reviews/${recipeId}`,
         values,
         {
           headers: { token: token },
@@ -48,7 +48,7 @@ const ReviewList = ({ recipeId }) => {
     const fetchReviews = async function () {
       try {
         const reviewsResponse = await axios.get(
-          `http://localhost:8080/api/recipes/${recipeId}/reviews`
+          `http://localhost:8080/api/reviews/${recipeId}`
         );
 
         // Format TIMESTAMP to display
@@ -78,8 +78,12 @@ const ReviewList = ({ recipeId }) => {
 
   return (
     <>
-      <div className="w-4/5 my-10 border border-yellow rounded-md px-5 py-5 justify-center">
-        <h3 className="text-3xl mt-2 mb-8 font-extrabold">See All Reviews</h3>
+      <div className="w-4/5 my-10 p-8 justify-center">
+      <img
+          src={require("../Images/review-header.png")}
+          alt="Header Image"
+          className="h-auto max-w-full mb-8"
+        />
         <div>
           {recipeReviews.length !== 0 ? (
             recipeReviews.map((review) => (
@@ -90,7 +94,7 @@ const ReviewList = ({ recipeId }) => {
                     alt="User profile image"
                     className="w-10 h-10 rounded-3xl mr-4"
                   />
-                  <div className="flex-col mr-16">
+                  <div className="flex-col mr-14">
                     <p className="text-brown-light">{username}</p>
                     <p className="text-brown-light text-sm text-opacity-35 italic">
                       {review.created_at}
@@ -104,6 +108,7 @@ const ReviewList = ({ recipeId }) => {
                         <span className="text-yellow text-lg">&#9733;</span>
                       }
                       className="text-3xl"
+                      readonly={true}
                     />
                     <p className="w-full break-all">{review.review}</p>
                   </div>
@@ -111,10 +116,10 @@ const ReviewList = ({ recipeId }) => {
               </div>
             ))
           ) : (
-            <p>There are no reviews yet</p>
+            <p className="text-lg italic mt-10 mr-0">No reviews yet! Be the first to share your experience.</p>
           )}
-          <p className="text-2xl text-brown-dark mt-10 font-bold">Leave a review</p>
-          <p className="text-yellow mb-5 text-base">We appreciate your feedback!</p>
+          <p className="text-3xl text-brown-dark mt-10 font-bold">Leave a review</p>
+          <p className="text-yellow mb-5 text-lg">We appreciate your feedback!</p>
           <ReviewForm handleSubmitReviewForm={handleSubmitReviewForm} />
         </div>
       </div>
