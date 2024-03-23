@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { apiKey, host } from "../../../config";
 import axios from "axios";
 import TriviaGame from './TriviaGame';
+import { PiArrowFatLinesDownFill } from "react-icons/pi";
 
 export default function FoodTrivia() {
 
@@ -43,19 +44,31 @@ export default function FoodTrivia() {
  
   return (
     
-    <div className="font-bold text-amber-700 text-center relative">
+    <div className="flex flex-col items-center font-bold text-amber-700 text-center relative">
       
       <img src={require("../../../Images/simmering.jpg")} alt="culinary Image" className="w-full"
       />
-      <div className='bg-gray-200 bg-opacity-70 py-16 absolute top-32 left-32 right-32 bottom-32'>
+      <div className='bg-gray-200 bg-opacity-70 py-16 absolute top-28 left-28 right-28 bottom-28'>
         <h2 className="font-bold text-5xl my-16 uppercase  text-amber-700 text-center">
         Let's Play Food Trivia!
       </h2>
       
       <p className='text-3xl mb-16'>Are you ready to challenge your culinary knowledge?</p>
-      <p className='text-2xl mb-16'>Start the fun and see how many trivia facts you know!</p>
+        <p className='text-2xl mb-20'>Start the fun and see how many trivia facts you know!</p>
+        
+        
+       <div className="flex justify-center items-center">
+      
+      <svg className="text-6xl ml-56 animate-bounce">
+        <PiArrowFatLinesDownFill />
+      </svg>
+    </div>
+      
+         
+        
+       
 
-      <button onClick={()=> fetchRandomTrivia()} type="button" className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-5 px-16 rounded-md text-3xl">START</button>
+      <button onClick={()=> fetchRandomTrivia()} type="button" className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-5 px-16 -mt-8 rounded-md text-3xl">START</button>
   
       </div>
       
