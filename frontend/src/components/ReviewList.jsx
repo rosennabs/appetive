@@ -50,7 +50,7 @@ const ReviewList = ({ recipeId }) => {
         const reviewsResponse = await axios.get(
           `http://localhost:8080/api/recipes/${recipeId}/reviews`
         );
-        
+
         // Format TIMESTAMP to display
         const reviewsData = reviewsResponse.data.map((review) => ({
           ...review,
@@ -79,42 +79,44 @@ const ReviewList = ({ recipeId }) => {
   return (
     <>
       <div className="w-4/5 my-10 border border-yellow rounded-md px-5 py-5 justify-center">
-        <h3 className="text-3xl mt-2 mb-4 font-extrabold">Leave a review </h3>
-        <p>We appreciate your feedback</p>
-        {recipeReviews.length !== 0 ? (
-          recipeReviews.map((review) => (
-            <div key={review.recipeId} className="mb-5">
-              <div className="flex">
-                <img
-                  src="https://static.vecteezy.com/system/resources/previews/026/434/409/non_2x/default-avatar-profile-icon-social-media-user-photo-vector.jpg"
-                  alt="User profile image"
-                  className="w-10 h-10 rounded-3xl mr-4"
-                />
-                <div className="flex-col">
-                  <p className="text-brown-light">{username}</p>
-                  <p className="text-brown-light text-sm">
-                    {review.created_at}
-                  </p>
-                  <Rating
-                    initialRating={review.rating}
-                    emptySymbol={
-                      <span className="text-gray-400 text-lg">&#9734;</span>
-                    }
-                    fullSymbol={
-                      <span className="text-yellow text-lg">&#9733;</span>
-                    }
-                    className="text-3xl"
+        <h3 className="text-3xl mt-2 mb-8 font-extrabold">See All Reviews</h3>
+        <div>
+          {recipeReviews.length !== 0 ? (
+            recipeReviews.map((review) => (
+              <div key={review.recipeId} className="mb-4 bg-yellow bg-opacity-10 px-4 py-2 rounded-lg filter hover:drop-shadow-2xl">
+                <div className="flex">
+                  <img
+                    src="https://static.vecteezy.com/system/resources/previews/026/434/409/non_2x/default-avatar-profile-icon-social-media-user-photo-vector.jpg"
+                    alt="User profile image"
+                    className="w-10 h-10 rounded-3xl mr-4"
                   />
-                  <p>Comment: {review.review}</p>
+                  <div className="flex-col mr-16">
+                    <p className="text-brown-light">{username}</p>
+                    <p className="text-brown-light text-sm text-opacity-35 italic">
+                      {review.created_at}
+                    </p>
+                    <Rating
+                      initialRating={review.rating}
+                      emptySymbol={
+                        <span className="text-gray-400 text-lg">&#9734;</span>
+                      }
+                      fullSymbol={
+                        <span className="text-yellow text-lg">&#9733;</span>
+                      }
+                      className="text-3xl"
+                    />
+                    <p className="w-full break-all">{review.review}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <p>There are no reviews yet</p>
-        )}
-
-        <ReviewForm handleSubmitReviewForm={handleSubmitReviewForm} />
+            ))
+          ) : (
+            <p>There are no reviews yet</p>
+          )}
+          <p className="text-2xl text-brown-dark mt-10 font-bold">Leave a review</p>
+          <p className="text-yellow mb-5 text-base">We appreciate your feedback!</p>
+          <ReviewForm handleSubmitReviewForm={handleSubmitReviewForm} />
+        </div>
       </div>
     </>
   );
