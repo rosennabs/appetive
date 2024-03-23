@@ -2,18 +2,39 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReviewForm from "./ReviewForm";
 import Rating from "react-rating";
+import { format } from "date-fns";
 
 const ReviewList = ({ recipeId }) => {
-  const [recipeDetails, setRecipeDetails] = useState(null);
   const [recipeReviews, setRecipeReviews] = useState([]);
   const [updated, setUpdated] = useState(0);
+  const [username, setUsername] = useState("");
+
+  const token = localStorage.token;
+
+  //Refactor and create custom hook for getUsername later
+  useEffect(() => {
+    const getUsername = async (token) => {
+      try {
+        const response = await axios.post(`http://localhost:8080/api/user/`, {
+          token,
+        });
+        setUsername(response.data);
+      } catch (error) {
+        console.error("Error fetching username:", error);
+      }
+    };
+    getUsername(token);
+  }, []);
 
   const handleSubmitReviewForm = async (values, { resetForm }) => {
     console.log("Values:", values);
     try {
       const res = await axios.post(
         `http://localhost:8080/api/recipes/${recipeId}/reviews`,
-        values
+        values,
+        {
+          headers: { token: token },
+        }
       );
       console.log("Response from review: ", res.data);
       setUpdated((prev) => ++prev);
@@ -29,9 +50,18 @@ const ReviewList = ({ recipeId }) => {
         const reviewsResponse = await axios.get(
           `http://localhost:8080/api/recipes/${recipeId}/reviews`
         );
-        console.log(reviewsResponse);
-        const reviewsData = reviewsResponse.data;
+        
+        // Format TIMESTAMP to display
+        const reviewsData = reviewsResponse.data.map((review) => ({
+          ...review,
+          created_at: format(
+            new Date(review.created_at),
+            "MMMM dd, yyyy - hh:mm aa"
+          ),
+        }));
+
         console.log(reviewsData);
+
         // Check if response is ok
         if (reviewsResponse.status === 200) {
           setRecipeReviews(reviewsData);
@@ -54,8 +84,30 @@ const ReviewList = ({ recipeId }) => {
         {recipeReviews.length !== 0 ? (
           recipeReviews.map((review) => (
             <div key={review.recipeId} className="mb-5">
-              <p>Rating: {review.rating}</p>
-              <p>Comment: {review.review}</p>
+              <div className="flex">
+                <img
+                  src="https://static.vecteezy.com/system/resources/previews/026/434/409/non_2x/default-avatar-profile-icon-social-media-user-photo-vector.jpg"
+                  alt="User profile image"
+                  className="w-10 h-10 rounded-3xl mr-4"
+                />
+                <div className="flex-col">
+                  <p className="text-brown-light">{username}</p>
+                  <p className="text-brown-light text-sm">
+                    {review.created_at}
+                  </p>
+                  <Rating
+                    initialRating={review.rating}
+                    emptySymbol={
+                      <span className="text-gray-400 text-lg">&#9734;</span>
+                    }
+                    fullSymbol={
+                      <span className="text-yellow text-lg">&#9733;</span>
+                    }
+                    className="text-3xl"
+                  />
+                  <p>Comment: {review.review}</p>
+                </div>
+              </div>
             </div>
           ))
         ) : (
@@ -69,11 +121,3 @@ const ReviewList = ({ recipeId }) => {
 };
 
 export default ReviewList;
-
-{
-  /* <div className="self-start w-4/5 ml-40 my-32 border border-yellow rounded-md px-5 py-5 flex gap-144">
-<div className="w-1/3">
-
-  <ReviewList recipeId={recipe.id} />
-</div> */
-}
