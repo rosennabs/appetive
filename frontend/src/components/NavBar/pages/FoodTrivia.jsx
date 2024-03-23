@@ -42,15 +42,23 @@ export default function FoodTrivia() {
   
  
   return (
-    <div className="font-bold text-amber-700 text-center">
-      <h2 className="font-bold text-5xl my-16 uppercase  text-amber-700 text-center">
-        Welcome to Food Trivia
+    
+    <div className="font-bold text-amber-700 text-center relative">
+      
+      <img src={require("../../../Images/simmering.jpg")} alt="culinary Image" className="w-full"
+      />
+      <div className='bg-gray-200 bg-opacity-70 py-16 absolute top-32 left-32 right-32 bottom-32'>
+        <h2 className="font-bold text-5xl my-16 uppercase  text-amber-700 text-center">
+        Let's Play Food Trivia!
       </h2>
+      
       <p className='text-3xl mb-16'>Are you ready to challenge your culinary knowledge?</p>
-      <p className='text-xl mb-16'>Start the fun and see how many trivia facts you know!</p>
+      <p className='text-2xl mb-16'>Start the fun and see how many trivia facts you know!</p>
 
       <button onClick={()=> fetchRandomTrivia()} type="button" className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-5 px-16 rounded-md text-3xl">START</button>
   
+      </div>
+      
         {
     trivia &&
         <TriviaGame
