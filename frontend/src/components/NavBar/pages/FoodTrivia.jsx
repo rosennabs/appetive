@@ -6,7 +6,7 @@ export default function FoodTrivia() {
 
   const [trivia, setTrivia] = useState('');
   
- useEffect(() => {
+ 
    const fetchRandomTrivia = async () => {
       
      const options = {
@@ -28,13 +28,13 @@ export default function FoodTrivia() {
        console.error("Error fetching trivia: ", error);
      }
    }
-    fetchRandomTrivia();
-  }, []);
+  
+ 
 
 
   return (
     <div>
-      <h2>
+      <h2 onClick={() => fetchRandomTrivia()}>
         FoodTrivia
       </h2>
       <p>{trivia}</p>
