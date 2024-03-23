@@ -1,9 +1,9 @@
 import React from "react";
-import FavList from "../../FavList";
 import AuthenticationError from "../../AuthenticationError";
 import useAuthentication from "../../../hooks/useAuthentication";
+import UserRecipesList from "../UserRecipesList";
 
-function Profile( {username} ) {
+function UserRecipes( {username} ) {
   const { isAuthenticated } = useAuthentication();
 
   return (
@@ -11,9 +11,9 @@ function Profile( {username} ) {
       {isAuthenticated ? (
         <div>
           <h1 className="text-4xl pt-10 font-bold mx-auto mb-5 text-center">
-            {username}'s Favourite Recipes
+            Recipes Added By {username}
           </h1>
-          <FavList />
+          <UserRecipesList />
         </div>
       ) : (
         <AuthenticationError />
@@ -22,4 +22,4 @@ function Profile( {username} ) {
   );
 }
 
-export default Profile;
+export default UserRecipes;

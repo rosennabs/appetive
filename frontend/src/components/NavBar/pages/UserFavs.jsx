@@ -3,7 +3,7 @@ import FavList from "../../FavList";
 import AuthenticationError from "../../AuthenticationError";
 import useAuthentication from "../../../hooks/useAuthentication";
 
-function Profile( {username} ) {
+function UserFavs( {username} ) {
   const { isAuthenticated } = useAuthentication();
 
   return (
@@ -22,4 +22,4 @@ function Profile( {username} ) {
   );
 }
 
-export default Profile;
+export default UserFavs;
