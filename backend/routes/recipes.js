@@ -140,7 +140,7 @@ router.post("/search", async (req, res) => {
   console.log(req.query);
   try {
     const {
-      title,
+      query: title,
       diet,
       cuisine,
       type,
@@ -149,6 +149,7 @@ router.post("/search", async (req, res) => {
       maxCalories,
     } = req.query;
 
+    console.log("options", req.query);
     //Getting results from external api
     const options = {
       method: "GET",

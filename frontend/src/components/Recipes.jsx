@@ -20,7 +20,7 @@ export default function Recipe({setSelected}) {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className='text-l mb-4 mt-32 ml-16 uppercase font-serif text-gray-500'> Make Yourself A Treat</h1>
+        <h1 className='text-l mb-4 ml-16 uppercase font-serif text-gray-500'> Make Yourself A Treat</h1>
 
         {searchClicked && <button type="button" onClick={() => window.location.reload()} className="hover:bg-yellow border-2 border-black text-black opacity-25 text-underline py-1 px-10 mb-4 mt-32 ml-16 mr-16 rounded-full">Reset</button>}
       </div>
