@@ -51,7 +51,7 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
             <FaHome className="size-7" />
           </NavLink>
           <NavLink to="/about">ABOUT US</NavLink>
-          <NavLink to="/food-trivia">FOOD TRIVIA</NavLink>
+          <NavLink to="/food-trivia" onClick={()=> setSelected(null)}>FOOD TRIVIA</NavLink>
           <NavLink to="/my-profile">
             MY PROFILE
             <FaCaretDown className="ml-1" />

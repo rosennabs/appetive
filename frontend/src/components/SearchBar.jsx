@@ -38,7 +38,7 @@ export default function SearchBar() {
             className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-500"
             />
 
-            <div className='ml-4' onClick={() => handleSubmit()}>
+            <div className='ml-4 cursor-pointer' onClick={() => handleSubmit()}>
             <FaSearch />
             </div>
             

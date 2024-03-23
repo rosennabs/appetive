@@ -15,7 +15,7 @@ const getUserFavs = async function (userID) {
       return { message: "User has no favs" };
     }
 
-    return results.rows; // returns array of objects each with recipe_id key and value
+    return results.rows; // returns array of objects each with recipe_id key and value 
   } catch (error) {
     console.error("Error in getUserFavs:", error.message);
     throw error;
