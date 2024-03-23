@@ -1,13 +1,15 @@
 import React, { useContext } from 'react';
 import { AppDataContext } from '../../contexts/AppDataContext';
 import { useSelectedRecipe } from '../../hooks/useSelectedRecipe';
+import useShareLink from '../../hooks/useShareLink';
 import RecipeDetails from '../RecipeDetails';
 
-export default function UserRecipes(props) {
+export default function ProfileRecipes(props) {
 
   // Access recipes
   const { fetchRecipeInfo } = useContext(AppDataContext);
   const { selectedRecipe, setSelected } = useSelectedRecipe();
+  const { shareLink, generateShareLink, copySuccess, setCopySuccess } = useShareLink();
   const recipes = props.recipes;
 
   //Function to handle click on a recipe
@@ -20,8 +22,12 @@ export default function UserRecipes(props) {
     <div>
       {selectedRecipe ? (
         <RecipeDetails
-          recipe={selectedRecipe}
-          setSelected={setSelected} />
+        recipe={selectedRecipe}
+        setSelected={setSelected}
+        shareLink={shareLink}
+        generateShareLink={generateShareLink}
+        copySuccess={copySuccess}
+        setCopySuccess={setCopySuccess}/>
       ) : (
         <section className="md:container max-w-screen-xl mx-auto flex flex-wrap">
           {recipes.map(recipe => ( 

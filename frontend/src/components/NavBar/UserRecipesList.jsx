@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import UserRecipes from "./UserRecipes";
+import ProfileRecipes from "./ProfileRecipes";
 import axios from "axios";
 
 export default function UserRecipesList () {
@@ -30,7 +30,7 @@ export default function UserRecipesList () {
         </div>
       ) : (
         <div>
-          <UserRecipes recipes={recipes} />
+          <ProfileRecipes recipes={recipes} />
         </div>
       )}
     </div>
