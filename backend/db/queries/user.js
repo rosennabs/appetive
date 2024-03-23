@@ -20,3 +20,5 @@ const getUserRecipes = async function (userID) {
     throw error;
   }
 };
+
+module.exports = { getUserRecipes };
