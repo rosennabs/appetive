@@ -1,5 +1,5 @@
 import React from "react";
-import FavList from "../../FavList";
+import FavList from "../FavList";
 import AuthenticationError from "../../AuthenticationError";
 import useAuthentication from "../../../hooks/useAuthentication";
 
