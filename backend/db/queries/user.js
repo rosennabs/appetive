@@ -1,10 +1,11 @@
 const db = require("../connection");
+const { getRecipeById } = require("./recipes");
 
 // Get all recipes created by user
 const getUserRecipes = async function (userID) {
   try {
     const queryString = `
-      SELECT id, title, image FROM recipes
+      SELECT id FROM recipes
       WHERE user_id = $1;
     `;
     const queryParams = [userID];
@@ -24,8 +25,8 @@ const getUserRecipes = async function (userID) {
 // Get display information for each recipe in array
 const displayUserRecipes = async function (recipeIDs) {
   try {
-  const promises = recipeIDs.map(async (fav) => {
-    const recipe = await getRecipeById(fav.recipe_id);
+  const promises = recipeIDs.map(async (recipeID) => {
+    const recipe = await getRecipeById(recipeID.id);
     return {
       id: recipe.id,
       title: recipe.title,
