@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Fav from "./Favs";
+import UserRecipes from "./UserRecipes";
 import axios from "axios";
 
 export default function FavList () {
@@ -30,7 +30,7 @@ export default function FavList () {
         </div>
       ) : (
         <div>
-          <Fav favs={favs} />
+          <UserRecipes recipes={favs} />
         </div>
       )}
     </div>
