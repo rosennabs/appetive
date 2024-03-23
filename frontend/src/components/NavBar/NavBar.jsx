@@ -20,7 +20,7 @@ import useAuthentication from "../../hooks/useAuthentication";
 import AuthenticationError from "../AuthenticationError";
 import axios from "axios";
 
-function NavBar({ toggleSearchBar, showSearchBar }) {
+function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
   const { isAuthenticated, setAuth, handleLogout } = useAuthentication();
   const [username, setUsername] = useState("");
   const token = localStorage.token;
@@ -92,8 +92,13 @@ function NavBar({ toggleSearchBar, showSearchBar }) {
         <ImgBtnLink to="/add-recipe">MAKE YOUR RECIPE</ImgBtnLink>
       </div>
 
-      {/* Search bar */}
-      <div>{showSearchBar && <SearchBar />}</div>
+           {/* Search bar */}
+        
+          <div>
+            {showSearchBar && <SearchBar />}
+          </div>
+      
+      <ImgBtnLink to="/add-recipe" onClick={() => setSelected(null)}>MAKE YOUR RECIPE</ImgBtnLink>
 
       <Routes>
         <Route path="/my-profile" element={<Profile username={username} />} />

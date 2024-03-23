@@ -305,7 +305,7 @@ const getRecipesBySearchQuery = async function (
     let queryString = "SELECT * FROM recipes WHERE 1 = 1";
     const queryParams = [];
 
-    //Add conditions based on query parameters
+    //Add conditions based on query parameters 
     if (title) {
       queryString += ` AND title ILIKE $${queryParams.length + 1}`;
       queryParams.push(`%${title}%`);
