@@ -4,7 +4,7 @@ const db = require("../connection");
 const getUserRecipes = async function (userID) {
   try {
     const queryString = `
-      SELECT * FROM recipes
+      SELECT id, title, image FROM recipes
       WHERE user_id = $1;
     `;
     const queryParams = [userID];
@@ -21,4 +21,26 @@ const getUserRecipes = async function (userID) {
   }
 };
 
-module.exports = { getUserRecipes };
+// Get display information for each recipe in array
+const displayUserRecipes = async function (recipeIDs) {
+  try {
+  const promises = recipeIDs.map(async (fav) => {
+    const recipe = await getRecipeById(fav.recipe_id);
+    return {
+      id: recipe.id,
+      title: recipe.title,
+      image: recipe.image
+    };
+  });
+
+  const results = await Promise.all(promises);
+  return results;
+} catch (error) {
+  console.error("Error in displayUserRecipes:", error.message);
+}
+};
+
+module.exports = {
+  getUserRecipes,
+  displayUserRecipes
+};

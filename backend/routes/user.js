@@ -6,6 +6,7 @@ const {
   toggleIsFav
 } = require("../db/queries/favlist");
 const { getUserNameById } = require("../db/queries/recipes_helpers");
+const { getUserRecipes, displayUserRecipes } = require("../db/queries/user");
 const jwtDecoder = require("../utils/jwtDecoder");
 
 // Get username
@@ -32,6 +33,19 @@ router.post("/fav", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+// Get all recipes created by user
+router.post("/recipe", async (req, res) => {
+  try {
+    const { user } = await jwtDecoder(req.body.token);
+    const userRecipes = await getUserRecipes(user);
+    const displayRecipes = await displayUserRecipes(userRecipes);
+    res.status(200).json(displayRecipes);
+  } catch (error) {
+    console.error("Error in api/user/recipe route:", error.message);
+    res.status(500).json({ error: "Internal Server Error" })
+  }
+})
 
 // Get fav status
 router.post("/recipe/:id", async (req, res) => {
