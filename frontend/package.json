@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.7",
     "crypto-browserify": "^3.12.0",
+    "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "formik": "^2.4.5",
     "os-browserify": "^0.3.0",
