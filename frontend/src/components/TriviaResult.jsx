@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 
-export default function TriviaResult() {
+export default function TriviaResult({ unknownCount, knownCount }) {
   return (
     <div className="flex flex-col font-bold text-black text-center relative">
       <img
@@ -9,29 +9,35 @@ export default function TriviaResult() {
         className="w-full"
       />
       <div className="bg-amber-100 bg-opacity-80 py-16 absolute top-28 left-28 right-28 bottom-28 flex flex-col justify-center items-center p-16 pb-4">
-        
-         
-            <h1 className="flex flex-row text-5xl mb-24">
-              Congratulations!
+        {knownCount > 0 ? (
+          <div>
+            <h1 className="flex flex-col text-5xl">
+              <p className="mb-16">Congratulations!!!</p>
+              <p>Keep exploring and learning</p>
             </h1>
 
-        <div className="flex flex-row items-center justify-between text-5xl bg-green-700 p-8 mt-24 rounded-md text-white">
-          <p>Score : 5/12</p>
-              
+            <div className="text-5xl bg-green-700 p-8 mt-24 mx-32 rounded-md text-white">
+              <span>Score : 5/12</span>
             </div>
+          </div>
+        ) : (
+          <div>
+            <h1 className="flex flex-col text-5xl">
+              <p className="mb-16">You didn't know any?</p>
+              <p>No problem, keep learning!</p>
+            </h1>
 
-            <div className="mt-16 underline text-2xl text-amber-700 flex flex-row justify-end items-end w-full">
-              <button
-                type="button"
-                
-                
-              >
-                Close
-              </button>
+            <div className="text-5xl bg-red-600 p-8 mt-24 mx-32 rounded-md text-white">
+              <p>Score : 0/12</p>
             </div>
-       </div>
-        
-      
+          </div>
+        )}
+
+        <div className="mt-16 underline underline-offset-8 text-2xl text-amber-700 flex flex-row justify-between items-end w-full">
+          <button type="button">Restart</button>
+          <button type="button">Close</button>
         </div>
-  )
+      </div>
+    </div>
+  );
 }
