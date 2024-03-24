@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "../SearchBar";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, userNavigate, useNavigate } from "react-router-dom";
 import {
   Nav,
   NavLink,
@@ -14,6 +14,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
 import Profile from "./pages/Profile";
+import UserFavs from "./pages/UserFavs";
+import UserRecipes from "./pages/UserRecipes";
 import { FaCaretDown, FaSearch, FaHome } from "react-icons/fa";
 import RecipeForm from "../RecipeForm";
 import useAuthentication from "../../hooks/useAuthentication";
@@ -22,23 +24,30 @@ import axios from "axios";
 
 
 function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
-  const { isAuthenticated, setAuth, handleLogout } = useAuthentication();
+  const { isAuthenticated, setAuth } = useAuthentication();
   const [username, setUsername] = useState("");
+  const navigate = useNavigate();
   const token = localStorage.token;
 
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.clear();
+    setAuth(false);
+    navigate("/");
+  };
+
   useEffect(() => {
-    const getUsername = async (token) => {
+    const getUsername = async () => {
       try {
-        const response = await axios.post(`http://localhost:8080/api/user/`, {
-          token,
+        const response = await axios.get(`http://localhost:8080/api/user/`, {
+          headers: { token: token },
         });
-        console.log(response);
         setUsername(response.data);
       } catch (error) {
         console.error("Error fetching username:", error);
       }
     };
-    getUsername(token);
+    getUsername();
   }, []);
 
   return (
@@ -110,6 +119,8 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
             )
           }
         />
+        <Route path="/my-favs" element={<UserFavs username={username} />} />
+        <Route path="/my-recipes" element={<UserRecipes username={username} />} />
       </Routes>
     </>
   );
