@@ -7,15 +7,14 @@ export default function FavButton (props) {
   const { isAuthenticated } = useAuthentication();
 
   const [ isFav, setIsFav ] = useState(false);
-  const userToken = localStorage.token;
+  const jwtToken = localStorage.token;
   const recipe_id = props.recipe_id;
 
   useEffect(() => {
-    const getFavStatus = async (token, recipe_id) => {
+    const getFavStatus = async (recipe_id) => {
       try {
-        const response = await axios.post(`http://localhost:8080/api/user/recipe/${recipe_id}`, {
-          token,
-          recipe_id
+        const response = await axios.get(`http://localhost:8080/api/user/recipe/${recipe_id}`, {
+          headers: { token: jwtToken }
         });
         const favCheck = response.data;
 
@@ -24,7 +23,7 @@ export default function FavButton (props) {
         console.error("Error getting fav status:", error);
       }
     }
-    getFavStatus(userToken, recipe_id);
+    getFavStatus(recipe_id);
   }, [isFav]);
 
   const handleFavClick = async (token, recipe_id) => {
@@ -36,7 +35,7 @@ export default function FavButton (props) {
       
       setIsFav(response.data);
     } catch (error) {
-      console.error("Error fetching favs:", error);
+      console.error("Error changing fav status:", error);
     }
   };
 
@@ -51,7 +50,7 @@ export default function FavButton (props) {
       </section>
     )}
     {isAuthenticated && !isFav && (
-      <section className="flex border border-black h-10 px-8 justify-center w-[220px]" onClick={() => {handleFavClick(userToken, recipe_id)}}>
+      <section className="flex border border-black h-10 px-8 justify-center w-[220px]" onClick={() => {handleFavClick(jwtToken, recipe_id)}}>
         <p className="flex items-center">
           <FaHeart />
           <button className="ml-2">Add to Favourites</button>
@@ -59,7 +58,7 @@ export default function FavButton (props) {
       </section>
     )}
     {isAuthenticated && isFav && (
-      <section className="flex border border-black h-10 px-8 justify-center bg-yellow w-[220px]" onClick={() => {handleFavClick(userToken, recipe_id)}}>
+      <section className="flex border border-black h-10 px-8 justify-center bg-yellow w-[220px]" onClick={() => {handleFavClick(jwtToken, recipe_id)}}>
         <p className="flex items-center">
           <FaHeart />
           <button className="ml-2">Favourite</button>

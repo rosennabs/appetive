@@ -5,12 +5,14 @@ import axios from "axios";
 export default function UserRecipesList () {
   
   const [ recipes, setRecipes ] = useState([]);
-  const userToken = localStorage.token;
+  const jwtToken = localStorage.token;
   
   useEffect(() => {
     const fetchRecipes = async (token) => {
       try {
-        const response = await axios.post(`http://localhost:8080/api/user/recipe`, { token });
+        const response = await axios.get(`http://localhost:8080/api/user/recipe`, {
+          headers: { token: jwtToken }
+        });
         const allRecipes = response.data;
 
         setRecipes(allRecipes);
@@ -18,7 +20,7 @@ export default function UserRecipesList () {
         console.error("Error fetching favs:", error);
       }
     };
-    fetchRecipes(userToken);
+    fetchRecipes();
   }, []);
 
   return (

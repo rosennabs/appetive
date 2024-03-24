@@ -8,12 +8,13 @@ const {
 const { getUserNameById } = require("../db/queries/recipes_helpers");
 const { getUserRecipes, displayUserRecipes } = require("../db/queries/user");
 const jwtDecoder = require("../utils/jwtDecoder");
+const authorization = require('../middleware/authorization');
 
 // Get username
-router.post("/", async (req, res) => {
+router.get("/", authorization, async (req, res) => {
   try {
-    const { user } = await jwtDecoder(req.body.token);
-    const username = await getUserNameById(user);
+    const user_id = req.user;
+    const username = await getUserNameById(user_id);
     res.status(200).json(username);
   } catch (error) {
     console.error("Error in api/user/ route:", error.message);
@@ -22,10 +23,9 @@ router.post("/", async (req, res) => {
 });
 
 // Return list of all user favs using token
-router.post("/fav", async (req, res) => {
+router.get("/fav", authorization, async (req, res) => {
   try {
-    const { user } = await jwtDecoder(req.body.token); // req should contain token from localStorage
-    const userFavs = await getUserFavs(user);
+    const userFavs = await getUserFavs(req.user);
     const displayFavs = await displayUserFavs(userFavs);
     res.status(200).json(displayFavs);
   } catch (error) {
@@ -35,10 +35,9 @@ router.post("/fav", async (req, res) => {
 });
 
 // Get all recipes created by user
-router.post("/recipe", async (req, res) => {
+router.get("/recipe", authorization, async (req, res) => {
   try {
-    const { user } = await jwtDecoder(req.body.token);
-    const userRecipes = await getUserRecipes(user);
+    const userRecipes = await getUserRecipes(req.user);
     const displayRecipes = await displayUserRecipes(userRecipes);
     res.status(200).json(displayRecipes);
   } catch (error) {
@@ -48,11 +47,11 @@ router.post("/recipe", async (req, res) => {
 })
 
 // Get fav status
-router.post("/recipe/:id", async (req, res) => {
+router.get("/recipe/:id", authorization, async (req, res) => {
   try {
-    const { user } = await jwtDecoder(req.body.token);
-    const recipe_id = req.body.recipe_id;
-    const response = await checkIfFav(user, recipe_id);
+    const user_id = req.user;
+    const recipe_id = req.params.id;
+    const response = await checkIfFav(user_id, recipe_id);
 
     res.status(200).json(response);
 

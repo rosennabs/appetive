@@ -25,13 +25,13 @@ import axios from "axios";
 function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
   const { isAuthenticated, setAuth, handleLogout } = useAuthentication();
   const [username, setUsername] = useState("");
-  const token = localStorage.token;
+  const jwtToken = localStorage.token;
 
   useEffect(() => {
-    const getUsername = async (token) => {
+    const getUsername = async () => {
       try {
-        const response = await axios.post(`http://localhost:8080/api/user/`, {
-          token,
+        const response = await axios.get(`http://localhost:8080/api/user/`, {
+          headers: { token: jwtToken },
         });
         console.log(response);
         setUsername(response.data);
@@ -39,7 +39,7 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
         console.error("Error fetching username:", error);
       }
     };
-    getUsername(token);
+    getUsername();
   }, []);
 
   return (
