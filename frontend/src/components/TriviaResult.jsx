@@ -1,8 +1,11 @@
 import React, {useContext} from "react";
 import { AppDataContext } from "../contexts/AppDataContext";
+import { useNavigate } from 'react-router-dom';
 
 export default function TriviaResult() {
-const { knownCount, unknownCount } = useContext(AppDataContext);
+  const { knownCount, unknownCount } = useContext(AppDataContext);
+  const navigate = useNavigate();
+
   
   return (
     <div className="flex flex-col font-bold text-black text-center relative">
@@ -37,8 +40,8 @@ const { knownCount, unknownCount } = useContext(AppDataContext);
         )}
 
         <div className="mt-16 underline underline-offset-8 text-2xl text-amber-700 flex flex-row justify-between items-end w-full">
-          <button type="button">Restart</button>
-          <button type="button">Close</button>
+          <button type="button" onClick={() => navigate('/food-trivia')}>Restart</button>
+          <button type="button" onClick={() => navigate('/')}>Close</button>
         </div>
       </div>
     </div>
