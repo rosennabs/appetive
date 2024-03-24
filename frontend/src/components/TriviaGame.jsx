@@ -13,8 +13,11 @@ export default function TriviaGame() {
   const [endGameClicked, setEndGameClicked] = useState(false);
 
   const handleEndGameClick = () => {
-    setEndGameClicked(true);
+    if (knownCount === 0 && unknownCount === 0) {
+    navigate('/');
+  } else {
     navigate('/trivia-result');
+  }
   };
 
   return (
