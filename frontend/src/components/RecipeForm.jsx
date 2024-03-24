@@ -92,28 +92,32 @@ function RecipeForm() {
         Title is required
       </div>
     ),
-    prep_time: Yup.number().positive(
-      <div>
-        <FaExclamationCircle className="inline-block mr-1" />
-        Prep time must be greater than 0
-      </div>
-      ).required(
-      <div>
-        <FaExclamationCircle className="inline-block mr-1" />
-        Prep time is required
-      </div>
-    ),
-    number_of_servings: Yup.number().positive(
-      <div>
-        <FaExclamationCircle className="inline-block mr-1" />
-        Servings must be greater than 0
-      </div>
-      ).required(
-      <div>
-        <FaExclamationCircle className="inline-block mr-1" />
-        Number of servings is required
-      </div>
-    ),
+    prep_time: Yup.number()
+      .positive(
+        <div>
+          <FaExclamationCircle className="inline-block mr-1" />
+          Prep time must be greater than 0
+        </div>
+      )
+      .required(
+        <div>
+          <FaExclamationCircle className="inline-block mr-1" />
+          Prep time is required
+        </div>
+      ),
+    number_of_servings: Yup.number()
+      .positive(
+        <div>
+          <FaExclamationCircle className="inline-block mr-1" />
+          Servings must be greater than 0
+        </div>
+      )
+      .required(
+        <div>
+          <FaExclamationCircle className="inline-block mr-1" />
+          Number of servings is required
+        </div>
+      ),
     instructions: Yup.string().required(
       <div>
         <FaExclamationCircle className="inline-block mr-1" />
@@ -165,11 +169,11 @@ function RecipeForm() {
           validationSchema={validationSchema}
         >
           {({ values, handleChange }) => (
-            <Form className="border border-yellow rounded-md px-5 py-5">
+            <Form className="bg-white rounded-xl p-12 drop-shadow-3xl">
               <span className="text-sm italic text-red-500">* Required</span>
               <div className="my-5">
                 <label className="block font-bold text-lg" htmlFor="title">
-                  Recipe Title*
+                  Recipe Title<span className="text-red-500">*</span>
                 </label>
                 <Field
                   id="title"
@@ -177,7 +181,7 @@ function RecipeForm() {
                   type="text"
                   value={values.title}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light my-1"
+                  className="w-full px-4 py-2 border border-opacity-20 border-brown-light rounded-md focus:outline-none focus:border-yellow my-1"
                 />
                 <ErrorMessage
                   name="title"
@@ -188,7 +192,7 @@ function RecipeForm() {
               <div className="flex justify-between my-5">
                 <div className="basis-1/2 space-x-1">
                   <label className="block font-bold text-lg" htmlFor="cuisine">
-                    Cuisine*
+                    Cuisine<span className="text-red-500">*</span>
                   </label>
                   <Field
                     as="select"
@@ -196,7 +200,7 @@ function RecipeForm() {
                     name="cuisine"
                     value={values.cuisine}
                     onChange={handleChange}
-                    className="w-48 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                    className="w-48 px-4 py-2 border border-opacity-20 border-brown-light rounded-md focus:outline-none focus:border-yellow my-1"
                   >
                     {cuisine.map((cuisineName, index) => (
                       <option key={`cuisine-${index}`} value={cuisineName}>
@@ -210,7 +214,7 @@ function RecipeForm() {
                     className="block font-bold text-lg"
                     htmlFor="meal_type"
                   >
-                    Meal Type*
+                    Meal Type<span className="text-red-500">*</span>
                   </label>
                   <Field
                     as="select"
@@ -218,7 +222,7 @@ function RecipeForm() {
                     name="meal_type"
                     value={values.meal_type}
                     onChange={handleChange}
-                    className="w-48 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                    className="w-48 px-4 py-2 border border-opacity-20 border-brown-light rounded-md focus:outline-none focus:border-yellow my-1"
                   >
                     {type.map((typeName, index) => (
                       <option key={`type-${index}`} value={typeName}>
@@ -243,7 +247,7 @@ function RecipeForm() {
                       name="diet"
                       value={values.diet}
                       onChange={handleChange}
-                      className="w-48 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                      className="w-48 px-4 py-2 border border-opacity-20 border-brown-light rounded-md focus:outline-none focus:border-yellow my-1"
                     >
                       <option value="">None</option>
                       {diet.map((dietName, index) => (
@@ -254,7 +258,10 @@ function RecipeForm() {
                     </Field>
                   </div>
                   <div className="basis-1/2 space-x-1">
-                    <label className="block text-brown-light" htmlFor="intolerances">
+                    <label
+                      className="block text-brown-light"
+                      htmlFor="intolerances"
+                    >
                       Intolerances
                     </label>
                     <Field
@@ -263,7 +270,7 @@ function RecipeForm() {
                       name="intolerances"
                       value={values.intolerances}
                       onChange={handleChange}
-                      className="w-48 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                      className="w-48 px-4 py-2 border border-opacity-20 border-brown-light rounded-md focus:outline-none focus:border-yellow my-1"
                     >
                       <option value="">None</option>
                       {intolerances.map((intoleranceName, index) => (
@@ -284,7 +291,7 @@ function RecipeForm() {
                     className="block font-bold text-lg"
                     htmlFor="prep_time"
                   >
-                    Prep Time*
+                    Prep Time<span className="text-red-500">*</span>
                   </label>
                   <Field
                     id="prep_time"
@@ -292,21 +299,21 @@ function RecipeForm() {
                     type="number"
                     value={values.prep_time}
                     onChange={handleChange}
-                    className="w-48 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                    className="w-48 px-4 py-2 border border-opacity-20 border-brown-light rounded-md focus:outline-none focus:border-yellow my-1"
                   />{" "}
                   minutes
                 </div>
                 <ErrorMessage
-                    name="prep_time"
-                    component="div"
-                    className="error text-red-600 text-sm"
-                  />
+                  name="prep_time"
+                  component="div"
+                  className="error text-red-600 text-sm"
+                />
                 <div className="basis-1/2 space-x-1">
                   <label
                     className="block font-bold text-lg"
                     htmlFor="number_of_servings"
                   >
-                    Number of Servings*
+                    Number of Servings<span className="text-red-500">*</span>
                   </label>
                   <Field
                     id="number_of_servings"
@@ -314,9 +321,9 @@ function RecipeForm() {
                     type="number"
                     value={values.number_of_servings}
                     onChange={handleChange}
-                    className="w-48 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                    className="w-48 px-4 py-2 border border-opacity-20 border-brown-light rounded-md focus:outline-none focus:border-yellow my-1"
                   />
-                    <ErrorMessage
+                  <ErrorMessage
                     name="number_of_servings"
                     component="div"
                     className="error text-red-600 text-sm"
@@ -328,7 +335,7 @@ function RecipeForm() {
                   className="block font-bold text-lg"
                   htmlFor="ingredients"
                 >
-                  Ingredients*
+                  Ingredients<span className="text-red-500">*</span>
                 </label>
                 <FieldArray name="ingredients">
                   {({ push, remove }) => (
@@ -347,7 +354,7 @@ function RecipeForm() {
                               placeholder="50g"
                               value={values.ingredients[index].measurement}
                               onChange={handleChange}
-                              className="w-1/6 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                              className="w-1/6 px-4 py-2 border border-opacity-20 border-brown-light rounded-md focus:outline-none focus:border-yellow my-1"
                             />
                             <Field
                               name={`${startName}.name`}
@@ -355,7 +362,7 @@ function RecipeForm() {
                               placeholder="carrots"
                               value={values.ingredients[index].name}
                               onChange={handleChange}
-                              className="w-4/6 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                              className="w-4/6 px-4 py-2 border border-opacity-20 border-brown-light rounded-md focus:outline-none focus:border-yellow my-1"
                             />
                             {index > 0 ? (
                               <button
@@ -388,7 +395,7 @@ function RecipeForm() {
                   className="block font-bold text-lg"
                   htmlFor="instructions"
                 >
-                  Instructions*
+                  Instructions<span className="text-red-500">*</span>
                 </label>
                 <Field
                   as="textarea"
@@ -396,13 +403,13 @@ function RecipeForm() {
                   name="instructions"
                   value={values.instructions}
                   onChange={handleChange}
-                  className="w-full h-[100px] px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light resize-none"
+                  className="w-full h-[100px] px-4 py-2 border border-opacity-20 border-brown-light rounded-md focus:outline-none focus:border-yellow my-1 resize-none"
                 />
-                 <ErrorMessage
-                    name="instructions"
-                    component="div"
-                    className="error text-red-600 text-sm"
-                  />
+                <ErrorMessage
+                  name="instructions"
+                  component="div"
+                  className="error text-red-600 text-sm"
+                />
               </div>
               <fieldset className="my-5">
                 <legend className="font-bold text-lg">
@@ -411,7 +418,10 @@ function RecipeForm() {
 
                 <div className="flex justify-between">
                   <div className="basis-1/4">
-                    <label className="block text-brown-light" htmlFor="proteins">
+                    <label
+                      className="block text-brown-light"
+                      htmlFor="proteins"
+                    >
                       Protein
                     </label>
                     <Field
@@ -420,7 +430,7 @@ function RecipeForm() {
                       type="text"
                       value={values.proteins}
                       onChange={handleChange}
-                      className="w-40 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                      className="w-40 px-4 py-2 border border-opacity-20 border-brown-light rounded-md focus:outline-none focus:border-yellow my-1"
                     />
                   </div>
                   <div className="basis-1/4">
@@ -433,7 +443,7 @@ function RecipeForm() {
                       type="text"
                       value={values.fats}
                       onChange={handleChange}
-                      className="w-40 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                      className="w-40 px-4 py-2 border border-opacity-20 border-brown-light rounded-md focus:outline-none focus:border-yellow my-1"
                     />
                   </div>
                   <div className="basis-1/4">
@@ -446,11 +456,14 @@ function RecipeForm() {
                       type="text"
                       value={values.carbs}
                       onChange={handleChange}
-                      className="w-40 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                      className="w-40 px-4 py-2 border border-opacity-20 border-brown-light rounded-md focus:outline-none focus:border-yellow my-1"
                     />
                   </div>
                   <div className="basis-1/4">
-                    <label className="block text-brown-light" htmlFor="calories">
+                    <label
+                      className="block text-brown-light"
+                      htmlFor="calories"
+                    >
                       Calories
                     </label>
                     <Field
@@ -459,25 +472,15 @@ function RecipeForm() {
                       type="number"
                       value={values.calories}
                       onChange={handleChange}
-                      className="w-40 px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                      className="w-40 px-4 py-2 border border-opacity-20 border-brown-light rounded-md focus:outline-none focus:border-yellow my-1"
                     />
                   </div>
                 </div>
               </fieldset>
               <div className="my-5">
                 <label className="block font-bold text-lg" htmlFor="image">
-                  Image URL*
+                  Image URL<span className="text-red-500">*</span>
                 </label>
-                {/* <input
-                id="image"
-                name="image"
-                type="file"
-                value={values.image}
-                onChange={(event) => {
-                  setFieldValue("file", event.currentTarget.files[0]);
-                }}
-                className="px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
-              /> */}
                 <Field
                   id="image"
                   name="image"
@@ -485,18 +488,18 @@ function RecipeForm() {
                   placeholder="http://"
                   value={values.image}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-yellow rounded-md focus:outline-none focus:border-brown-light"
+                  className="w-full px-4 py-2 border border-opacity-20 border-brown-light rounded-md focus:outline-none focus:border-yellow my-1"
                 />
-                  <ErrorMessage
-                    name="image"
-                    component="div"
-                    className="error text-red-600 text-sm"
-                  />
+                <ErrorMessage
+                  name="image"
+                  component="div"
+                  className="error text-red-600 text-sm"
+                />
               </div>
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="bg-yellow text-black py-2 px-6 mb-8 rounded-full hover:bg-brown-light hover:text-darker-white"
+                  className="bg-yellow text-black py-2 px-6 mb-4 mt-2 rounded-full hover:bg-brown-light hover:text-darker-white"
                 >
                   Create Recipe
                 </button>
