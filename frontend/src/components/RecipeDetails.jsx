@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   FaShareSquare,
   FaPrint,
@@ -46,6 +46,8 @@ const RecipeDetails = function ({
   const printRecipe = () => {
     window.print();
   };
+
+  const reviewRef = useRef(null);
 
   return (
     <>
@@ -212,7 +214,16 @@ const RecipeDetails = function ({
               <section className="flex border border-black h-10 px-8 items-center">
                 <p className="flex items-center">
                   <FaStar />
-                  <button className="ml-2">Leave a Review</button>
+                  <button
+                    className="ml-2"
+                    onClick={() => {
+                      reviewRef.current?.scrollIntoView({
+                        behavior: "smooth",
+                      });
+                    }}
+                  >
+                    Leave a Review
+                  </button>
                 </p>
               </section>
             </div>
@@ -293,7 +304,12 @@ const RecipeDetails = function ({
             </section>
           </div>
 
-          <ReviewList recipeId={recipe.id} />
+          <div
+            ref={reviewRef}
+            className="flex flex-col justify-center items-center"
+          >
+            <ReviewList recipeId={recipe.id} />
+          </div>
         </div>
       )}
     </>
