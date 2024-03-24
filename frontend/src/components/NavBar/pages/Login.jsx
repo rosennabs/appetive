@@ -78,7 +78,7 @@ function Login({ setAuth }) {
         Welcome back to Appetive!
       </h1>
       <form
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto max-w-lg justify-self-center"
+        className="bg-white shadow-md rounded p-10 mx-auto max-w-lg justify-self-center"
         onSubmit={formik.handleSubmit}
       >
         <div className="mb-4">
@@ -86,7 +86,7 @@ function Login({ setAuth }) {
             Email Address
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-yellow focus:border-opacity-50"
             id="email"
             name="email"
             type="email"
@@ -108,7 +108,7 @@ function Login({ setAuth }) {
             Password
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-yellow focus:border-opacity-50"
             id="password"
             name="password"
             type="password"

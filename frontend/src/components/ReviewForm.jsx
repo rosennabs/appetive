@@ -58,7 +58,7 @@ function ReviewForm({ handleSubmitReviewForm }) {
                     id="review"
                     name="review"
                     placeholder="Write your review here"
-                    className="w-full h-20 bg-transparent resize-none focus:outline-none border-2 p-2"
+                    className="w-full h-20 bg-transparent resize-none focus:outline-none border-2 p-2 rounded-xl focus:border-yellow focus:border-opacity-50"
                     value={values.review}
                     onChange={handleChange}
                   />
