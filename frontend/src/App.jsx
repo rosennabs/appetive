@@ -49,6 +49,7 @@ function App() {
             toggleSearchBar={toggleSearchBar}
             showSearchBar={showSearchBar}
             username={username}
+            setSelected={setSelected}
           />
           <Routes>
             <Route
