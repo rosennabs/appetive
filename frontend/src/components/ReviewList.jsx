@@ -149,7 +149,7 @@ const ReviewList = ({ recipeId }) => {
                         reject={rejectDelete}
                         acceptClassName="bg-yellow px-4 py-2 rounded-md shadow-md mr-2 hover:bg-brown-light hover:text-darker-white"
                         rejectClassName="bg-yellow px-4 py-2 rounded-md shadow-md hover:bg-brown-light hover:text-darker-white mr-2 ml-28"
-                        className="bg-white drop-shadow-2xl  px-8 py-5 rounded-3xl w-80"
+                        className="bg-white shadow-2xl  px-8 py-5 rounded-3xl w-80"
                       />
                     </>
                   ) : (
