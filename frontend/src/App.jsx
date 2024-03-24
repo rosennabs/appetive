@@ -35,10 +35,13 @@ function App() {
             showSearchBar={showSearchBar}
             setSelected={setSelected}
           />
-        </Router>
-
+        
         <Routes>
-          <Route path="/food-trivia" element={<FoodTrivia />} />
+          <Route
+            path="/food-trivia"
+            element={
+              <FoodTrivia
+            />} />
           <Route
             path="/trivia-game"
             element={
@@ -51,7 +54,8 @@ function App() {
             }
           />
         </Routes>
-
+        </Router>
+        
         {selectedRecipe ? (
           <RecipeDetails
             recipe={selectedRecipe}

@@ -19,8 +19,7 @@ import RecipeForm from "../RecipeForm";
 import useAuthentication from "../../hooks/useAuthentication";
 import AuthenticationError from "../AuthenticationError";
 import axios from "axios";
-import FoodTrivia from "../FoodTrivia";
-import TriviaGame from "../TriviaGame";
+
 
 function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
   const { isAuthenticated, setAuth, handleLogout } = useAuthentication();

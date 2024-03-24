@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function TriviaGame({ trivia, fetchRandomTrivia, knownCount, unknownCount }) {
+export default function TriviaGame({ FoodTrivia, fetchRandomTrivia, knownCount, unknownCount }) {
  return (
        <div>
-         <p> {trivia} </p>
+         <p> {FoodTrivia} </p>
      <button
        type="button"
        onClick={() => fetchRandomTrivia(false)}
