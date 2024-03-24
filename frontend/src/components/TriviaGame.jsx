@@ -66,7 +66,7 @@ export default function TriviaGame() {
                 </div>
               </>
             ) : (
-              <p>Loading...</p>
+              <p className="text-3xl">Loading...</p>
             )}
           </div>
       
