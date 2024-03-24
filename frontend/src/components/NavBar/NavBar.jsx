@@ -33,7 +33,6 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
         const response = await axios.get(`http://localhost:8080/api/user/`, {
           headers: { token: jwtToken },
         });
-        console.log(response);
         setUsername(response.data);
       } catch (error) {
         console.error("Error fetching username:", error);
