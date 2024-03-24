@@ -22,6 +22,7 @@ import useAuthentication from "../../hooks/useAuthentication";
 import AuthenticationError from "../AuthenticationError";
 import axios from "axios";
 
+
 function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
   const { isAuthenticated, setAuth } = useAuthentication();
   const [username, setUsername] = useState("");
@@ -59,10 +60,7 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
             <FaHome className="size-7" />
           </NavLink>
           <NavLink to="/about">ABOUT US</NavLink>
-          <NavLink to="/browse-recipes" className="dropdown-menu">
-            BROWSE RECIPES
-            <FaCaretDown className="ml-1" />
-          </NavLink>
+          <NavLink to="/food-trivia" onClick={()=> setSelected(null)}>FOOD TRIVIA</NavLink>
           <NavLink to="/my-profile">
             MY PROFILE
             <FaCaretDown className="ml-1" />
@@ -98,21 +96,19 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
           alt="Header Image"
           className="h-auto max-w-full mt-16"
         />
-        <ImgBtnLink to="/add-recipe">MAKE YOUR RECIPE</ImgBtnLink>
+       <ImgBtnLink to="/add-recipe" onClick={() => setSelected(null)}>MAKE YOUR RECIPE</ImgBtnLink>
       </div>
 
-      {/* Search bar */}
-      <div>{showSearchBar && <SearchBar />}</div>
-
-      <ImgBtnLink to="/add-recipe" onClick={() => setSelected(null)}>
-        MAKE YOUR RECIPE
-      </ImgBtnLink>
+        <div>
+          {showSearchBar && <SearchBar />}
+        </div>
 
       <Routes>
         <Route path="/my-profile" element={<Profile username={username} />} />
         <Route path="/login" element={<Login setAuth={setAuth} />} />
         <Route path="/register" element={<Register setAuth={setAuth} />} />
         <Route path="/about" element={<About />} />
+        
         <Route
           path="/add-recipe"
           element={
