@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "../SearchBar";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, userNavigate, useNavigate } from "react-router-dom";
 import {
   Nav,
   NavLink,
@@ -21,9 +21,17 @@ import AuthenticationError from "../AuthenticationError";
 import axios from "axios";
 
 function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
-  const { isAuthenticated, setAuth, handleLogout } = useAuthentication();
+  const { isAuthenticated, setAuth } = useAuthentication();
   const [username, setUsername] = useState("");
+  const navigate = useNavigate();
   const token = localStorage.token;
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.clear();
+    setAuth(false);
+    navigate("/");
+  };
 
   useEffect(() => {
     const getUsername = async (token) => {
@@ -31,7 +39,6 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
         const response = await axios.post(`http://localhost:8080/api/user/`, {
           token,
         });
-        console.log(response);
         setUsername(response.data);
       } catch (error) {
         console.error("Error fetching username:", error);
@@ -92,13 +99,12 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
         <ImgBtnLink to="/add-recipe">MAKE YOUR RECIPE</ImgBtnLink>
       </div>
 
-           {/* Search bar */}
-        
-          <div>
-            {showSearchBar && <SearchBar />}
-          </div>
-      
-      <ImgBtnLink to="/add-recipe" onClick={() => setSelected(null)}>MAKE YOUR RECIPE</ImgBtnLink>
+      {/* Search bar */}
+      <div>{showSearchBar && <SearchBar />}</div>
+
+      <ImgBtnLink to="/add-recipe" onClick={() => setSelected(null)}>
+        MAKE YOUR RECIPE
+      </ImgBtnLink>
 
       <Routes>
         <Route path="/my-profile" element={<Profile username={username} />} />
