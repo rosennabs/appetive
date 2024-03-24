@@ -39,7 +39,8 @@ export function useFoodTrivia() {
     setFoodTrivia,
     foodTrivia,
     knownCount,
-    unknownCount
-  }
+    unknownCount,
+    setUnknownCount,
+  };
   
 }

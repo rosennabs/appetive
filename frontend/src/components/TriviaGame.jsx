@@ -1,49 +1,60 @@
-import React, { useContext } from 'react';
-import { AppDataContext } from '../contexts/AppDataContext';
+import React, { useContext } from "react";
+import { AppDataContext } from "../contexts/AppDataContext";
+import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 
 
 export default function TriviaGame() {
-  const { foodTrivia, fetchRandomTrivia, knownCount, unknownCount } = useContext(AppDataContext);
+  const { foodTrivia, fetchRandomTrivia, knownCount, unknownCount } =
+    useContext(AppDataContext);
 
-  
   return (
-    <div className="flex flex-col items-center font-bold text-amber-700 text-center relative">
+    <div className="flex flex-col font-bold text-black text-center relative">
       <img
         src={require("../Images/simmering.jpg")}
         alt="culinary Image"
         className="w-full"
       />
-      <div className="bg-gray-100 bg-opacity-70 py-16 absolute top-28 left-28 right-28 bottom-28">
-         {foodTrivia ? (
+      <div className="bg-amber-100 bg-opacity-80 py-16 absolute top-28 left-28 right-28 bottom-28 flex flex-col justify-center items-center p-16">
+        {foodTrivia ? (
           <>
-        <p> {foodTrivia} </p> 
+            <p className="flex flex-row text-4xl mb-24">
 
-        <button
-          type="button"
-          onClick={() => fetchRandomTrivia(false)}
-          className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-5 px-12 mr-16 rounded-md text-3xl"
-        >
-          Never heard that!
-        </button>
+              <FaQuoteLeft className="h-4"/>
+              {foodTrivia}
+              <FaQuoteRight className="h-4"/>
+            </p>
 
-        <button
-          type="button"
-          onClick={() => fetchRandomTrivia(true)}
-          className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-5 px-12 rounded-md text-3xl"
-        >
-          Totally knew that!
-        </button>
+            <div>
+              <button
+                type="button"
+                onClick={() => fetchRandomTrivia(false)}
+                className="bg-red-600 hover:bg-red-700 text-white font-bold py-5 px-12 mr-16 rounded-md text-3xl"
+              >
+                
+                Never heard that!
+              </button>
 
-        <div>
-          <p>Known Count: {knownCount}</p>
-          <p>Unknown Count: {unknownCount}</p>
+              <button
+                type="button"
+                onClick={() => fetchRandomTrivia(true)}
+                className="bg-green-700 hover:bg-green-800 text-white font-bold py-5 px-12 rounded-md text-3xl"
+              >
+                Totally knew that!
+              </button>
             </div>
-            </>
+
+
+            <div className="flex flex-row items-center justify-between text-5xl mt-32">
+              
+              <p className=" text-red-600 mr-64">{unknownCount} </p>
+             
+              <p className=" text-green-700 ml-32">{knownCount}</p>
+            </div>
+          </>
         ) : (
           <p>Loading...</p>
         )}
       </div>
     </div>
-
   );
 }
