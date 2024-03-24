@@ -17,7 +17,7 @@ export default function TriviaResult({ unknownCount, knownCount }) {
             </h1>
 
             <div className="text-5xl bg-green-700 p-8 mt-24 mx-32 rounded-md text-white">
-              <p>Score : {`${knownCount}/${unknownCount}`}</p>
+              <p>Score : {`${knownCount}/${knownCount + unknownCount}`}</p>
             </div>
           </div>
         ) : (
@@ -28,7 +28,7 @@ export default function TriviaResult({ unknownCount, knownCount }) {
             </h1>
 
             <div className="text-5xl bg-red-600 p-8 mt-24 mx-32 rounded-md text-white">
-              <p>Score : {`${knownCount}/${unknownCount}`}</p>
+              <p>Score : {`${knownCount}/${knownCount + unknownCount}`}</p>
             </div>
           </div>
         )}

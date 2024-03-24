@@ -2,15 +2,19 @@ import React, { useContext, useState } from "react";
 import { AppDataContext } from "../contexts/AppDataContext";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import TriviaResult from "./TriviaResult";
+import { useNavigate } from 'react-router-dom';
 
 export default function TriviaGame() {
   const { foodTrivia, fetchRandomTrivia, knownCount, unknownCount } =
     useContext(AppDataContext);
 
+  const navigate = useNavigate();
+  
   const [endGameClicked, setEndGameClicked] = useState(false);
 
   const handleEndGameClick = () => {
     setEndGameClicked(true);
+    navigate('/trivia-result');
   };
 
   return (
