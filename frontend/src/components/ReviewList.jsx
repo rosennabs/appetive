@@ -141,7 +141,7 @@ const ReviewList = ({ recipeId }) => {
                         onHide={() => setVisible(false)}
                         message={
                           <p className="text-lg py-5 text-red-400 mb-2">
-                            <FaExclamationCircle className="text-xl inline-block mr-2"/>
+                            <FaExclamationCircle className="text-xl inline-block mr-2" />
                             Do you want to delete?
                           </p>
                         }
@@ -169,7 +169,12 @@ const ReviewList = ({ recipeId }) => {
           <p className="text-yellow mb-5 text-lg">
             We appreciate your feedback!
           </p>
-          <ReviewForm handleSubmitReviewForm={handleSubmit} />
+
+          {isAuthenticated ? (
+            <ReviewForm handleSubmitReviewForm={handleSubmit} />
+          ) : (
+            <p className="hidden">Login/ Sign up to leave a review</p>
+          )}
         </div>
       </div>
     </>
