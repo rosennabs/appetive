@@ -1,12 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AppDataContext } from "../contexts/AppDataContext";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
+import TriviaResult from "./TriviaResult";
 
 export default function TriviaGame() {
   const { foodTrivia, fetchRandomTrivia, knownCount, unknownCount } =
     useContext(AppDataContext);
+  
+  const [endGameClicked, setEndGameClicked] = useState(false);
+
+  const handleEndGameClick = () => {
+    setEndGameClicked(true);
+
+  };
 
   return (
+    <>
+      {!endGameClicked ? (
+
     <div className="flex flex-col font-bold text-black text-center relative">
       <img
         src={require("../Images/simmering.jpg")}
@@ -48,6 +59,7 @@ export default function TriviaGame() {
             <div className="mt-16 underline text-2xl text-amber-700 flex flex-row justify-end items-end w-full">
               <button
                 type="button"
+                onClick={()=> handleEndGameClick()}
                 
               >
                 End Game
@@ -58,6 +70,10 @@ export default function TriviaGame() {
           <p>Loading...</p>
         )}
       </div>
-    </div>
+        </div>
+      ) : (
+        <TriviaResult />
+      )}
+    </>
   );
 }

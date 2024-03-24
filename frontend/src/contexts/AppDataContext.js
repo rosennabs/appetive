@@ -24,6 +24,7 @@ export const AppDataProvider = ({ children }) => {
     knownCount,
     unknownCount,
     setUnknownCount,
+    setKnownCount,
   } = useFoodTrivia();
   
 
@@ -41,6 +42,7 @@ export const AppDataProvider = ({ children }) => {
         knownCount,
         unknownCount,
         setUnknownCount,
+        setKnownCount,
       }}
     >
       {children}

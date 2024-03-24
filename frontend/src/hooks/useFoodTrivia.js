@@ -41,6 +41,7 @@ export function useFoodTrivia() {
     knownCount,
     unknownCount,
     setUnknownCount,
+    setKnownCount,
   };
   
 }

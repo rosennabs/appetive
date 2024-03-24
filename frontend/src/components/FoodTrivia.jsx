@@ -7,7 +7,7 @@ import { AppDataContext } from '../contexts/AppDataContext';
 
 
 export default function FoodTrivia() {
-   const {  fetchRandomTrivia,  setFoodTrivia, setUnknownCount } = useContext(AppDataContext);
+   const {  fetchRandomTrivia,  setFoodTrivia, setUnknownCount, setKnownCount } = useContext(AppDataContext);
   
   const [startClicked, setStartClicked] = useState(false);
 
@@ -15,6 +15,7 @@ export default function FoodTrivia() {
 
     setFoodTrivia(null);
     setUnknownCount(0);
+    setKnownCount(0);
     setStartClicked(true);
     fetchRandomTrivia();
     
