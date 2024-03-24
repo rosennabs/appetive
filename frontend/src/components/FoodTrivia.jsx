@@ -1,20 +1,30 @@
-import React, {useState} from "react";
-
+import React, {useState, useContext} from "react";
 import { PiArrowFatLinesDownFill } from "react-icons/pi";
 import TriviaGame from "./TriviaGame";
+import { AppDataContext } from '../contexts/AppDataContext';
+
+
 
 
 export default function FoodTrivia() {
+   const {  fetchRandomTrivia,  setFoodTrivia } = useContext(AppDataContext);
   
   const [startClicked, setStartClicked] = useState(false);
 
   const handleStartClick = () => {
+
+    setFoodTrivia(null);
     setStartClicked(true);
+    fetchRandomTrivia();
+    
   };
+
+
 
   return (
     <>
       {!startClicked ? (
+        
         <div className="flex flex-col items-center font-bold text-amber-700 text-center relative">
           <img
             src={require("../Images/simmering.jpg")}

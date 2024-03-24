@@ -3,7 +3,7 @@ import { AppDataContext } from '../contexts/AppDataContext';
 
 
 export default function TriviaGame() {
-  const { FoodTrivia, fetchRandomTrivia, knownCount, unknownCount } = useContext(AppDataContext);
+  const { foodTrivia, fetchRandomTrivia, knownCount, unknownCount } = useContext(AppDataContext);
 
   
   return (
@@ -14,7 +14,9 @@ export default function TriviaGame() {
         className="w-full"
       />
       <div className="bg-gray-100 bg-opacity-70 py-16 absolute top-28 left-28 right-28 bottom-28">
-        <p> {FoodTrivia} </p>
+         {foodTrivia ? (
+          <>
+        <p> {foodTrivia} </p> 
 
         <button
           type="button"
@@ -35,7 +37,11 @@ export default function TriviaGame() {
         <div>
           <p>Known Count: {knownCount}</p>
           <p>Unknown Count: {unknownCount}</p>
-        </div>
+            </div>
+            </>
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
     </div>
 

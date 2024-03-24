@@ -14,7 +14,7 @@ import {
 } from "react-router-dom";
 import Footer from "./components/Footer";
 import FoodTrivia from "./components/FoodTrivia";
-import TriviaGame from "./components/TriviaGame";
+
 
 
 
@@ -40,13 +40,7 @@ function App() {
             path="/food-trivia"
             element={
               <FoodTrivia
-            />} />
-          <Route
-            path="/trivia-game"
-            element={
-              <TriviaGame />
-            }
-          />
+            />} />        
         </Routes>
         </Router>
         
