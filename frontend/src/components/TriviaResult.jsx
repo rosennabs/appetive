@@ -1,6 +1,9 @@
-import React from "react";
+import React, {useContext} from "react";
+import { AppDataContext } from "../contexts/AppDataContext";
 
-export default function TriviaResult({ unknownCount, knownCount }) {
+export default function TriviaResult() {
+const { knownCount, unknownCount } = useContext(AppDataContext);
+  
   return (
     <div className="flex flex-col font-bold text-black text-center relative">
       <img

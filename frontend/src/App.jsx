@@ -10,7 +10,6 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Switch,
 } from "react-router-dom";
 import Footer from "./components/Footer";
 import FoodTrivia from "./components/FoodTrivia";
@@ -19,10 +18,12 @@ import TriviaResult from "./components/TriviaResult";
 
 
 
+
 function App() {
   const { selectedRecipe, setSelected } = useSelectedRecipe();
   const { showSearchBar, toggleSearchBar } = useSearchBar();
   const { shareLink, generateShareLink, copySuccess, setCopySuccess } = useShareLink();
+  
   
   
 
@@ -37,8 +38,9 @@ function App() {
           />
         
         <Routes>
-          <Route path="/food-trivia" element={<FoodTrivia />} />
-            <Route path="/trivia-result" element={<TriviaResult />} />
+            <Route path="/food-trivia" element={<FoodTrivia />} />
+            <Route path="/trivia-result" element={<TriviaResult/>} />
+            
         </Routes>
         </Router>
         

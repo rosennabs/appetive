@@ -1,16 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { AppDataContext } from "../contexts/AppDataContext";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
-import TriviaResult from "./TriviaResult";
 import { useNavigate } from 'react-router-dom';
+
 
 export default function TriviaGame() {
   const { foodTrivia, fetchRandomTrivia, knownCount, unknownCount } =
     useContext(AppDataContext);
 
   const navigate = useNavigate();
-  
-  const [endGameClicked, setEndGameClicked] = useState(false);
 
   const handleEndGameClick = () => {
     if (knownCount === 0 && unknownCount === 0) {
@@ -22,7 +20,7 @@ export default function TriviaGame() {
 
   return (
     <>
-      {!endGameClicked ? (
+      
         <div className="flex flex-col font-bold text-black text-center relative">
           <img
             src={require("../Images/simmering.jpg")}
@@ -71,12 +69,9 @@ export default function TriviaGame() {
               <p>Loading...</p>
             )}
           </div>
-        </div>
-      ) : (
-          <TriviaResult
-            unknownCount={unknownCount}
-            knownCount={knownCount} />
-      )}
+      
+   </div>
+          
     </>
   );
 }
