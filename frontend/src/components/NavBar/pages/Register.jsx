@@ -1,45 +1,64 @@
 import React, { Fragment, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { FaExclamationCircle } from "react-icons/fa";
 
 function Register({ setAuth }) {
-  const [inputs, setInputs] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
   const navigate = useNavigate();
+  
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
 
-  const { name, email, password } = inputs;
+    validationSchema: Yup.object({
+      name: Yup.string().required(
+        <div>
+          <FaExclamationCircle className="inline-block mr-1" /> 
+          Name is required
+        </div>
+      ),
+      email: Yup.string()
+        .email(
+          <div>
+            <FaExclamationCircle className="inline-block mr-1" /> 
+            Invalid email address
+          </div>
+        )
+        .required(
+          <div>
+            <FaExclamationCircle className="inline-block mr-1" /> 
+            Email is required
+          </div>
+        ),
+      password: Yup.string().required(
+        <div>
+          <FaExclamationCircle className="inline-block mr-1" /> 
+          Password is required
+        </div>
+      ),
+    }),
 
-  //Function to handle onChange for inputs
-  const handleOnChange = (e) => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
-  };
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.post(
+          `http://localhost:8080/auth/register`,
+          values
+        );
 
-  // Function to handle onSubmit for signup
-  const handleOnSubmitForm = async (e) => {
-    e.preventDefault();
-
-    const body = { name, email, password };
-
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/auth/register",
-        body
-      );
-
-      //Save token in localStorge
-      localStorage.setItem("token", response.data.token);
-
-      setAuth(true);
-
-      navigate("/");
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
+        //Save token in localStorge
+        localStorage.setItem("token", response.data.token);
+        setAuth(true);
+        navigate("/");
+      } catch (error) {
+        console.error(error.message);
+      }
+    },
+  });
 
   return (
     <Fragment>
@@ -52,13 +71,10 @@ function Register({ setAuth }) {
 
       <form
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto max-w-lg justify-self-center"
-        onSubmit={handleOnSubmitForm}
+        onSubmit={formik.handleSubmit}
       >
         <div className="mb-4">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="name"
-          >
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
             Your Name
           </label>
           <input
@@ -67,16 +83,17 @@ function Register({ setAuth }) {
             name="name"
             type="text"
             placeholder="Name"
-            value={name}
-            onChange={(e) => handleOnChange(e)}
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
+          {formik.touched.name && formik.errors.name ? (
+            <div className="text-red-500 text-sm">{formik.errors.name}</div>
+          ) : null}
         </div>
 
         <div className="mb-4">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="email"
-          >
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
             Email Address
           </label>
           <input
@@ -85,9 +102,13 @@ function Register({ setAuth }) {
             type="email"
             name="email"
             placeholder="Email"
-            value={email}
-            onChange={(e) => handleOnChange(e)}
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
+          {formik.touched.email && formik.errors.email ? (
+            <div className="text-red-500 text-sm">{formik.errors.email}</div>
+          ) : null}
         </div>
 
         <div className="mb-4">
@@ -103,9 +124,13 @@ function Register({ setAuth }) {
             type="password"
             name="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => handleOnChange(e)}
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
+          {formik.touched.password && formik.errors.password ? (
+            <div className="text-red-500 text-sm">{formik.errors.password}</div>
+          ) : null}
         </div>
 
         <div className="pt-3">
@@ -118,7 +143,10 @@ function Register({ setAuth }) {
 
           <p className="mt-3 text-sm text-gray-500">
             Already have an account?
-            <Link to="/login" className="text-brown-light font-bold underline ml-1">
+            <Link
+              to="/login"
+              className="text-brown-light font-bold underline ml-1"
+            >
               Log in
             </Link>
           </p>
