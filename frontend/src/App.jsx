@@ -18,28 +18,28 @@ import axios from "axios";
 import HomePage from "./components/HomePage";
 
 function App() {
-  const { setAuth } = useAuthentication();
+  const { setAuth, username } = useAuthentication();
   const { selectedRecipe, setSelected } = useSelectedRecipe();
   const { showSearchBar, toggleSearchBar } = useSearchBar();
   const { shareLink, generateShareLink, copySuccess, setCopySuccess } =
     useShareLink();
-  const [username, setUsername] = useState("");
-  const token = localStorage.token;
+  // const [username, setUsername] = useState("");
+  // const token = localStorage.token;
 
-  useEffect(() => {
-    const getUsername = async (token) => {
-      try {
-        const response = await axios.post(`http://localhost:8080/api/user/`, {
-          token,
-        });
-        console.log(response);
-        setUsername(response.data);
-      } catch (error) {
-        console.error("Error fetching username:", error);
-      }
-    };
-    getUsername(token);
-  }, []);
+  // useEffect(() => {
+  //   const getUsername = async (token) => {
+  //     try {
+  //       const response = await axios.post(`http://localhost:8080/api/user/`, {
+  //         token,
+  //       });
+  //       console.log(response);
+  //       setUsername(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching username:", error);
+  //     }
+  //   };
+  //   getUsername(token);
+  // }, []);
 
   return (
     <>
