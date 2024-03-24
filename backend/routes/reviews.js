@@ -1,6 +1,6 @@
 const authorization = require("../middleware/authorization");
 const router = require("express").Router();
-const { getReviewsByRecipeId, addReview } = require("../db/queries/reviews")
+const { getReviewsByRecipeId, addReview, deleteReview } = require("../db/queries/reviews");
 
 // Get review
 router.get("/:id", async (req, res) => {
@@ -45,7 +45,15 @@ router.post("/:id", authorization, async (req, res) => {
 });
 
 //Delete a review
-
+router.delete("/:id/delete", authorization, async (req, res) => {
+  const review_id = req.params.id;
+  try {
+    const deletedReview = await deleteReview(review_id);
+    res.status(200).send({ message: 'Review deleted successfully.', deletedReview });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server error from DeleteReview route");
+  }
+});
 
 module.exports = router;
-
