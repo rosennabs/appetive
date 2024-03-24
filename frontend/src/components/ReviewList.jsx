@@ -3,13 +3,15 @@ import axios from "axios";
 import ReviewForm from "./ReviewForm";
 import Rating from "react-rating";
 import { format } from "date-fns";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt, FaExclamationCircle } from "react-icons/fa";
 import useAuthentication from "../hooks/useAuthentication";
 import { jwtDecode } from "jwt-decode";
+import { ConfirmDialog } from "primereact/confirmdialog";
 
 const ReviewList = ({ recipeId }) => {
   const [recipeReviews, setRecipeReviews] = useState([]);
   const [updated, setUpdated] = useState(0);
+  const [visible, setVisible] = useState(false);
   const { isAuthenticated } = useAuthentication();
 
   const token = localStorage.token;
@@ -31,19 +33,6 @@ const ReviewList = ({ recipeId }) => {
       console.error("Error submitting review: ", error);
     }
   };
-
-  const handleDelete  = async (review_id) => {
-    try {
-      const res = await axios.delete(`http://localhost:8080/api/reviews/${review_id}/delete`, 
-      {
-        headers: { token: token },
-      });
-      // console.log("Res from delete fucntion", res.data);
-      setUpdated((prev) => ++prev);
-    } catch (error) {
-      console.error("Error deleting review: ", error);
-    }
-  }
 
   useEffect(() => {
     const fetchReviews = async function () {
@@ -77,13 +66,34 @@ const ReviewList = ({ recipeId }) => {
     fetchReviews();
   }, [recipeId, updated]);
 
+  const acceptDelete = async (review_id) => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:8080/api/reviews/${review_id}/delete`,
+        {
+          headers: { token: token },
+        }
+      );
+      console.log("Res from delete fucntion", res.data);
+      console.log("Accepted");
+      setUpdated((prev) => ++prev);
+      setVisible(false);
+    } catch (error) {
+      console.error("Error deleting review: ", error);
+    }
+  };
+
+  const rejectDelete = () => {
+    setVisible(false);
+  };
+
   return (
     <>
-        <img
-          src={require("../Images/review-header.png")}
-          alt="Header Image"
-          className="h-auto w-4/5 mt-24"
-        />
+      <img
+        src={require("../Images/review-header.png")}
+        alt="Header Image"
+        className="h-auto w-4/5 mt-24"
+      />
       <div className="w-2/3 my-8 p-8 justify-center">
         <div>
           {recipeReviews.length !== 0 ? (
@@ -119,13 +129,31 @@ const ReviewList = ({ recipeId }) => {
                     <p className="w-full break-all">{review.review}</p>
                   </div>
 
-                  {isAuthenticated && review.user_id == current_user_id ? (
-                    <FaTrashAlt 
-                      className="grid justify-items-end text-red-400 text-lg hover:cursor-pointer hover:rotate-12 hover:text-red-700"
-                      onClick={() => handleDelete(review.id)}
-                    />
+                  {isAuthenticated && review.user_id === current_user_id ? (
+                    <>
+                      <FaTrashAlt
+                        className="grid justify-items-end text-red-300 text-lg hover:cursor-pointer hover:rotate-12 hover:text-red-600"
+                        onClick={() => setVisible(true)}
+                        label="Delete"
+                      />
+                      <ConfirmDialog
+                        visible={visible}
+                        onHide={() => setVisible(false)}
+                        message={
+                          <p className="text-lg py-5 text-red-400 mb-2">
+                            <FaExclamationCircle className="text-xl inline-block mr-2"/>
+                            Do you want to delete?
+                          </p>
+                        }
+                        accept={() => acceptDelete(review.id)}
+                        reject={rejectDelete}
+                        acceptClassName="bg-yellow px-4 py-2 rounded-md shadow-md mr-2 hover:bg-brown-light hover:text-darker-white"
+                        rejectClassName="bg-yellow px-4 py-2 rounded-md shadow-md hover:bg-brown-light hover:text-darker-white mr-2 ml-28"
+                        className="bg-white drop-shadow-2xl  px-8 py-5 rounded-3xl w-80"
+                      />
+                    </>
                   ) : (
-                    <FaTrashAlt className="hidden"/>
+                    <FaTrashAlt className="hidden" />
                   )}
                 </div>
               </div>
