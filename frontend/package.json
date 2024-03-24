@@ -11,6 +11,7 @@
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "formik": "^2.4.5",
+    "jwt-decode": "^4.0.0",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
     "react": "^18.2.0",
