@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Rating from "react-rating";
 import * as Yup from "yup";
+import { FaExclamationCircle } from "react-icons/fa";
 
 function ReviewForm({ handleSubmitReviewForm }) {
   const initialValues = {
@@ -10,7 +11,12 @@ function ReviewForm({ handleSubmitReviewForm }) {
   };
 
   const validationSchema = Yup.object().shape({
-    review: Yup.string().required("* Review is required!"),
+    review: Yup.string().required(
+      <div>
+        <FaExclamationCircle className="inline-block mr-1" /> Review can't be
+        blank
+      </div>
+    ),
   });
 
   return (
