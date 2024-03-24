@@ -19,7 +19,8 @@ import RecipeForm from "../RecipeForm";
 import useAuthentication from "../../hooks/useAuthentication";
 import AuthenticationError from "../AuthenticationError";
 import axios from "axios";
-import FoodTrivia from "./pages/FoodTrivia";
+import FoodTrivia from "../FoodTrivia";
+import TriviaGame from "../TriviaGame";
 
 function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
   const { isAuthenticated, setAuth, handleLogout } = useAuthentication();
@@ -99,7 +100,7 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
         <Route path="/login" element={<Login setAuth={setAuth} />} />
         <Route path="/register" element={<Register setAuth={setAuth} />} />
         <Route path="/about" element={<About />} />
-        <Route path="/food-trivia" element={<FoodTrivia />} />
+        
         <Route
           path="/add-recipe"
           element={
