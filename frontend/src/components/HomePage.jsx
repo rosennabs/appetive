@@ -1,3 +1,7 @@
+import RecipeDetails from "./RecipeDetails";
+import SearchForm from "./SearchForm";
+import Recipes from "./Recipes";
+
 function HomePage({
   selectedRecipe,
   setSelected,
