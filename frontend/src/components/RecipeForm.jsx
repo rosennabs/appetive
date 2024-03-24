@@ -169,7 +169,7 @@ function RecipeForm() {
           validationSchema={validationSchema}
         >
           {({ values, handleChange }) => (
-            <Form className="bg-white rounded-xl p-12 drop-shadow-3xl">
+            <Form className="bg-white rounded-xl p-12 shadow-2xl">
               <span className="text-sm italic text-red-500">* Required</span>
               <div className="my-5">
                 <label className="block font-bold text-lg" htmlFor="title">
