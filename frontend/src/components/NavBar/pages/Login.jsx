@@ -7,6 +7,7 @@ import { FaExclamationCircle } from "react-icons/fa";
 
 function Login({ setAuth }) {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -18,20 +19,20 @@ function Login({ setAuth }) {
       email: Yup.string()
         .email(
           <div>
-            <FaExclamationCircle className="inline-block mr-1" /> Invalid email
-            address
+            <FaExclamationCircle className="inline-block mr-1" />
+            Invalid email address
           </div>
         )
         .required(
           <div>
-            <FaExclamationCircle className="inline-block mr-1" /> Email is
-            required
+            <FaExclamationCircle className="inline-block mr-1" />
+            Email is required
           </div>
         ),
       password: Yup.string().required(
         <div>
-          <FaExclamationCircle className="inline-block mr-1" /> Password is
-          required
+          <FaExclamationCircle className="inline-block mr-1" />
+          Password is required
         </div>
       ),
     }),
@@ -48,6 +49,21 @@ function Login({ setAuth }) {
         setAuth(true);
         navigate("/");
       } catch (error) {
+        if (error.response.status === 401) {
+          setError(
+            <div>
+              <FaExclamationCircle className="inline-block mr-1" />
+              Invalid email or password. Please try again.
+            </div>
+          );
+        } else {
+          setError(
+            <div>
+              <FaExclamationCircle className="inline-block mr-1" />
+              An error occured. Please try again later.
+            </div>
+          );
+        }
         console.error(error.message);
       }
     },
@@ -105,6 +121,7 @@ function Login({ setAuth }) {
             <div className="text-red-500 text-sm">{formik.errors.password}</div>
           ) : null}
         </div>
+        <p className="text-red-500 text-sm mb-4">{error}</p>
 
         <div className="pt-3">
           <button
