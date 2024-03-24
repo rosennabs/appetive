@@ -49,7 +49,7 @@ const useAppData = () => {
       };
 
       // Make the API request
-      if (recipeId >= 5) {
+      if (recipeId >= 10) {
         response = await axios.request(options);
       } else {
         response = await axios.get(
@@ -74,7 +74,7 @@ const useAppData = () => {
         instructions: recipe.instructions,
         sourceName: recipe.sourceName,
         sourceUrl: recipe.sourceUrl,
-        counter_attempt: recipe.counter_attempt
+        counter_attempt: recipe.counter_attempt,
       };
       // console.log("Extracted Recipe Info: ", extractedRecipeInfo);
       return extractedRecipeInfo;
@@ -111,7 +111,7 @@ const useAppData = () => {
       cuisine: values.cuisine,
       type: values.type,
       diet: values.diet ? values.diet.join(",") : "", // Check if values.diet is defined
-      intolerances: values.intolerances ? values.intolerances.join(",") : "", 
+      intolerances: values.intolerances ? values.intolerances.join(",") : "",
       minCalories: values.minCalories,
       maxCalories: values.maxCalories,
     };
