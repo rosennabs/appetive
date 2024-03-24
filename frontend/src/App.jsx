@@ -74,6 +74,7 @@ function App() {
               path="/my-profile"
               element={<Profile username={username} />}
             />
+            <Route path="/add-recipe" element={<RecipeForm />} />
           </Routes>
           <Footer />
         </Router>
