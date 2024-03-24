@@ -1,6 +1,7 @@
 import { createContext } from "react";
 
 import useAppData from "../hooks/useAppData";
+import { useFoodTrivia } from "../hooks/useFoodTrivia";
 
 export const AppDataContext = createContext();
 
@@ -15,6 +16,14 @@ export const AppDataProvider = ({ children }) => {
     setRecipes,
     searchClicked,
   } = useAppData();
+
+  const {
+    fetchRandomTrivia,
+    setFoodTrivia,
+    foodTrivia,
+    knownCount,
+    unknownCount,
+  } = useFoodTrivia();
   
 
   return (
@@ -25,6 +34,11 @@ export const AppDataProvider = ({ children }) => {
         fetchRecipeInfo,
         setRecipes,
         searchClicked,
+        fetchRandomTrivia,
+        setFoodTrivia,
+        foodTrivia,
+        knownCount,
+        unknownCount,
       }}
     >
       {children}

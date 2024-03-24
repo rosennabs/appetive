@@ -13,7 +13,6 @@ import {
   Switch,
 } from "react-router-dom";
 import Footer from "./components/Footer";
-import { useFoodTrivia } from "./hooks/useFoodTrivia";
 import FoodTrivia from "./components/FoodTrivia";
 import TriviaGame from "./components/TriviaGame";
 
@@ -23,7 +22,7 @@ function App() {
   const { selectedRecipe, setSelected } = useSelectedRecipe();
   const { showSearchBar, toggleSearchBar } = useSearchBar();
   const { shareLink, generateShareLink, copySuccess, setCopySuccess } = useShareLink();
-  const { fetchRandomTrivia, setFoodTrivia, foodTrivia, knownCount, unknownCount } = useFoodTrivia();
+  
   
 
   return (
@@ -45,12 +44,7 @@ function App() {
           <Route
             path="/trivia-game"
             element={
-              <TriviaGame
-                foodTrivia={foodTrivia}
-                fetchRandomTrivia={fetchRandomTrivia}
-                knownCount={knownCount}
-                unknownCount={unknownCount}
-              />
+              <TriviaGame />
             }
           />
         </Routes>

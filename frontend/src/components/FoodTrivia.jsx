@@ -3,7 +3,9 @@ import React, {useState} from "react";
 import { PiArrowFatLinesDownFill } from "react-icons/pi";
 import TriviaGame from "./TriviaGame";
 
+
 export default function FoodTrivia() {
+  
   const [startClicked, setStartClicked] = useState(false);
 
   const handleStartClick = () => {
@@ -47,7 +49,7 @@ export default function FoodTrivia() {
           </div>
         </div>
       ) : (
-        <TriviaGame />
+          <TriviaGame />
       )}
     </>
   );
