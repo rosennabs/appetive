@@ -1,41 +1,73 @@
 import React, { Fragment, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { FaExclamationCircle } from "react-icons/fa";
 
 function Login({ setAuth }) {
-  const [inputs, setInputs] = useState({
-    email: "",
-    password: "",
-  });
-
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
-  const { email, password } = inputs;
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
 
-  //Function to handle onChange for inputs
-  const handleOnChange = (e) => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
-  };
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email(
+          <div>
+            <FaExclamationCircle className="inline-block mr-1" />
+            Invalid email address
+          </div>
+        )
+        .required(
+          <div>
+            <FaExclamationCircle className="inline-block mr-1" />
+            Email is required
+          </div>
+        ),
+      password: Yup.string().required(
+        <div>
+          <FaExclamationCircle className="inline-block mr-1" />
+          Password is required
+        </div>
+      ),
+    }),
 
-  // Function to handle onSubmit for login
-  const handleOnSubmitForm = async (e) => {
-    e.preventDefault();
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.post(
+          `http://localhost:8080/auth/login`,
+          values
+        );
 
-    try {
-      const body = { email, password };
-      const response = await axios.post(
-        "http://localhost:8080/auth/login",
-        body
-      );
-
-      //Save token to localStorage
-      localStorage.setItem("token", response.data.token);
-      setAuth(true);
-      navigate("/");
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
+        //Save token to localStorage
+        localStorage.setItem("token", response.data.token);
+        setAuth(true);
+        navigate("/");
+      } catch (error) {
+        if (error.response.status === 401) {
+          setError(
+            <div>
+              <FaExclamationCircle className="inline-block mr-1" />
+              Invalid email or password. Please try again.
+            </div>
+          );
+        } else {
+          setError(
+            <div>
+              <FaExclamationCircle className="inline-block mr-1" />
+              An error occured. Please try again later.
+            </div>
+          );
+        }
+        console.error(error.message);
+      }
+    },
+  });
 
   return (
     <Fragment>
@@ -46,25 +78,26 @@ function Login({ setAuth }) {
         Welcome back to Appetive!
       </h1>
       <form
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto max-w-lg justify-self-center"
-        onSubmit={handleOnSubmitForm}
+        className="bg-white shadow-md rounded p-10 mx-auto max-w-lg justify-self-center"
+        onSubmit={formik.handleSubmit}
       >
         <div className="mb-4">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="email"
-          >
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
             Email Address
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-yellow focus:border-opacity-50"
             id="email"
             name="email"
             type="email"
             placeholder="Email"
-            value={email}
-            onChange={(e) => handleOnChange(e)}
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
+          {formik.touched.email && formik.errors.email ? (
+            <div className="text-red-500 text-sm">{formik.errors.email}</div>
+          ) : null}
         </div>
 
         <div className="mb-4">
@@ -75,15 +108,20 @@ function Login({ setAuth }) {
             Password
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-yellow focus:border-opacity-50"
             id="password"
             name="password"
             type="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => handleOnChange(e)}
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
+          {formik.touched.password && formik.errors.password ? (
+            <div className="text-red-500 text-sm">{formik.errors.password}</div>
+          ) : null}
         </div>
+        <p className="text-red-500 text-sm mb-4">{error}</p>
 
         <div className="pt-3">
           <button
@@ -95,7 +133,10 @@ function Login({ setAuth }) {
 
           <p className="mt-3 text-sm text-gray-500">
             Don't have an account yet?
-            <Link to="/register" className="text-brown-light font-bold underline ml-1">
+            <Link
+              to="/register"
+              className="text-brown-light font-bold underline ml-1"
+            >
               Sign up now
             </Link>
           </p>
