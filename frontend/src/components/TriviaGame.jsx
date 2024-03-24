@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { AppDataContext } from "../contexts/AppDataContext";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 
-
 export default function TriviaGame() {
   const { foodTrivia, fetchRandomTrivia, knownCount, unknownCount } =
     useContext(AppDataContext);
@@ -14,14 +13,13 @@ export default function TriviaGame() {
         alt="culinary Image"
         className="w-full"
       />
-      <div className="bg-amber-100 bg-opacity-80 py-16 absolute top-28 left-28 right-28 bottom-28 flex flex-col justify-center items-center p-16">
+      <div className="bg-amber-100 bg-opacity-80 py-16 absolute top-28 left-28 right-28 bottom-28 flex flex-col justify-center items-center p-16 pb-4">
         {foodTrivia ? (
           <>
             <p className="flex flex-row text-4xl mb-24">
-
-              <FaQuoteLeft className="h-4"/>
+              <FaQuoteLeft className="h-4" />
               {foodTrivia}
-              <FaQuoteRight className="h-4"/>
+              <FaQuoteRight className="h-4" />
             </p>
 
             <div>
@@ -30,7 +28,6 @@ export default function TriviaGame() {
                 onClick={() => fetchRandomTrivia(false)}
                 className="bg-red-600 hover:bg-red-700 text-white font-bold py-5 px-12 mr-16 rounded-md text-3xl"
               >
-                
                 Never heard that!
               </button>
 
@@ -43,12 +40,18 @@ export default function TriviaGame() {
               </button>
             </div>
 
-
             <div className="flex flex-row items-center justify-between text-5xl mt-32">
-              
               <p className=" text-red-600 mr-64">{unknownCount} </p>
-             
               <p className=" text-green-700 ml-32">{knownCount}</p>
+            </div>
+
+            <div className="mt-16 underline text-2xl text-amber-700 flex flex-row justify-end items-end w-full">
+              <button
+                type="button"
+                
+              >
+                End Game
+              </button>
             </div>
           </>
         ) : (
