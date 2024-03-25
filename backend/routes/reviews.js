@@ -5,6 +5,7 @@ const {
   addReview,
   deleteReview,
 } = require("../db/queries/reviews");
+const { getUserNameById } = require("../db/queries/recipes_helpers");
 
 // Get review
 router.get("/:id", async (req, res) => {
@@ -56,7 +57,7 @@ router.delete("/:id/delete", authorization, async (req, res) => {
 });
 
 // Get username of the reviewer
-router.get("/:user_id", async (req, res) => {
+router.get("/users/:user_id", async (req, res) => {
   try {
     const userId = req.params.user_id;
     if (!userId) {
