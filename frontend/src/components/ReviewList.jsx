@@ -14,8 +14,12 @@ const ReviewList = ({ recipeId }) => {
   const [visible, setVisible] = useState(false);
   const { isAuthenticated } = useAuthentication();
 
-  const token = localStorage.token;
-  const current_user_id = jwtDecode(token).user;
+  let token, current_user_id;
+
+  if (isAuthenticated) {
+    token = localStorage.token;
+    current_user_id = jwtDecode(token).user;
+  }
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
@@ -26,7 +30,6 @@ const ReviewList = ({ recipeId }) => {
           headers: { token: token },
         }
       );
-      // console.log("Response from review: ", res.data);
       setUpdated((prev) => ++prev);
       resetForm();
     } catch (error) {
@@ -50,14 +53,7 @@ const ReviewList = ({ recipeId }) => {
           ),
         }));
 
-        console.log(reviewsData);
-
-        // Check if response is ok
-        if (reviewsResponse.status === 200) {
-          setRecipeReviews(reviewsData);
-        } else {
-          console.log("Error fetching recipe reviews");
-        }
+        setRecipeReviews(reviewsData);
       } catch (error) {
         console.error("Error", error.message);
       }
@@ -129,7 +125,7 @@ const ReviewList = ({ recipeId }) => {
                     <p className="w-full break-all">{review.review}</p>
                   </div>
 
-                  {isAuthenticated && review.user_id === current_user_id ? (
+                  {isAuthenticated && review.user_id === current_user_id && (
                     <>
                       <FaTrashAlt
                         className="grid justify-items-end text-red-300 text-lg hover:cursor-pointer hover:rotate-12 hover:text-red-600"
@@ -152,8 +148,6 @@ const ReviewList = ({ recipeId }) => {
                         className="bg-white shadow-2xl  px-8 py-5 rounded-3xl w-80"
                       />
                     </>
-                  ) : (
-                    <FaTrashAlt className="hidden" />
                   )}
                 </div>
               </div>
@@ -163,18 +157,20 @@ const ReviewList = ({ recipeId }) => {
               No reviews yet! Be the first to share your experience.
             </p>
           )}
-          <p className="text-3xl text-brown-dark mt-10 font-bold">
-            Leave a review
-          </p>
-          <p className="text-yellow mb-5 text-lg">
-            We appreciate your feedback!
-          </p>
 
-          {isAuthenticated ? (
-            <ReviewForm handleSubmitReviewForm={handleSubmit} />
-          ) : (
-            <p className="hidden">Login/ Sign up to leave a review</p>
+          {isAuthenticated && (
+            <>
+              <p className="text-3xl text-brown-dark mt-10 font-bold">
+                Leave a review
+              </p>
+              <p className="text-yellow mb-5 text-lg">
+                We appreciate your feedback!
+              </p>
+
+              <ReviewForm handleSubmitReviewForm={handleSubmit} />
+            </>
           )}
+
         </div>
       </div>
     </>
