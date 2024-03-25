@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { AppDataContext } from "../contexts/AppDataContext";
 
-export default function Recipe({ setSelected }) {
+export default function Recipes({ setSelected }) {
   //Access recipes from state
   const { state, fetchRecipeInfo, searchClicked } = useContext(AppDataContext);
   const { recipes } = state;

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "../SearchBar";
-import { BrowserRouter as Router, Route, Routes, userNavigate, useNavigate } from "react-router-dom";
 import {
   Nav,
   NavLink,
@@ -21,13 +20,11 @@ import RecipeForm from "../RecipeForm";
 import useAuthentication from "../../hooks/useAuthentication";
 import AuthenticationError from "../AuthenticationError";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
-
-function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
+function NavBar({ toggleSearchBar, showSearchBar, setSelected, username }) {
   const { isAuthenticated, setAuth } = useAuthentication();
-  const [username, setUsername] = useState("");
   const navigate = useNavigate();
-  const token = localStorage.token;
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -35,20 +32,6 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
     setAuth(false);
     navigate("/");
   };
-
-  useEffect(() => {
-    const getUsername = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/api/user/`, {
-          headers: { token: token },
-        });
-        setUsername(response.data);
-      } catch (error) {
-        console.error("Error fetching username:", error);
-      }
-    };
-    getUsername();
-  }, []);
 
   return (
     <>
@@ -60,7 +43,9 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
             <FaHome className="size-7" />
           </NavLink>
           <NavLink to="/about">ABOUT US</NavLink>
-          <NavLink to="/food-trivia" onClick={()=> setSelected(null)}>FOOD TRIVIA</NavLink>
+          <NavLink to="/food-trivia" onClick={() => setSelected(null)}>
+            FOOD TRIVIA
+          </NavLink>
           <NavLink to="/my-profile">
             MY PROFILE
             <FaCaretDown className="ml-1" />
@@ -96,32 +81,12 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
           alt="Header Image"
           className="h-auto max-w-full mt-16"
         />
-       <ImgBtnLink to="/add-recipe" onClick={() => setSelected(null)}>MAKE YOUR RECIPE</ImgBtnLink>
+        <ImgBtnLink to="/add-recipe" onClick={() => setSelected(null)}>
+          MAKE YOUR RECIPE
+        </ImgBtnLink>
       </div>
 
-        <div>
-          {showSearchBar && <SearchBar />}
-        </div>
-
-      <Routes>
-        <Route path="/my-profile" element={<Profile username={username} />} />
-        <Route path="/login" element={<Login setAuth={setAuth} />} />
-        <Route path="/register" element={<Register setAuth={setAuth} />} />
-        <Route path="/about" element={<About />} />
-        
-        <Route
-          path="/add-recipe"
-          element={
-            isAuthenticated ? (
-              <RecipeForm setAuth={setAuth} />
-            ) : (
-              <AuthenticationError />
-            )
-          }
-        />
-        <Route path="/my-favs" element={<UserFavs username={username} />} />
-        <Route path="/my-recipes" element={<UserRecipes username={username} />} />
-      </Routes>
+      <div>{showSearchBar && <SearchBar />}</div>
     </>
   );
 }
