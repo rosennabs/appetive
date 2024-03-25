@@ -34,9 +34,8 @@ function App() {
     const getUsername = async (token) => {
       try {
         const response = await axios.get(`http://localhost:8080/api/user/`, {
-          token,
+          headers: { token },
         });
-        console.log(response);
         setUsername(response.data);
       } catch (error) {
         console.error("Error fetching username:", error);
