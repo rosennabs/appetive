@@ -45,13 +45,30 @@ const ReviewList = ({ recipeId }) => {
         );
 
         // Format TIMESTAMP to display
-        const reviewsData = reviewsResponse.data.map((review) => ({
-          ...review,
-          created_at: format(
-            new Date(review.created_at),
-            "MMMM dd, yyyy - hh:mm aa"
-          ),
-        }));
+        const reviewsData = await Promise.all(
+          reviewsResponse.data.map(async (review) => {
+            try {
+              const userResponse = await axios.get(
+                `http://localhost:8080/api/reviews/users/${review.user_id}`
+              );
+              const username = userResponse.data;
+              return {
+                ...review,
+                created_at: format(
+                  new Date(review.created_at),
+                  "MMMM dd, yyyy - hh:mm aa"
+                ),
+                username: username,
+              };
+            } catch (error) {
+              console.error(
+                "Error fetching username for review:",
+                error.message
+              );
+              return review; // If error occurs, return review without username
+            }
+          })
+        );
 
         setRecipeReviews(reviewsData);
       } catch (error) {
@@ -107,7 +124,7 @@ const ReviewList = ({ recipeId }) => {
                     />
                   </div>
                   <div className="flex-col mr-14 flex-grow">
-                    <p className="text-brown-light">Appetive User</p>
+                    <p className="text-brown-light">{review.username}</p>
                     <p className="text-brown-light text-sm text-opacity-35 italic">
                       {review.created_at}
                     </p>
@@ -168,7 +185,9 @@ const ReviewList = ({ recipeId }) => {
           {isAuthenticated ? (
             <ReviewForm handleSubmitReviewForm={handleSubmit} />
           ) : (
-            <p className="italic text-gray-500 ml-5">To leave a review, please log in or create an account.</p>
+            <p className="italic text-gray-500 ml-5">
+              To leave a review, please log in or create an account.
+            </p>
           )}
         </div>
       </div>

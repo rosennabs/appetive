@@ -5,6 +5,7 @@ const {
   addReview,
   deleteReview,
 } = require("../db/queries/reviews");
+const { getUserNameById } = require("../db/queries/recipes_helpers");
 
 // Get review
 router.get("/:id", async (req, res) => {
@@ -52,6 +53,21 @@ router.delete("/:id/delete", authorization, async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error from DeleteReview route");
+  }
+});
+
+// Get username of the reviewer
+router.get("/users/:user_id", async (req, res) => {
+  try {
+    const userId = req.params.user_id;
+    if (!userId) {
+      return res.status(400).json("Invalid user ID");
+    }
+    const username = await getUserNameById(userId);
+    res.status(200).json(username);
+  } catch (error) {
+    console.error("Error in api/reviews/:user_id route:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
