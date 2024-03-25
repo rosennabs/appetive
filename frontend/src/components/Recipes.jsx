@@ -3,7 +3,7 @@ import { AppDataContext } from "../contexts/AppDataContext";
 
 export default function Recipe({ setSelected }) {
   //Access recipes from state
-  const { state, fetchRecipeInfo, searchClicked } = useContext(AppDataContext);
+  const { state, setRecipes, fetchRecipeInfo, searchClicked } = useContext(AppDataContext);
   const { recipes } = state;
 
   //Function to handle click on a recipe

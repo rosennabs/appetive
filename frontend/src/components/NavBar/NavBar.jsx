@@ -24,7 +24,7 @@ import axios from "axios";
 import { AppDataContext } from '../../contexts/AppDataContext';
 
 
-function NavBar({ setSelected }) {
+function NavBar() {
 const { toggleSearchBar, showSearchBar } = useContext(AppDataContext);
 
   const { isAuthenticated, setAuth } = useAuthentication();
@@ -100,10 +100,10 @@ const { toggleSearchBar, showSearchBar } = useContext(AppDataContext);
           alt="Header Image"
           className="h-auto max-w-full mt-16"
         />
-       <ImgBtnLink to="/add-recipe" onClick={() => setSelected(null)}>MAKE YOUR RECIPE</ImgBtnLink>
+       <ImgBtnLink to="/add-recipe" className="animate-pulse">MAKE YOUR RECIPE</ImgBtnLink>
       </div>
 
-        <div>
+        <div >
           {showSearchBar && <SearchBar />}
         </div>
 

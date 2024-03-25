@@ -33,7 +33,6 @@ function App() {
       <Fragment>
         <Router>
           <NavBar
-            setSelected={setSelected}
           />
         
         <Routes>

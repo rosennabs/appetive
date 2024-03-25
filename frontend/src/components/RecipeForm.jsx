@@ -1,7 +1,8 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import { Formik, Form, FieldArray, Field, ErrorMessage } from "formik";
 import axios from "axios";
-import { FaPlusCircle, FaTrashAlt, FaExclamationCircle } from "react-icons/fa";
+import { FaPlusCircle, FaTrashAlt, FaRegWindowClose, FaExclamationCircle } from "react-icons/fa";
 import * as Yup from "yup";
 
 const cuisine = [
@@ -84,6 +85,8 @@ function RecipeForm() {
     measurement: "",
     name: "",
   };
+
+   const navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required(
@@ -170,7 +173,17 @@ function RecipeForm() {
         >
           {({ values, handleChange }) => (
             <Form className="bg-white rounded-xl p-12 shadow-2xl">
+              <div className="flex justify-between items-center">
               <span className="text-sm italic text-red-500">* Required</span>
+              <button
+                  type="button"
+                  onClick={()=> navigate('/')}
+                  className="text-4xl text-black"
+                >
+                  {" "}
+                  <FaRegWindowClose />
+              </button>
+              </div>
               <div className="my-5">
                 <label className="block font-bold text-lg" htmlFor="title">
                   Recipe Title<span className="text-red-500">*</span>
