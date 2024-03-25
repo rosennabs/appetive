@@ -158,19 +158,18 @@ const ReviewList = ({ recipeId }) => {
             </p>
           )}
 
-          {isAuthenticated && (
-            <>
-              <p className="text-3xl text-brown-dark mt-10 font-bold">
-                Leave a review
-              </p>
-              <p className="text-yellow mb-5 text-lg">
-                We appreciate your feedback!
-              </p>
+          <p className="text-3xl text-brown-dark mt-10 font-bold">
+            Leave a review
+          </p>
+          <p className="text-yellow mb-5 text-lg">
+            We appreciate your feedback!
+          </p>
 
-              <ReviewForm handleSubmitReviewForm={handleSubmit} />
-            </>
+          {isAuthenticated ? (
+            <ReviewForm handleSubmitReviewForm={handleSubmit} />
+          ) : (
+            <p className="italic text-gray-500 ml-5">To leave a review, please log in or create an account.</p>
           )}
-
         </div>
       </div>
     </>
