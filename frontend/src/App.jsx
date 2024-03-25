@@ -28,21 +28,20 @@ function App() {
   const { shareLink, generateShareLink, copySuccess, setCopySuccess } =
     useShareLink();
   const [username, setUsername] = useState("");
-  const token = localStorage.token;
+  const jwtToken = localStorage.token;
 
   useEffect(() => {
-    const getUsername = async (token) => {
+    const getUsername = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/api/user/`, {
-          token,
+          headers: { token: jwtToken },
         });
-        console.log(response);
         setUsername(response.data);
       } catch (error) {
         console.error("Error fetching username:", error);
       }
     };
-    getUsername(token);
+    getUsername();
   }, []);
 
   return (
