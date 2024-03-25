@@ -8,7 +8,7 @@ export default function UserRecipesList () {
   const jwtToken = localStorage.token;
   
   useEffect(() => {
-    const fetchRecipes = async (token) => {
+    const fetchRecipes = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/api/user/recipe`, {
           headers: { token: jwtToken }
