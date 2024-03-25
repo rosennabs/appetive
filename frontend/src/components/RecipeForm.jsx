@@ -52,16 +52,16 @@ const intolerances = [
 ];
 
 const diet = [
-  "Ketogenic",
-  "Vegetarian",
-  "Lacto-Vegetarian",
-  "Ovo-Vegetarian",
-  "Vegan",
-  "Pescetarian",
-  "Paleo",
-  "Primal",
-  "Low FODMAP",
-  "Whole30",
+  "ketogenic",
+  "vegetarian",
+  "lacto-vegetarian",
+  "ovo-vegetarian",
+  "vegan",
+  "pescetarian",
+  "paleo",
+  "primal",
+  "low FODMAP",
+  "whole30",
 ];
 
 const type = [
