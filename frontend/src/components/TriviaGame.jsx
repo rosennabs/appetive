@@ -30,7 +30,7 @@ export default function TriviaGame() {
           <div className="bg-amber-100 bg-opacity-80 py-16 absolute top-28 left-28 right-28 bottom-28 flex flex-col justify-center items-center p-16 pb-4">
             {foodTrivia ? (
               <>
-                <p className="flex flex-row text-4xl mb-24">
+                <p className="flex flex-row text-4xl mb-16">
                   <FaQuoteLeft className="h-4" />
                   {foodTrivia}
                   <FaQuoteRight className="h-4" />
@@ -54,12 +54,12 @@ export default function TriviaGame() {
                   </button>
                 </div>
 
-                <div className="flex flex-row items-center justify-between text-5xl mt-32">
+                <div className="flex flex-row items-center justify-between text-5xl mt-16">
                   <p className=" text-red-600 mr-64">{unknownCount} </p>
                   <p className=" text-green-700 ml-32">{knownCount}</p>
                 </div>
 
-                <div className="mt-16 underline text-2xl text-amber-700 flex flex-row justify-end items-end w-full">
+                <div className="mt-8 underline text-2xl text-amber-700 flex flex-row justify-end items-end w-full">
                   <button type="button" onClick={() => handleEndGameClick()}>
                     End Game
                   </button>

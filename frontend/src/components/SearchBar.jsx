@@ -3,10 +3,11 @@ import { Formik, Form } from 'formik';
 import { AppDataContext } from '../contexts/AppDataContext';
 import { FaSearch } from "react-icons/fa";
 
-export default function SearchBar() {
 
+export default function SearchBar() {
   
-  const { handleSearchSubmission } = useContext(AppDataContext);
+  
+  const { handleSearchSubmission, toggleSearchBar } = useContext(AppDataContext);
    
 
   return (
@@ -40,6 +41,10 @@ export default function SearchBar() {
 
             <div className='ml-4 cursor-pointer' onClick={() => handleSubmit()}>
             <FaSearch />
+            </div>
+
+            <div className='ml-4 cursor-pointer underline underline-offset-2' onClick={() => toggleSearchBar()}>
+            <p>Close</p>
             </div>
             
            </div>

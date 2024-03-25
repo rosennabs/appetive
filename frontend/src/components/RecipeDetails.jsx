@@ -181,13 +181,19 @@ const RecipeDetails = function ({
             </div>
           </div>
           <div className="bg-white p-8 w-5/6 border border-black">
-            {copySuccess && (
-              <span className="text-amber-700">Link copied to clipboard!</span>
-            )}
-            <CounterAttempt
-              recipeId={recipe.id}
-              counter_attempt={recipe.counter_attempt}
-            />
+            <div className="flex flex-col">
+              
+              <CounterAttempt
+                recipeId={recipe.id}
+                counter_attempt={recipe.counter_attempt}
+              />
+
+              {copySuccess && (
+                <span className="text-amber-700">
+                  Link copied to clipboard!
+                </span>
+              )}
+            </div>
 
             <div className="flex flex-row justify-between">
               <section className="flex border border-black h-10 px-10 items-center">

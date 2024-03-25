@@ -37,7 +37,7 @@ router.get("/", async (_req, res) => {
     const dbRecipes = await getRecipes();
 
     //merging results of db and external api
-    const allRecipes = [...apiRecipes, ...dbRecipes];
+    const allRecipes = [...dbRecipes, ...apiRecipes ];
     // console.log(allRecipes);
 
     if (allRecipes.length === 0) {

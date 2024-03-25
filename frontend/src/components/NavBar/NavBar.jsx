@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import SearchBar from "../SearchBar";
 import {
   Nav,
@@ -9,20 +9,17 @@ import {
   NavBtnLink,
   ImgBtnLink,
 } from "./NavBarElements";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import About from "./pages/About";
-import Profile from "./pages/Profile";
-import UserFavs from "./pages/UserFavs";
-import UserRecipes from "./pages/UserRecipes";
 import { FaCaretDown, FaSearch, FaHome } from "react-icons/fa";
-import RecipeForm from "../RecipeForm";
 import useAuthentication from "../../hooks/useAuthentication";
-import AuthenticationError from "../AuthenticationError";
-import axios from "axios";
+import { AppDataContext } from '../../contexts/AppDataContext';
 import { useNavigate } from "react-router";
 
-function NavBar({ toggleSearchBar, showSearchBar, setSelected, username }) {
+
+
+
+
+  function NavBar({ username }) {
+  const { toggleSearchBar, showSearchBar } = useContext(AppDataContext);
   const { isAuthenticated, setAuth } = useAuthentication();
   const navigate = useNavigate();
 
@@ -43,9 +40,7 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected, username }) {
             <FaHome className="size-7" />
           </NavLink>
           <NavLink to="/about">ABOUT US</NavLink>
-          <NavLink to="/food-trivia" onClick={() => setSelected(null)}>
-            FOOD TRIVIA
-          </NavLink>
+          <NavLink to="/food-trivia">FOOD TRIVIA</NavLink>
           <NavLink to="/my-profile">
             MY PROFILE
             <FaCaretDown className="ml-1" />
@@ -57,12 +52,7 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected, username }) {
             <>
               <NavBtnLink to="/login">LOGIN</NavBtnLink>
               <NavBtnLink to="/register">SIGN UP</NavBtnLink>
-              <div
-                className="ps-8 cursor-pointer"
-                onClick={() => toggleSearchBar()}
-              >
-                <FaSearch />
-              </div>
+              
             </>
           ) : (
             <>
@@ -72,6 +62,12 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected, username }) {
               </NavBtnLink>
             </>
           )}
+          <div
+                className="ps-8 cursor-pointer"
+                onClick={() => toggleSearchBar()}
+              >
+                <FaSearch />
+              </div>
         </NavBtn>
       </Nav>
 
@@ -81,12 +77,13 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected, username }) {
           alt="Header Image"
           className="h-auto max-w-full mt-16"
         />
-        <ImgBtnLink to="/add-recipe" onClick={() => setSelected(null)}>
-          MAKE YOUR RECIPE
-        </ImgBtnLink>
+       <ImgBtnLink to="/add-recipe" className="animate-pulse">MAKE YOUR RECIPE</ImgBtnLink>
       </div>
 
-      <div>{showSearchBar && <SearchBar />}</div>
+        <div >
+          {showSearchBar && <SearchBar />}
+        </div>
+
     </>
   );
 }

@@ -2,6 +2,7 @@ import { createContext } from "react";
 
 import useAppData from "../hooks/useAppData";
 import { useFoodTrivia } from "../hooks/useFoodTrivia";
+import { useSearchBar } from "../hooks/useSearchBar";
 
 export const AppDataContext = createContext();
 
@@ -26,6 +27,11 @@ export const AppDataProvider = ({ children }) => {
     setUnknownCount,
     setKnownCount,
   } = useFoodTrivia();
+
+  const {
+    showSearchBar,
+    toggleSearchBar
+  } = useSearchBar();
   
 
   return (
@@ -43,6 +49,8 @@ export const AppDataProvider = ({ children }) => {
         unknownCount,
         setUnknownCount,
         setKnownCount,
+        showSearchBar,
+        toggleSearchBar,
       }}
     >
       {children}

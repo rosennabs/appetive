@@ -1,10 +1,6 @@
 import NavBar from "./components/NavBar/NavBar";
-import SearchForm from "./components/SearchForm";
-import Recipes from "./components/Recipes";
-import RecipeDetails from "./components/RecipeDetails";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useContext } from "react";
 import { useSelectedRecipe } from "./hooks/useSelectedRecipe";
-import { useSearchBar } from "./hooks/useSearchBar";
 import useShareLink from "./hooks/useShareLink";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
@@ -18,15 +14,16 @@ import axios from "axios";
 import HomePage from "./components/HomePage";
 import FoodTrivia from "./components/FoodTrivia";
 import TriviaResult from "./components/TriviaResult";
+import { AppDataContext } from './contexts/AppDataContext';
 import UserFavs from "./components/NavBar/pages/UserFavs";
 import UserRecipes from "./components/NavBar/pages/UserRecipes";
 
 function App() {
   const { setAuth } = useAuthentication();
   const { selectedRecipe, setSelected } = useSelectedRecipe();
-  const { showSearchBar, toggleSearchBar } = useSearchBar();
-  const { shareLink, generateShareLink, copySuccess, setCopySuccess } =
-    useShareLink();
+ const { showSearchBar } = useContext(AppDataContext);
+  const { shareLink, generateShareLink, copySuccess, setCopySuccess } = useShareLink();
+  
   const [username, setUsername] = useState("");
   const jwtToken = localStorage.token;
 
@@ -49,10 +46,7 @@ function App() {
       <Fragment>
         <Router>
           <NavBar
-            toggleSearchBar={toggleSearchBar}
-            showSearchBar={showSearchBar}
             username={username}
-            setSelected={setSelected}
           />
           <Routes>
             <Route
