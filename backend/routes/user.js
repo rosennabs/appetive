@@ -3,12 +3,12 @@ const {
   getUserFavs,
   displayUserFavs,
   checkIfFav,
-  toggleIsFav
+  toggleIsFav,
 } = require("../db/queries/favlist");
 const { getUserNameById } = require("../db/queries/recipes_helpers");
 const { getUserRecipes, displayUserRecipes } = require("../db/queries/user");
 const jwtDecoder = require("../utils/jwtDecoder");
-const authorization = require('../middleware/authorization');
+const authorization = require("../middleware/authorization");
 
 // Get username
 router.get("/", authorization, async (req, res) => {
@@ -42,9 +42,9 @@ router.get("/recipe", authorization, async (req, res) => {
     res.status(200).json(displayRecipes);
   } catch (error) {
     console.error("Error in api/user/recipe route:", error.message);
-    res.status(500).json({ error: "Internal Server Error" })
+    res.status(500).json({ error: "Internal Server Error" });
   }
-})
+});
 
 // Get fav status
 router.get("/recipe/:id", authorization, async (req, res) => {
@@ -54,7 +54,6 @@ router.get("/recipe/:id", authorization, async (req, res) => {
     const response = await checkIfFav(user_id, recipe_id);
 
     res.status(200).json(response);
-
   } catch (error) {
     console.error("Error in api/user/recipe/:id/fav GET route:", error.message);
     res.status(500).json({ error: "Internal Server Error" });
@@ -70,7 +69,6 @@ router.post("/recipe/:id/fav", async (req, res) => {
     const toggle = await toggleIsFav(user, recipe_id);
 
     res.status(204).send(toggle);
-
   } catch (error) {
     console.error("Error in api/user/recipe/:id/fav route:", error.message);
     res.status(500).json({ error: "Internal Server Error" });

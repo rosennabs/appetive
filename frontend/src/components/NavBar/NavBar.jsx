@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import SearchBar from "../SearchBar";
-import { BrowserRouter as Router, Route, Routes, userNavigate, useNavigate } from "react-router-dom";
 import {
   Nav,
   NavLink,
@@ -22,15 +21,16 @@ import useAuthentication from "../../hooks/useAuthentication";
 import AuthenticationError from "../AuthenticationError";
 import axios from "axios";
 import { AppDataContext } from '../../contexts/AppDataContext';
+import { useNavigate } from "react-router";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 
-function NavBar() {
-const { toggleSearchBar, showSearchBar } = useContext(AppDataContext);
 
+
+  function NavBar({ username }) {
+  const { toggleSearchBar, showSearchBar } = useContext(AppDataContext);
   const { isAuthenticated, setAuth } = useAuthentication();
-  const [username, setUsername] = useState("");
   const navigate = useNavigate();
-  const token = localStorage.token;
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -38,20 +38,6 @@ const { toggleSearchBar, showSearchBar } = useContext(AppDataContext);
     setAuth(false);
     navigate("/");
   };
-
-  useEffect(() => {
-    const getUsername = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/api/user/`, {
-          headers: { token: token },
-        });
-        setUsername(response.data);
-      } catch (error) {
-        console.error("Error fetching username:", error);
-      }
-    };
-    getUsername();
-  }, []);
 
   return (
     <>

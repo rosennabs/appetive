@@ -1,6 +1,10 @@
 const authorization = require("../middleware/authorization");
 const router = require("express").Router();
-const { getReviewsByRecipeId, addReview, deleteReview } = require("../db/queries/reviews");
+const {
+  getReviewsByRecipeId,
+  addReview,
+  deleteReview,
+} = require("../db/queries/reviews");
 
 // Get review
 router.get("/:id", async (req, res) => {
@@ -10,14 +14,7 @@ router.get("/:id", async (req, res) => {
       return res.status(400).json("Invalid recipe ID");
     }
     const reviews = await getReviewsByRecipeId(recipeId);
-
-    if ("message" in reviews) {
-      // No reviews found for the recipe
-      res.status(404).json(reviews);
-    } else {
-      // Reviews found, return the array
-      res.status(200).json(reviews);
-    }
+    res.status(200).json(reviews);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error");
@@ -49,7 +46,9 @@ router.delete("/:id/delete", authorization, async (req, res) => {
   const review_id = req.params.id;
   try {
     const deletedReview = await deleteReview(review_id);
-    res.status(200).send({ message: 'Review deleted successfully.', deletedReview });
+    res
+      .status(200)
+      .send({ message: "Review deleted successfully.", deletedReview });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error from DeleteReview route");
