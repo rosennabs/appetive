@@ -138,6 +138,7 @@ function RecipeForm() {
 
   return (
     <>
+    <div className="mb-28">
       {isAuthenticated ? (
         <>
           <div className="flex justify-center items-center">
@@ -533,6 +534,7 @@ function RecipeForm() {
       ) : (
         <AuthenticationError />
       )}
+      </div>
     </>
   );
 }

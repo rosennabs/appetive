@@ -71,77 +71,84 @@ function Login({ setAuth }) {
 
   return (
     <Fragment>
-      <h1 className="text-4xl pt-10 font-bold mx-auto text-center">
-        Log into Your Account
-      </h1>
-      <h1 className="text-yellow text-xl pt-3 pb-10 mx-auto text-center">
-        Welcome back to Appetive!
-      </h1>
-      <form
-        className="bg-white shadow-md rounded p-10 mx-auto max-w-lg justify-self-center"
-        onSubmit={formik.handleSubmit}
-      >
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
-            Email Address
-          </label>
-          <input
-            className="shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-yellow focus:border-opacity-50"
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.touched.email && formik.errors.email ? (
-            <div className="text-red-500 text-sm">{formik.errors.email}</div>
-          ) : null}
-        </div>
-
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="password"
-          >
-            Password
-          </label>
-          <input
-            className="shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-yellow focus:border-opacity-50"
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.touched.password && formik.errors.password ? (
-            <div className="text-red-500 text-sm">{formik.errors.password}</div>
-          ) : null}
-        </div>
-        <p className="text-red-500 text-sm mb-4">{error}</p>
-
-        <div className="pt-3">
-          <button
-            className="bg-yellow rounded-xl py-2 px-6 hover:bg-brown-light hover:text-darker-white"
-            type="submit"
-          >
-            LOGIN
-          </button>
-
-          <p className="mt-3 text-sm text-gray-500">
-            Don't have an account yet?
-            <Link
-              to="/register"
-              className="text-brown-light font-bold underline ml-1"
+      <div className="mb-28">
+        <h1 className="text-4xl pt-10 font-bold mx-auto text-center">
+          Log into Your Account
+        </h1>
+        <h1 className="text-yellow text-xl pt-3 pb-10 mx-auto text-center">
+          Welcome back to Appetive!
+        </h1>
+        <form
+          className="bg-white shadow-md rounded p-10 mx-auto max-w-lg justify-self-center"
+          onSubmit={formik.handleSubmit}
+        >
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 font-bold mb-2"
+              htmlFor="email"
             >
-              Sign up now
-            </Link>
-          </p>
-        </div>
-      </form>
+              Email Address
+            </label>
+            <input
+              className="shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-yellow focus:border-opacity-50"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            {formik.touched.email && formik.errors.email ? (
+              <div className="text-red-500 text-sm">{formik.errors.email}</div>
+            ) : null}
+          </div>
+
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 font-bold mb-2"
+              htmlFor="password"
+            >
+              Password
+            </label>
+            <input
+              className="shadow appearance-none border rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-yellow focus:border-opacity-50"
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            {formik.touched.password && formik.errors.password ? (
+              <div className="text-red-500 text-sm">
+                {formik.errors.password}
+              </div>
+            ) : null}
+          </div>
+          <p className="text-red-500 text-sm mb-4">{error}</p>
+
+          <div className="pt-3">
+            <button
+              className="bg-yellow rounded-xl py-2 px-6 hover:bg-brown-light hover:text-darker-white"
+              type="submit"
+            >
+              LOGIN
+            </button>
+
+            <p className="mt-3 text-sm text-gray-500">
+              Don't have an account yet?
+              <Link
+                to="/register"
+                className="text-brown-light font-bold underline ml-1"
+              >
+                Sign up now
+              </Link>
+            </p>
+          </div>
+        </form>
+      </div>
     </Fragment>
   );
 }
