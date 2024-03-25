@@ -2,9 +2,9 @@ import NavBar from "./components/NavBar/NavBar";
 import SearchForm from "./components/SearchForm";
 import Recipes from "./components/Recipes";
 import RecipeDetails from "./components/RecipeDetails";
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import { useSelectedRecipe } from "./hooks/useSelectedRecipe";
-import { useSearchBar } from "./hooks/useSearchBar";
+
 import useShareLink from "./hooks/useShareLink";
 import {
   BrowserRouter as Router,
@@ -14,6 +14,7 @@ import {
 import Footer from "./components/Footer";
 import FoodTrivia from "./components/FoodTrivia";
 import TriviaResult from "./components/TriviaResult";
+import { AppDataContext } from './contexts/AppDataContext';
 
 
 
@@ -21,7 +22,7 @@ import TriviaResult from "./components/TriviaResult";
 
 function App() {
   const { selectedRecipe, setSelected } = useSelectedRecipe();
-  const { showSearchBar, toggleSearchBar } = useSearchBar();
+ const { showSearchBar } = useContext(AppDataContext);
   const { shareLink, generateShareLink, copySuccess, setCopySuccess } = useShareLink();
   
   
@@ -32,8 +33,6 @@ function App() {
       <Fragment>
         <Router>
           <NavBar
-            toggleSearchBar={toggleSearchBar}
-            showSearchBar={showSearchBar}
             setSelected={setSelected}
           />
         

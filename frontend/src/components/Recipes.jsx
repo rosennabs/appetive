@@ -49,7 +49,7 @@ export default function Recipe({ setSelected }) {
                   src={recipe.image}
                   alt="Regular food"
                   className="mx-auto m-2 object-cover"
-                  style={{ height: 243, width: 328 }}
+                  style={{ height: 200, width: 250 }}
                 />
                 <p className="mx-auto max-w-xs text-xs text-center font-bold text-amber-700">
                   {recipe.title}

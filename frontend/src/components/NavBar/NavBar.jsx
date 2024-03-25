@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import SearchBar from "../SearchBar";
 import { BrowserRouter as Router, Route, Routes, userNavigate, useNavigate } from "react-router-dom";
 import {
@@ -21,9 +21,12 @@ import RecipeForm from "../RecipeForm";
 import useAuthentication from "../../hooks/useAuthentication";
 import AuthenticationError from "../AuthenticationError";
 import axios from "axios";
+import { AppDataContext } from '../../contexts/AppDataContext';
 
 
-function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
+function NavBar({ setSelected }) {
+const { toggleSearchBar, showSearchBar } = useContext(AppDataContext);
+
   const { isAuthenticated, setAuth } = useAuthentication();
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
@@ -60,7 +63,7 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
             <FaHome className="size-7" />
           </NavLink>
           <NavLink to="/about">ABOUT US</NavLink>
-          <NavLink to="/food-trivia" onClick={()=> setSelected(null)}>FOOD TRIVIA</NavLink>
+          <NavLink to="/food-trivia">FOOD TRIVIA</NavLink>
           <NavLink to="/my-profile">
             MY PROFILE
             <FaCaretDown className="ml-1" />
@@ -72,12 +75,7 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
             <>
               <NavBtnLink to="/login">LOGIN</NavBtnLink>
               <NavBtnLink to="/register">SIGN UP</NavBtnLink>
-              <div
-                className="ps-8 cursor-pointer"
-                onClick={() => toggleSearchBar()}
-              >
-                <FaSearch />
-              </div>
+              
             </>
           ) : (
             <>
@@ -87,6 +85,12 @@ function NavBar({ toggleSearchBar, showSearchBar, setSelected }) {
               </NavBtnLink>
             </>
           )}
+          <div
+                className="ps-8 cursor-pointer"
+                onClick={() => toggleSearchBar()}
+              >
+                <FaSearch />
+              </div>
         </NavBtn>
       </Nav>
 
