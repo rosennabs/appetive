@@ -55,4 +55,19 @@ router.delete("/:id/delete", authorization, async (req, res) => {
   }
 });
 
+// Get username of the reviewer
+router.get("/:user_id", async (req, res) => {
+  try {
+    const userId = req.params.user_id;
+    if (!userId) {
+      return res.status(400).json("Invalid user ID");
+    }
+    const username = await getUserNameById(userId);
+    res.status(200).json(username);
+  } catch (error) {
+    console.error("Error in api/reviews/:user_id route:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = router;
