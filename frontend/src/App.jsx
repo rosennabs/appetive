@@ -1,7 +1,4 @@
 import NavBar from "./components/NavBar/NavBar";
-import SearchForm from "./components/SearchForm";
-import Recipes from "./components/Recipes";
-import RecipeDetails from "./components/RecipeDetails";
 import React, { Fragment, useEffect, useState, useContext } from "react";
 import { useSelectedRecipe } from "./hooks/useSelectedRecipe";
 import useShareLink from "./hooks/useShareLink";

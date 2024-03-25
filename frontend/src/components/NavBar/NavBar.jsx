@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import SearchBar from "../SearchBar";
 import {
   Nav,
@@ -9,20 +9,11 @@ import {
   NavBtnLink,
   ImgBtnLink,
 } from "./NavBarElements";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import About from "./pages/About";
-import Profile from "./pages/Profile";
-import UserFavs from "./pages/UserFavs";
-import UserRecipes from "./pages/UserRecipes";
 import { FaCaretDown, FaSearch, FaHome } from "react-icons/fa";
-import RecipeForm from "../RecipeForm";
 import useAuthentication from "../../hooks/useAuthentication";
-import AuthenticationError from "../AuthenticationError";
-import axios from "axios";
 import { AppDataContext } from '../../contexts/AppDataContext';
 import { useNavigate } from "react-router";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 
 
 
@@ -93,25 +84,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
           {showSearchBar && <SearchBar />}
         </div>
 
-      <Routes>
-        <Route path="/my-profile" element={<Profile username={username} />} />
-        <Route path="/login" element={<Login setAuth={setAuth} />} />
-        <Route path="/register" element={<Register setAuth={setAuth} />} />
-        <Route path="/about" element={<About />} />
-        
-        <Route
-          path="/add-recipe"
-          element={
-            isAuthenticated ? (
-              <RecipeForm setAuth={setAuth} />
-            ) : (
-              <AuthenticationError />
-            )
-          }
-        />
-        <Route path="/my-favs" element={<UserFavs username={username} />} />
-        <Route path="/my-recipes" element={<UserRecipes username={username} />} />
-      </Routes>
     </>
   );
 }
