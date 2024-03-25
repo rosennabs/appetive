@@ -1,75 +1,82 @@
 import React from "react";
-import { Formik, Form, FieldArray, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import Rating from "react-rating";
+import * as Yup from "yup";
+import { FaExclamationCircle } from "react-icons/fa";
 
-function ReviewForm({ onSubmit }) {
-  const user = localStorage.getItem("token");
+function ReviewForm({ handleSubmitReviewForm }) {
   const initialValues = {
-    user_id: user,
     review: "",
-    rating: 0,
+    rating: 1,
   };
+
+  const validationSchema = Yup.object().shape({
+    review: Yup.string().required(
+      <div>
+        <FaExclamationCircle className="inline-block mr-1" /> Review can't be
+        blank
+      </div>
+    ),
+  });
 
   return (
     <>
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmitReviewForm}
+        validationSchema={validationSchema}
+      >
         {({ values, handleChange, setFieldValue }) => (
           <Form>
-            <div>
-              <Field name="user_id" type="hidden" value={values.user_id} />
-            </div>
-
-            <div className="flex gap-4">
+            <div className="flex gap-6 w-full">
               <img
                 src="https://static.vecteezy.com/system/resources/previews/026/434/409/non_2x/default-avatar-profile-icon-social-media-user-photo-vector.jpg"
                 alt="User profile image"
-                className="w-12 h-12 rounded-3xl"
+                className="w-16 h-16 rounded-full mt-2"
               />
-
-              <div>
+              <div className="flex-col">
                 <div>
                   <label htmlFor="rating"></label>
+
                   <Rating
                     initialRating={values.rating}
                     onChange={(value) => setFieldValue("rating", value)}
-                    emptySymbol={<span className="text-gray-400">&#9734;</span>}
-                    fullSymbol={<span className="text-yellow">&#9733;</span>}
+                    emptySymbol={
+                      <span className="text-gray-400 text-lg">&#9734;</span>
+                    }
+                    fullSymbol={
+                      <span className="text-yellow text-lg">&#9733;</span>
+                    }
                     className="text-3xl"
-                  />
-                  <ErrorMessage
-                    name="rating"
-                    component="div"
-                    className="error"
                   />
                 </div>
 
-                <div className="border-b-2 mb-8">
+                <div className="w-128 mb-3">
                   <label htmlFor="review"></label>
                   <Field
                     as="textarea"
                     id="review"
                     name="review"
                     placeholder="Write your review here"
-                    className="w-96 bg-transparent resize-none focus:outline-none focus:border-transparent"
+                    className="w-full h-20 bg-transparent resize-none focus:outline-none border-2 p-2 rounded-xl focus:border-yellow focus:border-opacity-50"
                     value={values.review}
                     onChange={handleChange}
                   />
                   <ErrorMessage
                     name="review"
                     component="div"
-                    className="error"
+                    className="error text-red-600 text-sm"
                   />
                 </div>
+                <div className="mt-0 mb-10">
+                  <button
+                    type="submit"
+                    className="bg-yellow py-1 px-6 rounded-3xl hover:text-darker-white hover:bg-brown-light"
+                  >
+                    Submit
+                  </button>
+                </div>
               </div>
-            </div>
-
-            <div className="flex justify-end">
-              <button
-                type="submit"
-                className="bg-yellow text-black font-bold py-1 px-5 rounded-full"
-              >
-                Submit
-              </button>
             </div>
           </Form>
         )}

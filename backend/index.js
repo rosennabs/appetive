@@ -20,11 +20,14 @@ app.use(express.json()); //access req.body
 // Register and login routes
 app.use("/auth", require("./routes/jwtAuth"));
 
-//Recipes routes
+// Recipes routes
 app.use("/api/recipes", require("./routes/recipes"));
 
 // User data routes
 app.use("/api/user", require("./routes/user"));
+
+// Review routes
+app.use("/api/reviews", require("./routes/reviews"));
 
 app.listen(8080, () => {
   console.log("Server has started on port 8080");

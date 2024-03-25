@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
-import Fav from "./Favs";
+import ProfileRecipes from "./ProfileRecipes";
 import axios from "axios";
 
 export default function FavList () {
   
   const [ favs, setFavs ] = useState([]);
-  const userToken = localStorage.token;
+  const jwtToken = localStorage.token;
   
   useEffect(() => {
-    const fetchFavs = async (token) => {
+    const fetchFavs = async () => {
       try {
-        const response = await axios.post(`http://localhost:8080/api/user/fav`, { token });
+        const response = await axios.get(`http://localhost:8080/api/user/fav`, {
+          headers: { token: jwtToken },
+        });
         const allFavs = response.data;
 
         setFavs(allFavs);
@@ -18,7 +20,7 @@ export default function FavList () {
         console.error("Error fetching favs:", error);
       }
     };
-    fetchFavs(userToken);
+    fetchFavs();
   }, []);
 
   return (
@@ -30,7 +32,7 @@ export default function FavList () {
         </div>
       ) : (
         <div>
-          <Fav favs={favs} />
+          <ProfileRecipes recipes={favs} />
         </div>
       )}
     </div>

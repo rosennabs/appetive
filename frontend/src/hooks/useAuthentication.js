@@ -3,7 +3,6 @@ import axios from "axios";
 
 const useAuthentication = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.token);
-  const [username, setUsername] = useState("");
 
   const setAuth = (boolean) => {
     setIsAuthenticated(boolean);
@@ -34,44 +33,13 @@ const useAuthentication = () => {
     }
   };
 
-  const getUsername = async () => {
-    try {
-      const token = localStorage.token;
-      const response = await axios.post(`http://localhost:8080/api/user/`, {
-        token,
-      });
-      setUsername(response.data);
-    } catch (error) {
-      console.error("Error fetching username:", error);
-    }
-  };
-
   useEffect(() => {
-    const fetchData = async () => {
-      await checkAuthentication();
-      if (isAuthenticated) {
-        await getUsername();
-      }
-    };
-
-    fetchData();
-  }, [isAuthenticated]);
-
-  // useEffect(() => {
-  //   checkAuthentication();
-  // });
-
-  const handleLogout = (e) => {
-    e.preventDefault();
-    localStorage.clear();
-    setAuth(false);
-  };
+    checkAuthentication();
+  });
 
   return {
     isAuthenticated,
     setAuth,
-    handleLogout,
-    username,
   };
 };
 
