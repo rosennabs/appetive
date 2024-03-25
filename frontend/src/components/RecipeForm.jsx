@@ -173,17 +173,10 @@ function RecipeForm() {
         >
           {({ values, handleChange }) => (
             <Form className="bg-white rounded-xl p-12 shadow-2xl">
-              <div className="flex justify-between items-center">
+             
               <span className="text-sm italic text-red-500">* Required</span>
-              <button
-                  type="button"
-                  onClick={()=> navigate('/')}
-                  className="text-4xl text-black"
-                >
-                  {" "}
-                  <FaRegWindowClose />
-              </button>
-              </div>
+              
+              
               <div className="my-5">
                 <label className="block font-bold text-lg" htmlFor="title">
                   Recipe Title<span className="text-red-500">*</span>
