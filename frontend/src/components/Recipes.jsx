@@ -14,6 +14,7 @@ export default function Recipes({ setSelected }) {
       
     });
     setSelected(recipeInfo); //Set selected recipe details in state
+    console.log(recipeInfo);
   };
 
   return (
