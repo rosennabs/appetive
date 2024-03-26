@@ -3,12 +3,16 @@ import { AppDataContext } from "../contexts/AppDataContext";
 
 export default function Recipes({ setSelected }) {
   //Access recipes from state
-  const { state, setRecipes, fetchRecipeInfo, searchClicked } = useContext(AppDataContext);
+  const { state, fetchRecipeInfo, searchClicked } = useContext(AppDataContext);
   const { recipes } = state;
 
   //Function to handle click on a recipe
   const handleRecipeClick = async (recipeId) => {
     const recipeInfo = await fetchRecipeInfo(recipeId);
+    window.scrollTo({
+      top: 300,
+      
+    });
     setSelected(recipeInfo); //Set selected recipe details in state
   };
 
