@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, FieldArray, Field, ErrorMessage } from "formik";
 import axios from "axios";
@@ -11,6 +11,7 @@ import {
 import * as Yup from "yup";
 import useAuthentication from "../hooks/useAuthentication";
 import AuthenticationError from "./AuthenticationError";
+import SuccessAlert from "./SuccessAlert";
 
 const cuisine = [
   "African",
@@ -89,6 +90,7 @@ const type = [
 
 function RecipeForm() {
   const { isAuthenticated } = useAuthentication();
+  const [formSuccess, setFormSuccess] = useState(null);
 
   const emptyIngredient = {
     measurement: "",
@@ -158,6 +160,9 @@ function RecipeForm() {
             </div>
 
             <div className="max-w-screen-md mx-auto">
+
+              {formSuccess && <SuccessAlert />}
+              
               <Formik
                 initialValues={{
                   ingredients: [emptyIngredient],
@@ -180,6 +185,7 @@ function RecipeForm() {
                 }}
                 onSubmit={(values) => {
                   axios.post("http://localhost:8080/api/recipes/", values);
+                  setFormSuccess(true);
                 }}
                 validationSchema={validationSchema}
               >
