@@ -8,17 +8,15 @@ import {
   Bars,
   NavBtnLink,
   ImgBtnLink,
+  SearchBtnLink,
+  
 } from "./NavBarElements";
 import { FaCaretDown, FaSearch, FaHome } from "react-icons/fa";
 import useAuthentication from "../../hooks/useAuthentication";
-import { AppDataContext } from '../../contexts/AppDataContext';
+import { AppDataContext } from "../../contexts/AppDataContext";
 import { useNavigate } from "react-router";
 
-
-
-
-
-  function NavBar({ username }) {
+function NavBar({ username }) {
   const { toggleSearchBar, showSearchBar } = useContext(AppDataContext);
   const { isAuthenticated, setAuth } = useAuthentication();
   const navigate = useNavigate();
@@ -40,7 +38,12 @@ import { useNavigate } from "react-router";
             <FaHome className="size-7" />
           </NavLink>
           <NavLink to="/about">ABOUT US</NavLink>
-          <NavLink to="/food-trivia" onClick={() => window.scrollTo({ top: 300, behavior: "smooth" })}>FOOD TRIVIA</NavLink>
+          <NavLink
+            to="/food-trivia"
+            onClick={() => window.scrollTo({ top: 300, behavior: "smooth" })}
+          >
+            FOOD TRIVIA
+          </NavLink>
           <NavLink to="/my-profile">
             MY PROFILE
             <FaCaretDown className="ml-1" />
@@ -52,7 +55,6 @@ import { useNavigate } from "react-router";
             <>
               <NavBtnLink to="/login">LOGIN</NavBtnLink>
               <NavBtnLink to="/register">SIGN UP</NavBtnLink>
-              
             </>
           ) : (
             <>
@@ -62,12 +64,6 @@ import { useNavigate } from "react-router";
               </NavBtnLink>
             </>
           )}
-          <div
-                className="ps-8 cursor-pointer"
-                onClick={() => toggleSearchBar()}
-              >
-                <FaSearch />
-              </div>
         </NavBtn>
       </Nav>
 
@@ -77,13 +73,21 @@ import { useNavigate } from "react-router";
           alt="Header Image"
           className="h-auto max-w-full mt-16"
         />
-       <ImgBtnLink to="/add-recipe" className="animate-pulse">MAKE YOUR RECIPE</ImgBtnLink>
+      
+        <SearchBtnLink
+         className="animate-pulse"
+          onClick={() => toggleSearchBar()}
+        >
+          SEARCH RECIPES
+        </SearchBtnLink>
+
+        <ImgBtnLink to="/add-recipe" className="animate-pulse">
+          MAKE YOUR RECIPE
+          </ImgBtnLink>
+          
       </div>
 
-        <div >
-          {showSearchBar && <SearchBar />}
-        </div>
-
+      <div>{showSearchBar && <SearchBar />}</div>
     </>
   );
 }
