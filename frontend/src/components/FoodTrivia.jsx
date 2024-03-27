@@ -12,11 +12,7 @@ export default function FoodTrivia() {
   const [startClicked, setStartClicked] = useState(false);
 
   const handleStartClick = () => {
-    window.scrollTo({
-      bottom: 600,
-      behavior: 'smooth'
-    });
-
+    
     setFoodTrivia(null);
     setUnknownCount(0);
     setKnownCount(0);

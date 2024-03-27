@@ -10,6 +10,7 @@ import {
   ImgBtnLink,
   DropdownMenu,
   NavDropdown,
+  SearchBtnLink,
 } from "./NavBarElements";
 import {
   FaCaretDown,
@@ -84,12 +85,6 @@ function NavBar({ username }) {
               </NavBtnLink>
             </>
           )}
-          <div
-            className="ps-8 cursor-pointer"
-            onClick={() => toggleSearchBar()}
-          >
-            <FaSearch className="hover:text-darker-white" />
-          </div>
         </NavBtn>
       </Nav>
 
@@ -99,6 +94,14 @@ function NavBar({ username }) {
           alt="Header Image"
           className="h-auto max-w-full mt-16"
         />
+
+        <SearchBtnLink
+          className="animate-pulse"
+          onClick={() => toggleSearchBar()}
+        >
+          SEARCH RECIPES
+        </SearchBtnLink>
+
         <ImgBtnLink to="/add-recipe" className="animate-pulse">
           MAKE YOUR RECIPE
         </ImgBtnLink>

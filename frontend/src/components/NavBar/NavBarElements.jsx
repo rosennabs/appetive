@@ -141,29 +141,60 @@ export const ImgBtnLink = styled(Link)`
     position: absolute;
     border-radius: 4px;
     background: #EBB22F;
-    padding: 8px 30px;
+    padding: 8px 20px;
     color: #000000;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     text-decoration: none;
-    font-size: 15px;
-    margin-left: 40px;
-    margin-top: -85px;
+    font-size: 10px;
+    margin-left: 200px;
+    margin-top: -65px;
     &:hover {
         transition: all 0.2s ease-in-out;
         background: #64471D;
         color: #F5F5EF;
     }
-    @media screen and (max-width: 768px) {
+    @media screen and (min-width: 768px) {
         margin-top: -60px;
-        margin-left: 30px;
-        font-size: 10px;
+        margin-left: 250px;
+        font-size: 15px;
+        padding: 7px 20px;
+    }
+    @media screen and (min-width: 1080px) {
+        margin-top: -110px;
+        margin-left: 320px;
+        font-size: 22px;
+    }
+`;
+
+export const SearchBtnLink = styled(Link)`
+    position: absolute;
+    border-radius: 4px;
+    background: #EBB22F;
+    padding: 8px 25px;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    font-size: 10px;
+    margin-left: 40px;
+    margin-top: -65px;
+    &:hover {
+        transition: all 0.2s ease-in-out;
+        background: #64471D;
+        color: #F5F5EF;
+    }
+    @media screen and (min-width: 768px) {
+        margin-top: -60px;
+        margin-left: 50px;
+        font-size: 15px;
         padding: 7px 20px;
     }
     @media screen and (min-width: 1080px) {
         margin-top: -110px;
         margin-left: 60px;
         font-size: 22px;
+        
     }
 `;
 
