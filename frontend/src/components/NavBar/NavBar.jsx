@@ -89,7 +89,7 @@ function NavBar({ username }) {
 
       <div>
         <img
-          src={require("../../Images/header.png")}
+          src={require("../../Images/headers/header.png")}
           alt="Header Image"
           className="h-auto max-w-full mt-16"
         />

@@ -153,7 +153,7 @@ function RecipeForm() {
           <>
             <div className="flex justify-center items-center">
               <img
-                src={require("../Images/recipe-header.png")}
+                src={require("../Images/headers/recipe-header.png")}
                 alt="Header Image"
                 className="h-auto w-4/5 mt-16 mb-10"
               />

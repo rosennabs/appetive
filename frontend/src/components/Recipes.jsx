@@ -20,7 +20,7 @@ export default function Recipes({ setSelected }) {
     <div className="mb-28">
       <div className="flex justify-center items-center">
         <img
-          src={require("../Images/mainpage.png")}
+          src={require("../Images//headers/mainpage.png")}
           alt="Header Image"
           className="h-auto w-4/5 mt-16 mb-20"
         />
