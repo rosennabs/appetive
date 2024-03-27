@@ -27,7 +27,7 @@ export default function UserRecipesList () {
     <div>
       {recipes.length < 1 ? (
         <div>
-          <h1 className="font-bold text-3xl mb-8  text-yellow text-center">No recipes created</h1>
+          <h1 className="font-bold text-3xl mb-8 pt-12 text-yellow text-center">No recipes created</h1>
           <p className="text-sm italic text-gray-500 text-center">Click on "Make Your Recipe" to create a new recipe</p>
         </div>
       ) : (

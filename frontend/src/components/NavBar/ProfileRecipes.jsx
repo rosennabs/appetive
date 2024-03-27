@@ -15,6 +15,9 @@ export default function ProfileRecipes(props) {
   //Function to handle click on a recipe
   const handleRecipeClick = async (recipeId) => {
     const recipeInfo = await fetchRecipeInfo(recipeId);
+    window.scrollTo({
+      top: 800,
+    });
     setSelected(recipeInfo); //Set selected recipe details in state
   };
 
@@ -30,7 +33,7 @@ export default function ProfileRecipes(props) {
           setCopySuccess={setCopySuccess}
         />
       ) : (
-        <section className="md:container max-w-screen-xl mx-auto flex flex-wrap">
+        <section className="md:container max-w-screen-xl mx-auto flex flex-wrap pt-12">
           {recipes.map((recipe) => (
             <div
               key={recipe.id}
