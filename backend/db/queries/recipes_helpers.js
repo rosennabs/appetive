@@ -176,6 +176,10 @@ const getCuisineNameById = async function (id) {
 
 // lookup diet id and return diet name
 const getDietNameById = async function (id) {
+  if (id === null) {
+    return "none";
+  }
+  
   try {
     const queryString = `SELECT name FROM diets WHERE id = $1;`;
     const queryParams = [`${id}`];
@@ -212,6 +216,10 @@ const getMealTypeNameById = async function (id) {
 
 // lookup intolerance id and return intolerance name
 const getIntoleranceNameById = async function (id) {
+  if (id === null) {
+    return "none";
+  }
+  
   try {
     const queryString = `SELECT name FROM intolerances WHERE id = $1;`;
     const queryParams = [`${id}`];
