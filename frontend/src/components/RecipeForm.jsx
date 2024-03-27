@@ -5,7 +5,7 @@ import axios from "axios";
 import {
   FaPlusCircle,
   FaTrashAlt,
-  FaRegWindowClose,
+  FaTimes,
   FaExclamationCircle,
 } from "react-icons/fa";
 import * as Yup from "yup";
@@ -190,7 +190,7 @@ function RecipeForm() {
                 validationSchema={validationSchema}
               >
                 {({ values, handleChange }) => (
-                  <Form className="bg-white rounded-xl p-12 shadow-2xl">
+                  <Form className="bg-yellow bg-opacity-20 rounded-xl p-14 shadow-2xl">
                     <div className="flex justify-between items-center">
                       <span className="text-sm italic text-red-500">
                         * Required
@@ -198,9 +198,9 @@ function RecipeForm() {
                       <button
                         type="button"
                         onClick={() => navigate("/")}
-                        className="text-4xl text-black"
+                        className="text-2xl text-yellow hover:text-brown-light cursor-pointer"
                       >
-                        <FaRegWindowClose />
+                        <FaTimes />
                       </button>
                     </div>
                     <div className="my-5">
