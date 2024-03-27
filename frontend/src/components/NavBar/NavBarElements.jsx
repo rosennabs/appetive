@@ -1,4 +1,4 @@
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaInternetExplorer } from "react-icons/fa";
 import { NavLink as Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -48,18 +48,57 @@ export const Bars = styled(FaBars)`
     }
 `;
 
+export const DropdownMenu = styled.div`
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    z-index: 1000;
+    background-color: #EBB22F;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 140px;
+    display: none;
+    border-radius: 4px;
+    list-style-type: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+    & > * + * {
+        margin-top: 10px;
+        padding-top:10px;
+        border-top: 1px solid #ccc; /* Add border line between items */
+    }
+
+    & > *:hover {
+        color: #F5F5EF;
+        cursor: pointer;
+        display: block;
+    }
+    
+`;
+
+export const NavDropdown = styled.div`
+    position: relative;
+    border: 10px solid transparent;
+
+    &:hover ${DropdownMenu} {
+        display: block;
+    }
+`;
+
 export const NavMenu = styled.div`
     display: flex;
     align-items: center;
     margin-right: -24px;
+
     /* Second Nav */
     /* margin-right: 24px; */
     /* Third Nav */
     /* width: 100vw;
     white-space: nowrap; */
+
     @media screen and (max-width: 768px) {
         display: none;
-    }
+    }  
 `;
 
 export const NavBtn = styled.nav`
@@ -71,6 +110,7 @@ export const NavBtn = styled.nav`
     @media screen and (max-width: 768px) {
         display: none;
     }
+    
 `;
 
 export const NavBtnLink = styled(Link)`
@@ -126,3 +166,4 @@ export const ImgBtnLink = styled(Link)`
         font-size: 22px;
     }
 `;
+
