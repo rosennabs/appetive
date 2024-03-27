@@ -124,7 +124,7 @@ export const NavBtnLink = styled(Link)`
     transition: all 0.2s ease-in-out;
     text-decoration: none;
     /* Second Nav */
-    margin-left: 10px;
+    margin-right: 10px;
     &:hover {
         transition: all 0.2s ease-in-out;
         background: #64471D;
@@ -136,7 +136,6 @@ export const NavBtnLink = styled(Link)`
     }
 `;
 
-
 export const ImgBtnLink = styled(Link)`
     position: absolute;
     border-radius: 4px;
@@ -147,7 +146,7 @@ export const ImgBtnLink = styled(Link)`
     transition: all 0.2s ease-in-out;
     text-decoration: none;
     font-size: 10px;
-    margin-left: 200px;
+    margin-left: 130px;
     margin-top: -65px;
     &:hover {
         transition: all 0.2s ease-in-out;
@@ -155,14 +154,14 @@ export const ImgBtnLink = styled(Link)`
         color: #F5F5EF;
     }
     @media screen and (min-width: 768px) {
-        margin-top: -60px;
-        margin-left: 250px;
+        margin-top: -75px;
+        margin-left: 150px;
         font-size: 15px;
         padding: 7px 20px;
     }
     @media screen and (min-width: 1080px) {
         margin-top: -110px;
-        margin-left: 320px;
+        margin-left: 200px;
         font-size: 22px;
     }
 `;
@@ -177,7 +176,7 @@ export const SearchBtnLink = styled(Link)`
     transition: all 0.2s ease-in-out;
     text-decoration: none;
     font-size: 10px;
-    margin-left: 40px;
+    margin-left: 30px;
     margin-top: -65px;
     &:hover {
         transition: all 0.2s ease-in-out;
@@ -185,8 +184,8 @@ export const SearchBtnLink = styled(Link)`
         color: #F5F5EF;
     }
     @media screen and (min-width: 768px) {
-        margin-top: -60px;
-        margin-left: 50px;
+        margin-top: -75px;
+        margin-left: 40px;
         font-size: 15px;
         padding: 7px 20px;
     }

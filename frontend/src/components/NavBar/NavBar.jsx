@@ -14,7 +14,6 @@ import {
 } from "./NavBarElements";
 import {
   FaCaretDown,
-  FaSearch,
   FaHome,
   FaUtensils,
   FaHeart,
@@ -79,7 +78,7 @@ function NavBar({ username }) {
             </>
           ) : (
             <>
-              <p>Welcome {username}!</p>
+              <p className="mr-2">Welcome {username}!</p>
               <NavBtnLink to="/logout" onClick={(e) => handleLogout(e)}>
                 LOGOUT
               </NavBtnLink>
@@ -99,7 +98,7 @@ function NavBar({ username }) {
           className="animate-pulse"
           onClick={() => toggleSearchBar()}
         >
-          SEARCH RECIPES
+          SEARCH
         </SearchBtnLink>
 
         <ImgBtnLink to="/add-recipe" className="animate-pulse">
