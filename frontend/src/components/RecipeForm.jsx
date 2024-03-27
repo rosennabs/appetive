@@ -190,7 +190,7 @@ function RecipeForm() {
                 validationSchema={validationSchema}
               >
                 {({ values, handleChange }) => (
-                  <Form className="relative bg-yellow bg-opacity-10 rounded-xl p-14 shadow-2xl">
+                  <Form className="relative bg-opacity-10 rounded-xl p-14 shadow-2xl">
                     <div className="flex justify-between items-center">
                       <span className="text-sm italic text-red-500">
                         * Required
