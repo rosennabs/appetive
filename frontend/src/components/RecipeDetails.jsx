@@ -1,10 +1,5 @@
 import React, { useRef } from "react";
-import {
-  FaShareSquare,
-  FaPrint,
-  FaStar,
-  FaRegWindowClose,
-} from "react-icons/fa";
+import { FaShareSquare, FaPrint, FaStar, FaTimes } from "react-icons/fa";
 import { FaPlateWheat } from "react-icons/fa6";
 import { ImSpoonKnife, ImClock } from "react-icons/im";
 import { GiCook, GiCookingPot } from "react-icons/gi";
@@ -53,11 +48,9 @@ const RecipeDetails = function ({
     <>
       {recipe && (
         <div className="flex flex-col justify-center items-center">
-          <div className="flex justify-center items-center mt-16 w-5/6 bg-red-900  text-white">
+          <div className="relative flex justify-center items-center mt-16 w-5/6 bg-brown-light text-darker-white">
             <div className="w-full flex-col justify-center p-8 items-center">
-              <h2 className="text-4xl font-extrabold mb-10 mt-4">
-                {recipe.title}
-              </h2>
+              <h2 className="text-3xl font-bold mb-10 mt-4">{recipe.title}</h2>
 
               <div className="flex flex-row">
                 {recipe.nutrients.map((nutrient) => {
@@ -128,22 +121,20 @@ const RecipeDetails = function ({
                 )}
 
                 {recipe.diets.length > 0 && (
-                  <section className="flex flex-row items-center">
-                    <GiCookingPot />
-                    <span className="pl-2 pr-2">Diet(s) :</span>
-                    <span className="text-lg flex-wrap">
-                      {recipe.diets.slice(0, 5).join(", ")}
+                  <section className="grid grid-cols-auto gap-x-2 items-center">
+                    <span className="text-lg">
+                      <GiCookingPot className="inline-block mr-2" />
+                      Diet(s): {recipe.diets.slice(0, 5).join(", ")}
                       {recipe.diets.length > 5 && ", ..."}
                     </span>
                   </section>
                 )}
 
                 {recipe.type.length > 0 && (
-                  <section className="flex flex-row items-center">
-                    <FaPlateWheat />
-                    <span className="pl-2 pr-2">Type(s) :</span>
+                  <section className="grid grid-cols-auto gap-x-2 items-center">
                     <span className="text-lg">
-                      {recipe.type.slice(0, 6).join(", ")}
+                      <FaPlateWheat className="inline-block mr-2" />
+                      Type(s): {recipe.type.slice(0, 6).join(", ")}
                       {recipe.type.length > 6 && ", ..."}
                     </span>
                   </section>
@@ -161,33 +152,33 @@ const RecipeDetails = function ({
               </div>
             </div>
 
-            <div className="flex flex-col w-1/2">
-              <div className="flex justify-end">
+            <div className="flex flex-col w-2/3">
+              <div className="absolute top-0 right-0">
                 <button
                   type="button"
                   onClick={() => setSelected(null)}
-                  className="text-5xl text-yellow pr-8 mt-4"
+                  className="text-2xl text-yellow pr-8 mt-4 text-opacity-50 hover:text-opacity-100"
                 >
                   {" "}
-                  <FaRegWindowClose />
+                  <FaTimes />
                 </button>
               </div>
 
               <img
-                className="mb-10 w-full h-80 mt-8 p-8"
+                className="mb-10 w-full h-full mt-8 p-8"
                 src={recipe.image}
                 alt=""
               />
             </div>
           </div>
-          <div className="bg-white p-8 w-5/6 border border-black">
-            <div className="flex flex-col">
-              
-              <CounterAttempt
-                recipeId={recipe.id}
-                counter_attempt={recipe.counter_attempt}
-              />
 
+          <div className="bg-white p-8 w-5/6 border border-black">
+            <CounterAttempt
+              recipeId={recipe.id}
+              counter_attempt={recipe.counter_attempt}
+            />
+
+            <div className="flex flex-col">
               {copySuccess && (
                 <span className="text-amber-700">
                   Link copied to clipboard!
@@ -195,32 +186,34 @@ const RecipeDetails = function ({
               )}
             </div>
 
-            <div className="flex flex-row justify-between">
-              <section className="flex border border-black h-10 px-10 items-center">
+            <div className="flex flex-row justify-between mt-3">
+              <button className="flex bg-yellow text-brown-light bg-opacity-30 hover:bg-opacity-100 hover:shadow-xl h-10 px-6 items-center rounded-xl">
                 <div className="flex items-center">
                   <FaShareSquare />
-                  <button
+                  <p
                     className="ml-2"
                     onClick={() => generateShareLink(recipe.id)}
                   >
                     Share Recipe
-                  </button>
+                  </p>
                 </div>
-              </section>
+              </button>
 
-              <section className="flex border border-black h-10 px-10 items-center">
+              <button className="flex bg-yellow text-brown-light bg-opacity-30 hover:bg-opacity-100 hover:shadow-xl h-10 px-6 items-center rounded-xl">
                 <p className="flex items-center">
-                  <FaPrint />
-                  <button className="ml-2" onClick={() => printRecipe()}>
+                  <FaPrint/>
+                  <p className="ml-2" onClick={() => printRecipe()}>
                     Print Recipe
-                  </button>
+                  </p>
                 </p>
-              </section>
+              </button>
+
               <FavButton recipe_id={recipe.id} />
-              <section className="flex border border-black h-10 px-8 items-center">
+
+              <button className="flex bg-yellow text-brown-light bg-opacity-30 hover:bg-opacity-100 hover:shadow-xl h-10 px-6 items-center rounded-xl">
                 <p className="flex items-center">
                   <FaStar />
-                  <button
+                  <p
                     className="ml-2"
                     onClick={() => {
                       reviewRef.current?.scrollIntoView({
@@ -229,13 +222,13 @@ const RecipeDetails = function ({
                     }}
                   >
                     Leave a Review
-                  </button>
+                  </p>
                 </p>
-              </section>
+              </button>
             </div>
 
             <section>
-              <p className="text-3xl font-extrabold mt-12 mb-8">Ingredients</p>
+              <p className="text-3xl font-extrabold mt-12 mb-8 text-brown-dark">Ingredients</p>
 
               <div className="text-lg">
                 {recipe.ingredients.map((ingredient) => (
@@ -247,7 +240,7 @@ const RecipeDetails = function ({
                 ))}
               </div>
 
-              <p className="text-3xl font-extrabold mt-12 mb-8">Instructions</p>
+              <p className="text-3xl font-extrabold mt-12 mb-8 text-brown-dark">Instructions</p>
 
               <div className="text-lg">
                 <ol className="list-decimal px-4">
@@ -273,7 +266,7 @@ const RecipeDetails = function ({
                 </ol>
               </div>
 
-              <p className="text-3xl font-extrabold mt-12 mb-8">
+              <p className="text-3xl font-extrabold mt-12 mb-8 text-brown-dark">
                 Nutritional Facts
               </p>
 
