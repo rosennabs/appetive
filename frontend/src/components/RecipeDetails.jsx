@@ -242,7 +242,7 @@ const RecipeDetails = function ({
                   <li key={ingredient.id}>
                     {ingredient.id.length > 1
                       ? ingredient.original
-                      : `${ingredient.name}, ${ingredient.amount}${ingredient.unit}`}
+                      : `${ingredient.name}, ${ingredient.amount} ${ingredient.unit}`}
                   </li>
                 ))}
               </div>
