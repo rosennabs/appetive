@@ -7,23 +7,23 @@ import Footer from "./components/Footer";
 import Login from "./components/NavBar/pages/Login";
 import Register from "./components/NavBar/pages/Register";
 import About from "./components/NavBar/pages/About";
-import Profile from "./components/NavBar/pages/Profile";
 import RecipeForm from "./components/RecipeForm";
 import useAuthentication from "./hooks/useAuthentication";
 import axios from "axios";
 import HomePage from "./components/HomePage";
 import FoodTrivia from "./components/FoodTrivia";
 import TriviaResult from "./components/TriviaResult";
-import { AppDataContext } from './contexts/AppDataContext';
+import { AppDataContext } from "./contexts/AppDataContext";
 import UserFavs from "./components/NavBar/pages/UserFavs";
 import UserRecipes from "./components/NavBar/pages/UserRecipes";
 
 function App() {
   const { setAuth } = useAuthentication();
   const { selectedRecipe, setSelected } = useSelectedRecipe();
- const { showSearchBar } = useContext(AppDataContext);
-  const { shareLink, generateShareLink, copySuccess, setCopySuccess } = useShareLink();
-  
+  const { showSearchBar } = useContext(AppDataContext);
+  const { shareLink, generateShareLink, copySuccess, setCopySuccess } =
+    useShareLink();
+
   const [username, setUsername] = useState("");
   const jwtToken = localStorage.token;
 
@@ -45,9 +45,7 @@ function App() {
     <>
       <Fragment>
         <Router>
-          <NavBar
-            username={username}
-          />
+          <NavBar username={username} />
           <Routes>
             <Route
               path="/"
@@ -68,17 +66,11 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login setAuth={setAuth} />} />
             <Route path="/register" element={<Register setAuth={setAuth} />} />
-            <Route
-              path="/my-profile"
-              element={<Profile username={username} />}
-            />
             <Route path="/add-recipe" element={<RecipeForm />} />
             <Route path="/food-trivia" element={<FoodTrivia />} />
             <Route path="/trivia-result" element={<TriviaResult />} />
             <Route path="/my-favs" element={<UserFavs username={username} />} />
-            <Route
-              path="/my-recipes"
-              element={<UserRecipes username={username} />}
+            <Route path="/my-recipes" element={<UserRecipes username={username} />}
             />
           </Routes>
           <Footer />
