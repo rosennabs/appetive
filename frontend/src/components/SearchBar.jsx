@@ -1,60 +1,48 @@
-import React, { useContext } from 'react';
-import { Formik, Form } from 'formik';
-import { AppDataContext } from '../contexts/AppDataContext';
-import { FaSearch } from "react-icons/fa";
-
+import React, { useContext } from "react";
+import { Formik, Form } from "formik";
+import { AppDataContext } from "../contexts/AppDataContext";
+import { FaSearch, FaTimes } from "react-icons/fa";
 
 export default function SearchBar() {
-  
-  
-  const { handleSearchSubmission, toggleSearchBar } = useContext(AppDataContext);
-   
+  const { handleSearchSubmission, toggleSearchBar } =
+    useContext(AppDataContext);
 
   return (
     <Formik
-      initialValues = {
-        { title: '' } 
-      }
-
+      initialValues={{ title: "" }}
       onSubmit={(values, actions) => {
         handleSearchSubmission(values);
         console.log("values: ", values);
-        
+
         actions.setSubmitting(false);
       }}
-      
     >
-      {({ handleSubmit, handleChange, values}) => (
+      {({ handleSubmit, handleChange, values }) => (
         <Form onSubmit={handleSubmit}>
-          
-          <div className="flex justify-center items-center bg-white border border-gray-300 rounded-md shadow-lg p-16">
-          
-          <input
-            type="text"
-            name="title"
-            value={values.title}
-            onChange={handleChange}
-            placeholder="Search recipes"
-            autoComplete='off'
-            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-500"
+          <div className="flex justify-center items-center bg-white border border-gray-300 rounded-md shadow-lg py-8">
+            <input
+              type="text"
+              name="title"
+              value={values.title}
+              onChange={handleChange}
+              placeholder="Search recipes"
+              autoComplete="off"
+              className="w-96 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-500"
             />
 
-            <div className='ml-4 cursor-pointer' onClick={() => handleSubmit()}>
-            <FaSearch />
+            <div className="ml-4 cursor-pointer" onClick={() => handleSubmit()}>
+              <FaSearch className="text-lg text-brown-light hover:text-black"/>
             </div>
 
-            <div className='ml-4 cursor-pointer underline underline-offset-2' onClick={() => toggleSearchBar()}>
-            <p>Close</p>
+            <div
+              className="ml-4 cursor-pointer underline underline-offset-2"
+              onClick={() => toggleSearchBar()}
+            >
+              <FaTimes className="text-lg text-brown-light hover:text-black"/>
             </div>
-            
-           </div>
-          
-            
-          
+          </div>
         </Form>
       )}
-      
     </Formik>
-    
-  )
+  );
 }
