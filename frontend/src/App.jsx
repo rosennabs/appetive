@@ -45,7 +45,10 @@ function App() {
     <>
       <Fragment>
         <Router>
-          <NavBar username={username} />
+          <NavBar
+            username={username}
+            setSelected={setSelected}
+          />
           <Routes>
             <Route
               path="/"

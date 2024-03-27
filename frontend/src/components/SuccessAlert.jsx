@@ -9,7 +9,7 @@ const SuccessAlert = () => {
     const timeout = setTimeout(() => {
       // Navigate to the home page after a delay
       navigate("/my-recipes");
-    }, 2500);
+    }, 2000);
 
     // Clean up the timeout when the effect re-runs
     return () => clearTimeout(timeout);

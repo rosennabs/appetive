@@ -23,7 +23,7 @@ import { AppDataContext } from "../../contexts/AppDataContext";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
-function NavBar({ username }) {
+function NavBar({ username, setSelected }) {
   const { toggleSearchBar, showSearchBar } = useContext(AppDataContext);
   const { isAuthenticated, setAuth } = useAuthentication();
 
@@ -33,6 +33,7 @@ function NavBar({ username }) {
     e.preventDefault();
     localStorage.clear();
     setAuth(false);
+    setSelected(null);
     navigate("/");
   };
 
