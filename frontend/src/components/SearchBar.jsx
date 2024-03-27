@@ -20,7 +20,7 @@ export default function SearchBar() {
       {({ handleSubmit, handleChange, values }) => (
         <Form onSubmit={handleSubmit}>
           
-          <div className="flex justify-center items-center bg-red-900 border border-gray-300 px-8 mb-8  shadow-lg p-16">
+          <div className="flex justify-center items-center bg-white border border-gray-300 px-8 mb-8 shadow-lg py-8">
           
           <input
             type="text"
@@ -29,18 +29,18 @@ export default function SearchBar() {
             onChange={handleChange}
             placeholder="Search recipes"
             autoComplete='off'
-            className="px-4 py-2 text-xl border border-gray-300 rounded-md focus:outline-none focus:border-amber-500"
+            className=" w-96 px-4 py-2 text-xl border border-gray-300 rounded-md focus:outline-none focus:border-amber-500"
             />
 
             <div className="ml-4 cursor-pointer" onClick={() => handleSubmit()}>
-              <FaSearch className="text-lg text-brown-light hover:text-black"/>
+              <FaSearch className="text-xl text-brown-light hover:text-black"/>
             </div>
 
             <div
               className="ml-4 cursor-pointer underline underline-offset-2"
               onClick={() => toggleSearchBar()}
             >
-              <FaTimes className="text-lg text-brown-light hover:text-black"/>
+              <FaTimes className="text-xl text-brown-light hover:text-black"/>
             </div>
           </div>
         </Form>
