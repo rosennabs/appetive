@@ -160,8 +160,6 @@ function RecipeForm() {
             </div>
 
             <div className="max-w-screen-md mx-auto">
-
-              {formSuccess && <SuccessAlert />}
               
               <Formik
                 initialValues={{
@@ -563,6 +561,8 @@ function RecipeForm() {
                   </Form>
                 )}
               </Formik>
+
+              {formSuccess && <SuccessAlert />}
             </div>
           </>
         ) : (
