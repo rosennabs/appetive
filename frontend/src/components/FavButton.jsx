@@ -42,7 +42,7 @@ export default function FavButton (props) {
   return (
     <div>
     {!isAuthenticated && (
-      <section className="flex border border-black h-10 px-8 justify-center w-[220px] opacity-50 pointer-events-none">
+      <section className="flex bg-yellow text-brown-light bg-opacity-30 hover:bg-opacity-100 hover:shadow-xl h-10 px-6 items-center rounded-xl opacity-50 pointer-events-none">
         <p className="flex items-center">
           <FaHeart />
           <button className="ml-2">Add to Favourites</button>
@@ -50,7 +50,7 @@ export default function FavButton (props) {
       </section>
     )}
     {isAuthenticated && !isFav && (
-      <section className="flex border border-black h-10 px-8 justify-center w-[220px]" onClick={() => {handleFavClick(jwtToken, recipe_id)}}>
+      <section className="flex bg-yellow text-brown-light bg-opacity-30 hover:bg-opacity-100 hover:shadow-xl h-10 px-6 items-center rounded-xl" onClick={() => {handleFavClick(jwtToken, recipe_id)}}>
         <p className="flex items-center">
           <FaHeart />
           <button className="ml-2">Add to Favourites</button>
@@ -58,7 +58,7 @@ export default function FavButton (props) {
       </section>
     )}
     {isAuthenticated && isFav && (
-      <section className="flex border border-black h-10 px-8 justify-center bg-yellow w-[220px]" onClick={() => {handleFavClick(jwtToken, recipe_id)}}>
+      <section className="flex bg-yellow text-brown-light bg-opacity-30 hover:bg-opacity-100 hover:shadow-xl h-10 px-6 items-center rounded-xl bg-yellow" onClick={() => {handleFavClick(jwtToken, recipe_id)}}>
         <p className="flex items-center">
           <FaHeart />
           <button className="ml-2">Favourite</button>
