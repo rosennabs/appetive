@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import SearchBar from "../SearchBar";
 import {
   Nav,
@@ -8,19 +8,30 @@ import {
   Bars,
   NavBtnLink,
   ImgBtnLink,
+  DropdownMenu,
+  NavDropdown,
 } from "./NavBarElements";
-import { FaCaretDown, FaSearch, FaHome } from "react-icons/fa";
+import {
+  FaCaretDown,
+  FaSearch,
+  FaHome,
+  FaUtensils,
+  FaHeart,
+} from "react-icons/fa";
 import useAuthentication from "../../hooks/useAuthentication";
-import { AppDataContext } from '../../contexts/AppDataContext';
+import { AppDataContext } from "../../contexts/AppDataContext";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
-
-
-
-
-  function NavBar({ username }) {
+function NavBar({ username }) {
   const { toggleSearchBar, showSearchBar } = useContext(AppDataContext);
   const { isAuthenticated, setAuth } = useAuthentication();
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleClick = () => {
+    setShowDropdown((prev) => !prev);
+  };
+
   const navigate = useNavigate();
 
   const handleLogout = (e) => {
@@ -32,7 +43,7 @@ import { useNavigate } from "react-router";
 
   return (
     <>
-      <Bars />
+      <Bars onClick={handleClick} />
 
       <Nav className="fixed top-0">
         <NavMenu>
@@ -41,10 +52,21 @@ import { useNavigate } from "react-router";
           </NavLink>
           <NavLink to="/about">ABOUT US</NavLink>
           <NavLink to="/food-trivia">FOOD TRIVIA</NavLink>
-          <NavLink to="/my-profile">
-            MY PROFILE
-            <FaCaretDown className="ml-1" />
-          </NavLink>
+
+          <NavDropdown>
+            <div>
+              <p className="inline-block mr-1">PROFILE</p>
+              <FaCaretDown className="ml-1 inline-block" />
+            </div>
+            <DropdownMenu>
+              <li>
+                <Link to="/my-recipes"> <FaUtensils className=" inline-block mr-1" /> My Recipes</Link>
+              </li>
+              <li>
+                <Link to="/my-favs"><FaHeart className="inline-block mr-1" />My Favorites</Link>
+              </li>
+            </DropdownMenu>
+          </NavDropdown>
         </NavMenu>
 
         <NavBtn>
@@ -52,7 +74,6 @@ import { useNavigate } from "react-router";
             <>
               <NavBtnLink to="/login">LOGIN</NavBtnLink>
               <NavBtnLink to="/register">SIGN UP</NavBtnLink>
-              
             </>
           ) : (
             <>
@@ -63,11 +84,11 @@ import { useNavigate } from "react-router";
             </>
           )}
           <div
-                className="ps-8 cursor-pointer"
-                onClick={() => toggleSearchBar()}
-              >
-                <FaSearch />
-              </div>
+            className="ps-8 cursor-pointer"
+            onClick={() => toggleSearchBar()}
+          >
+            <FaSearch className="hover:text-darker-white" />
+          </div>
         </NavBtn>
       </Nav>
 
@@ -77,13 +98,12 @@ import { useNavigate } from "react-router";
           alt="Header Image"
           className="h-auto max-w-full mt-16"
         />
-       <ImgBtnLink to="/add-recipe" className="animate-pulse">MAKE YOUR RECIPE</ImgBtnLink>
+        <ImgBtnLink to="/add-recipe" className="animate-pulse">
+          MAKE YOUR RECIPE
+        </ImgBtnLink>
       </div>
 
-        <div >
-          {showSearchBar && <SearchBar />}
-        </div>
-
+      <div>{showSearchBar && <SearchBar />}</div>
     </>
   );
 }
