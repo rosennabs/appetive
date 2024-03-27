@@ -344,12 +344,12 @@ function RecipeForm() {
                           className="w-48 px-4 py-2 border border-opacity-20 border-brown-light rounded-md focus:outline-none focus:border-yellow my-1"
                         />{" "}
                         minutes
+                        <ErrorMessage
+                          name="prep_time"
+                          component="div"
+                          className="error text-red-600 text-sm"
+                        />
                       </div>
-                      <ErrorMessage
-                        name="prep_time"
-                        component="div"
-                        className="error text-red-600 text-sm"
-                      />
                       <div className="basis-1/2 space-x-1">
                         <label
                           className="block font-bold text-lg"
