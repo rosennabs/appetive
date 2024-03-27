@@ -33,7 +33,7 @@ export default function ProfileRecipes(props) {
           setCopySuccess={setCopySuccess}
         />
       ) : (
-        <section className="md:container max-w-screen-xl mx-auto flex flex-wrap">
+        <section className="md:container max-w-screen-xl mx-auto flex flex-wrap pt-12">
           {recipes.map((recipe) => (
             <div
               key={recipe.id}

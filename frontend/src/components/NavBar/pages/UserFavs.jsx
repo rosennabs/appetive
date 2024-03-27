@@ -10,7 +10,7 @@ function UserFavs( {username} ) {
     <div className="mb-28">
       {isAuthenticated ? (
         <div>
-          <h1 className="text-4xl py-12 font-bold mx-auto text-center">
+          <h1 className="text-4xl pt-12 pb-0 font-bold mx-auto text-center">
             {username}'s Favourite Recipes
           </h1>
           <FavList />
