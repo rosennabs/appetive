@@ -26,11 +26,6 @@ import { Link } from "react-router-dom";
 function NavBar({ username }) {
   const { toggleSearchBar, showSearchBar } = useContext(AppDataContext);
   const { isAuthenticated, setAuth } = useAuthentication();
-  const [showDropdown, setShowDropdown] = useState(false);
-
-  const handleClick = () => {
-    setShowDropdown((prev) => !prev);
-  };
 
   const navigate = useNavigate();
 
@@ -43,7 +38,7 @@ function NavBar({ username }) {
 
   return (
     <>
-      <Bars onClick={handleClick} />
+      <Bars />
 
       <Nav className="fixed top-0">
         <NavMenu>
@@ -60,10 +55,16 @@ function NavBar({ username }) {
             </div>
             <DropdownMenu>
               <li>
-                <Link to="/my-recipes"> <FaUtensils className=" inline-block mr-1" /> My Recipes</Link>
+                <Link to="/my-recipes">
+                  {" "}
+                  <FaUtensils className=" inline-block mr-1" /> My Recipes
+                </Link>
               </li>
               <li>
-                <Link to="/my-favs"><FaHeart className="inline-block mr-1" />My Favorites</Link>
+                <Link to="/my-favs">
+                  <FaHeart className="inline-block mr-1" />
+                  My Favorites
+                </Link>
               </li>
             </DropdownMenu>
           </NavDropdown>
