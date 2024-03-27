@@ -15,6 +15,9 @@ export default function ProfileRecipes(props) {
   //Function to handle click on a recipe
   const handleRecipeClick = async (recipeId) => {
     const recipeInfo = await fetchRecipeInfo(recipeId);
+    window.scrollTo({
+      top: 800,
+    });
     setSelected(recipeInfo); //Set selected recipe details in state
   };
 
