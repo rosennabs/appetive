@@ -64,7 +64,7 @@ function About() {
             alt="Header Image"
             className="h-40 w-40 mx-5 mt-16 mb-3"
           />
-          <p className="font-bold">Hisban</p>
+          <p className="font-bold">Hisban Shiraz</p>
         </div>
 
         <div className="flex flex-col justify-center items-center">
@@ -73,7 +73,7 @@ function About() {
             alt="Header Image"
             className="h-40 w-40 mx-5 mt-16 mb-3"
           />
-          <p className="font-bold">Maddie</p>
+          <p className="font-bold">Maddie Lee</p>
         </div>
 
         <div className="flex flex-col justify-center items-center">
@@ -82,7 +82,7 @@ function About() {
             alt="Header Image"
             className="h-40 w-40 mx-5 mt-16 mb-3"
           />
-          <p className="font-bold">Rosemary</p>
+          <p className="font-bold">Rosemary Okere</p>
         </div>
 
         <div className="flex flex-col justify-center items-center">
