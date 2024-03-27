@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import SearchBar from "../SearchBar";
 import {
   Nav,
@@ -8,17 +8,25 @@ import {
   Bars,
   NavBtnLink,
   ImgBtnLink,
+  DropdownMenu,
+  NavDropdown,
   SearchBtnLink,
-  
 } from "./NavBarElements";
-import { FaCaretDown, FaSearch, FaHome } from "react-icons/fa";
+import {
+  FaCaretDown,
+  FaHome,
+  FaUtensils,
+  FaHeart,
+} from "react-icons/fa";
 import useAuthentication from "../../hooks/useAuthentication";
 import { AppDataContext } from "../../contexts/AppDataContext";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 function NavBar({ username }) {
   const { toggleSearchBar, showSearchBar } = useContext(AppDataContext);
   const { isAuthenticated, setAuth } = useAuthentication();
+
   const navigate = useNavigate();
 
   const handleLogout = (e) => {
@@ -38,16 +46,28 @@ function NavBar({ username }) {
             <FaHome className="size-7" />
           </NavLink>
           <NavLink to="/about">ABOUT US</NavLink>
-          <NavLink
-            to="/food-trivia"
-            onClick={() => window.scrollTo({ top: 300, behavior: "smooth" })}
-          >
-            FOOD TRIVIA
-          </NavLink>
-          <NavLink to="/my-profile">
-            MY PROFILE
-            <FaCaretDown className="ml-1" />
-          </NavLink>
+          <NavLink to="/food-trivia">FOOD TRIVIA</NavLink>
+
+          <NavDropdown>
+            <div>
+              <p className="inline-block mr-1">PROFILE</p>
+              <FaCaretDown className="ml-1 inline-block" />
+            </div>
+            <DropdownMenu>
+              <li>
+                <Link to="/my-recipes">
+                  {" "}
+                  <FaUtensils className=" inline-block mr-1" /> My Recipes
+                </Link>
+              </li>
+              <li>
+                <Link to="/my-favs">
+                  <FaHeart className="inline-block mr-1" />
+                  My Favorites
+                </Link>
+              </li>
+            </DropdownMenu>
+          </NavDropdown>
         </NavMenu>
 
         <NavBtn>
@@ -58,7 +78,7 @@ function NavBar({ username }) {
             </>
           ) : (
             <>
-              <p>Welcome {username}!</p>
+              <p className="mr-2">Welcome {username}!</p>
               <NavBtnLink to="/logout" onClick={(e) => handleLogout(e)}>
                 LOGOUT
               </NavBtnLink>
@@ -69,22 +89,21 @@ function NavBar({ username }) {
 
       <div>
         <img
-          src={require("../../Images/header.png")}
+          src={require("../../Images/headers/header.png")}
           alt="Header Image"
           className="h-auto max-w-full mt-16"
         />
-      
+
         <SearchBtnLink
-         className="animate-pulse"
+          className="animate-pulse"
           onClick={() => toggleSearchBar()}
         >
-          SEARCH RECIPES
+          SEARCH
         </SearchBtnLink>
 
         <ImgBtnLink to="/add-recipe" className="animate-pulse">
           MAKE YOUR RECIPE
-          </ImgBtnLink>
-          
+        </ImgBtnLink>
       </div>
 
       <div>{showSearchBar && <SearchBar />}</div>

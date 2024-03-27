@@ -103,7 +103,7 @@ const ReviewList = ({ recipeId }) => {
   return (
     <>
       <img
-        src={require("../Images/review-header.png")}
+        src={require("../Images//headers/review-header.png")}
         alt="Header Image"
         className="h-auto w-4/5 mt-24"
       />

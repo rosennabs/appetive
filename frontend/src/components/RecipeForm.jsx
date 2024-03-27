@@ -5,7 +5,7 @@ import axios from "axios";
 import {
   FaPlusCircle,
   FaTrashAlt,
-  FaRegWindowClose,
+  FaTimes,
   FaExclamationCircle,
 } from "react-icons/fa";
 import * as Yup from "yup";
@@ -153,7 +153,7 @@ function RecipeForm() {
           <>
             <div className="flex justify-center items-center">
               <img
-                src={require("../Images/recipe-header.png")}
+                src={require("../Images/headers/recipe-header.png")}
                 alt="Header Image"
                 className="h-auto w-4/5 mt-16 mb-10"
               />
@@ -190,7 +190,7 @@ function RecipeForm() {
                 validationSchema={validationSchema}
               >
                 {({ values, handleChange }) => (
-                  <Form className="bg-white rounded-xl p-12 shadow-2xl">
+                  <Form className="relative bg-opacity-10 rounded-xl p-14 shadow-2xl">
                     <div className="flex justify-between items-center">
                       <span className="text-sm italic text-red-500">
                         * Required
@@ -198,9 +198,9 @@ function RecipeForm() {
                       <button
                         type="button"
                         onClick={() => navigate("/")}
-                        className="text-4xl text-black"
+                        className="absolute top-6 right-6 text-2xl text-yellow hover:text-brown-light cursor-pointer"
                       >
-                        <FaRegWindowClose />
+                        <FaTimes />
                       </button>
                     </div>
                     <div className="my-5">

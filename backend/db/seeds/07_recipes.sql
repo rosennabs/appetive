@@ -34,7 +34,7 @@ VALUES
     '30g',
     4,
     300,
-    5,
+    28,
     CURRENT_TIMESTAMP,
     CURRENT_TIMESTAMP
   );
@@ -116,7 +116,7 @@ VALUES
     '2g',
     4,
     250,
-    2,
+    35,
     CURRENT_TIMESTAMP,
     CURRENT_TIMESTAMP
   );
@@ -157,7 +157,7 @@ VALUES
     '8g',
     4,
     250,
-    0,
+    20,
     CURRENT_TIMESTAMP,
     CURRENT_TIMESTAMP
   );

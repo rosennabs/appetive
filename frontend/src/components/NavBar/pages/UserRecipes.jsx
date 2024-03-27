@@ -7,10 +7,10 @@ function UserRecipes( {username} ) {
   const { isAuthenticated } = useAuthentication();
 
   return (
-    <div>
+    <div className="mb-28">
       {isAuthenticated ? (
         <div>
-          <h1 className="text-4xl pt-10 font-bold mx-auto mb-5 text-center">
+          <h1 className="text-4xl py-12 font-bold mx-auto text-center">
             Recipes Added By {username}
           </h1>
           <UserRecipesList />
