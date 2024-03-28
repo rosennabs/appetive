@@ -26,8 +26,7 @@ export default function Recipes({ setSelected }) {
         />
       </div>
 
-      <div className="flex items-center justify-between">
-
+      <div className="flex items-center justify-end">
         {searchClicked && (
           <button
             type="button"

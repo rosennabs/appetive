@@ -103,6 +103,10 @@ const useAppData = () => {
   const [searchClicked, setSearchClicked] = useState(false);
 
   const handleSearchSubmission = async (values) => {
+    window.scrollTo({
+      top: 1600,
+      behavior: "smooth",
+    });
     // Store user's selected options
     setSearchClicked(true);
 
