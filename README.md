@@ -39,25 +39,25 @@ Here are the technologies used in this project:
 
 ### Homepage
 
-![Alt text](//frontend/src/Images/Final%20UI/homepage1.png){:height="200px" width="600px"}
-![Alt text](//frontend/src/Images/Final%20UI/homepage2.png){:height="200px" width="600px"}
+![Homepage](//frontend/src/Images/Final%20UI/homepage1.png)
+![Homepage](//frontend/src/Images/Final%20UI/homepage2.png)
 
 ### About Page
-![Alt text](//frontend/src/Images/Final%20UI/about-page.png){:height="200px" width="600px"}
+![About page](//frontend/src/Images/Final%20UI/about-page.png)
 
 ### Recipe Detail
-![Alt text](//frontend/src/Images/Final%20UI/recipe-detail.png){:height="200px" width="600px"}
-![Alt text](//frontend/src/Images/Final%20UI/recipe-detail1.png){:height="200px" width="600px"}
-![Alt text](//frontend/src/Images/Final%20UI/review.png){:height="200px" width="600px"}
+![Reciep Detail](//frontend/src/Images/Final%20UI/recipe-detail.png)
+![Reciep Detail](//frontend/src/Images/Final%20UI/recipe-detail1.png)
+![Reciep Detail](//frontend/src/Images/Final%20UI/review.png)
 
 
 ### Adding Recipe Form
-![Alt text](//frontend/src/Images/Final%20UI/add-recipe.png){:height="200px" width="600px"}
+![Adding new recipe form](//frontend/src/Images/Final%20UI/add-recipe.png)
 
 ### My Favorites and My Recipes
-![Alt text](//frontend/src/Images/Final%20UI/my-favs.png){:height="200px" width="600px"}
-![Alt text](//frontend/src/Images/Final%20UI/my-recipes.png){:height="200px" width="600px"}
+![My favs](//frontend/src/Images/Final%20UI/my-favs.png)
+![My recipes](//frontend/src/Images/Final%20UI/my-recipes.png)
 
 ### Food Trivia
-![Alt text](//frontend/src/Images/Final%20UI/trivia1.png){:height="200px" width="600px"}
-![Alt text](//frontend/src/Images/Final%20UI/trivia2.png){:height="200px" width="600px"}
+![Food Trivia](//frontend/src/Images/Final%20UI/trivia1.png)
+![Food Trivia](//frontend/src/Images/Final%20UI/trivia2.png)
