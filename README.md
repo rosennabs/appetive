@@ -39,25 +39,25 @@ Here are the technologies used in this project:
 
 ### Homepage
 
-![Homepage](//frontend/src/Images/Final%20UI/homepage1.png)
-![Homepage](//frontend/src/Images/Final%20UI/homepage2.png)
+![Homepage](frontend/src/Images/Final%20UI/homepage1.png)
+![Homepage](frontend/src/Images/Final%20UI/homepage2.png)
 
 ### About Page
-![About page](//frontend/src/Images/Final%20UI/about-page.png)
+![About page](frontend/src/Images/Final%20UI/about-page.png)
 
 ### Recipe Detail
-![Reciep Detail](//frontend/src/Images/Final%20UI/recipe-detail.png)
-![Reciep Detail](//frontend/src/Images/Final%20UI/recipe-detail1.png)
-![Reciep Detail](//frontend/src/Images/Final%20UI/review.png)
+![Reciep Detail](frontend/src/Images/Final%20UI/recipe-detail.png)
+![Reciep Detail](frontend/src/Images/Final%20UI/recipe-detail1.png)
+![Reciep Detail](frontend/src/Images/Final%20UI/review.png)
 
 
 ### Adding Recipe Form
-![Adding new recipe form](//frontend/src/Images/Final%20UI/add-recipe.png)
+![Adding new recipe form](frontend/src/Images/Final%20UI/add-recipe.png)
 
 ### My Favorites and My Recipes
-![My favs](//frontend/src/Images/Final%20UI/my-favs.png)
-![My recipes](//frontend/src/Images/Final%20UI/my-recipes.png)
+![My favs](frontend/src/Images/Final%20UI/my-favs.png)
+![My recipes](frontend/src/Images/Final%20UI/my-recipes.png)
 
 ### Food Trivia
-![Food Trivia](//frontend/src/Images/Final%20UI/trivia1.png)
-![Food Trivia](//frontend/src/Images/Final%20UI/trivia2.png)
+![Food Trivia](frontend/src/Images/Final%20UI/trivia1.png)
+![Food Trivia](frontend/src/Images/Final%20UI/trivia2.png)
